@@ -8,11 +8,15 @@ class Order < ApplicationRecord
     validates :discount, numericality: { lass_than: 1 }
     validates :shipping, presence: true
     validates :status, presence: true
-    validate :within_24_hours
+    validate :within_24_hours, on: :update
 
     private
 
     def within_24_hours
-        errors.add(:status, "must be within 24 hours of order") unless created_at > Time.now-1.day
+        return if Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i)
+
+        if Time.at(created_at.to_i) < Time.at(Time.now-1.day.to_i)
+            errors.add(:status, "must be within 24 hours of order")
+        end
     end
 end
