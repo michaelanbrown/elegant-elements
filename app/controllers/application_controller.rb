@@ -3,6 +3,9 @@ class ApplicationController < ActionController::API
 
   include ActionController::Cookies
 
+  rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
+
   def current_customer
     @current_customer ||= Customer.find_by(id: session[:customer_id])
   end
@@ -11,6 +14,14 @@ class ApplicationController < ActionController::API
 
   def authenticate_customer
     render json: { errors: "Not authorized" }, status: :unauthorized unless current_customer
+  end
+
+  def render_unprocessable_entity_response(exception)
+    render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity
+  end
+
+  def render_not_found_response
+    render json: { error: "Record not found" }, status: :not_found
   end
 
 end
