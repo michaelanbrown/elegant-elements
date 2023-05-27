@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :orders
   resources :customizations
   resources :customers
   # Routing logic: fallback requests for React Router.
