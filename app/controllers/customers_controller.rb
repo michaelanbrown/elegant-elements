@@ -1,4 +1,5 @@
 class CustomersController < ApplicationController
+    skip_before_action :authenticate_customer, only: [:index, :create]
 
     def index 
         render json: Customer.all, status: :ok
