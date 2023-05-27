@@ -24,6 +24,10 @@ class ApplicationController < ActionController::API
     @order = Order.find(params[:id])
   end
 
+  def find_customization
+    @customization = Customization.find(params[:id])
+  end
+
   def render_unprocessable_entity_response(exception)
     render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity
   end
