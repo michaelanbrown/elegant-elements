@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+    before_action :find_product, only: [:show, :update, :destroy]
 
     def index 
         render json: Product.all, status: :ok

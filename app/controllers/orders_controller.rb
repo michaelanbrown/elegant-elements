@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-    before_action :find_race, only: [:show, :update]
+    before_action :find_order, only: [:show, :update]
 
     def index 
         render json: Order.all, status: :ok
