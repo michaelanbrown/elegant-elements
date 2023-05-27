@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2023_05_27_212307) do
   end
 
   create_table "customizations", force: :cascade do |t|
-    t.string "type"
+    t.string "custom_type"
     t.float "price"
     t.string "personalization"
     t.datetime "created_at", precision: 6, null: false
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2023_05_27_212307) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string "type"
+    t.string "jewelry"
     t.float "price"
     t.integer "quantity"
     t.integer "customization_id"
