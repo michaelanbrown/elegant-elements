@@ -4,8 +4,13 @@ class CustomersController < ApplicationController
         render json: Customer.all, status: :ok
     end
 
+    def show
+        render json: current_customer, status: :ok
+    end
+
     def create
         customer = Customer.create!(customer_params)
+        session[:customer_id] = customer.id
         render json: customer, status: :ok
     end
 
