@@ -3,6 +3,7 @@ class CreateCustomizations < ActiveRecord::Migration[6.1]
     create_table :customizations do |t|
       t.string :type
       t.float :price
+      t.string :personalization
 
       t.timestamps
     end
