@@ -9,5 +9,12 @@ class CreateProducts < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+
+    add_foreign_key :products, :customizations, column: :customization_id
+    add_index :products, :customization_id
+
+    add_foreign_key :products, :orders, column: :order_id
+    add_index :products, :order_id
+
   end
 end

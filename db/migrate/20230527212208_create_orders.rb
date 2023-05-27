@@ -8,5 +8,9 @@ class CreateOrders < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+
+    add_foreign_key :orders, :customers, column: :customer_id
+    add_index :orders, :customer_id
+
   end
 end
