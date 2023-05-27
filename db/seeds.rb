@@ -14,9 +14,9 @@ c1 = Customization.create(custom_type: "phrase", price: 4.00, personalization: "
 c2 = Customization.create(custom_type: "word", price: 2.00, personalization: "Smiles")
 c3 = Customization.create(custom_type: "date", price: 2.00, personalization: "01.26.2021")
 
-o1 = Order.create(customer_id: u1.id, total: 20.00, discount: 0.00, shipping: 7.00)
-o2 = Order.create(customer_id: u2.id, total: 19.00, discount: 0.00, shipping: 7.00)
-o3 = Order.create(customer_id: u3.id, total: 39.00, discount: 0.00, shipping: 7.00)
+o1 = Order.create(customer_id: u1.id, total: 20.00, discount: 0.00, shipping: 7.00, status: "completed")
+o2 = Order.create(customer_id: u2.id, total: 19.00, discount: 0.00, shipping: 7.00, status: "canceled")
+o3 = Order.create(customer_id: u3.id, total: 39.00, discount: 0.00, shipping: 7.00, status: "completed")
 
 p1 = Product.create(jewelry: "necklace", price: 10.00, quantity: 1, customization_id: c3.id, order_id: o2.id)
 p2 = Product.create(jewelry: "bracelet", price: 9.00, quantity: 1, customization_id: c1.id, order_id: o1.id)

@@ -5,6 +5,7 @@ class CreateOrders < ActiveRecord::Migration[6.1]
       t.float :total
       t.float :discount
       t.float :shipping
+      t.string :status
 
       t.timestamps
     end
