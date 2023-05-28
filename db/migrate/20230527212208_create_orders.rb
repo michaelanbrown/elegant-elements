@@ -4,8 +4,8 @@ class CreateOrders < ActiveRecord::Migration[6.1]
       t.integer :customer_id
       t.float :total
       t.float :discount
-      t.float :shipping
-      t.string :status
+      t.float :shipping, default: 7.00
+      t.string :status, default: "in progress"
 
       t.timestamps
     end

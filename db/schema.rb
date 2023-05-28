@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(version: 2023_05_27_212307) do
     t.integer "customer_id"
     t.float "total"
     t.float "discount"
-    t.float "shipping"
-    t.string "status"
+    t.float "shipping", default: 7.0
+    t.string "status", default: "in progress"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["customer_id"], name: "index_orders_on_customer_id"
