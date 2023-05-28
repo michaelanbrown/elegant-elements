@@ -23,7 +23,7 @@ class ProductsController < ApplicationController
     def destroy
         @product.destroy
         head :no_content 
-    end 
+    end
 
     private
 
