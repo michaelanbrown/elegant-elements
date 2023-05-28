@@ -28,8 +28,13 @@ class ApplicationController < ActionController::API
     @customization = Customization.find(params[:id])
   end
 
-  def authorize_customer
-    permitted = @order.user_id == current_user.id
+  def authorize_customer_on_order
+    permitted = @order.customer_id == current_customer.id
+    render json: { errors: "Not authorized" }, status: :unauthorized unless permitted
+  end
+
+  def authorize_customer_on_product
+    permitted = @product.order.customer_id == current_customer.id
     render json: { errors: "Not authorized" }, status: :unauthorized unless permitted
   end
 

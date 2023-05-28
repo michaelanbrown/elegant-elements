@@ -5,7 +5,7 @@ class Product < ApplicationRecord
     validates :jewelry, presence: true, inclusion: { in: %w(necklace bracelet keychain) }
     validates :price, numericality: { greater_than: 0 }
     validates :quantity, numericality: { greater_than: 0 }
-    validate :within_24_hours, on: :update
+    validate :within_24_hours, on: :update, :destroy
 
     private
 
