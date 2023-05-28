@@ -25,9 +25,7 @@ class OrdersController < ApplicationController
         params.permit(:total, :discount).merge(customer_id: current_customer.id)
     end
 
-    :customer_id, :total, :discount, :shipping
-
-    # def update_order_params
-    #     params.permit(:name, :year, :duration)
-    # end
+    def update_order_params
+        params.permit(:status)
+    end
 end
