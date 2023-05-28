@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
     before_action :find_order, only: [:show, :update]
-    before_action :authorize_customer
+    before_action :authorize_customer, only: [:show, :update, :destroy]
 
     def index 
         render json: Order.all, status: :ok
