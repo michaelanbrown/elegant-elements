@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  # before_action :authenticate_customer
+  before_action :authenticate_customer
 
   include ActionController::Cookies
 
@@ -26,6 +26,11 @@ class ApplicationController < ActionController::API
 
   def find_customization
     @customization = Customization.find(params[:id])
+  end
+
+  def authorize_customer
+    permitted = @order.user_id == current_user.id
+    render json: { errors: "Not authorized" }, status: :unauthorized unless permitted
   end
 
   def render_unprocessable_entity_response(exception)
