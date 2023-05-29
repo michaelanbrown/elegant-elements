@@ -1,4 +1,5 @@
 import React from 'react';
+import '../App.css'
 
 function Welcome() {
     
@@ -6,7 +7,7 @@ function Welcome() {
     return (
         <div>
             <br />
-            <img src={"https://i.imgur.com/upX3ZLK.png"} alt="Elegant Elements" width="20%" height="20%"/>
+            <img className="eleganceimg" src={"https://i.imgur.com/upX3ZLK.png"} alt="Elegant Elements" width="20%" height="20%"/>
         </div>
     )
 }
