@@ -6,12 +6,8 @@ function Header() {
   return (
     <div className="Header">
       <header>
-        <h1>
-        <span role="img" aria-label="plane"></span>✨Elegant Elements✨<span role="img" aria-label="globe"></span>
-        <br/>
-        </h1>
-          <p><em>Adding a touch of inspiration and elegance to your every day life</em></p>
         <div>
+        <p className="active"><em>✨Adding a touch of inspiration and elegance to your every day life✨</em></p>
             <NavBar />
         </div>  
       </header>

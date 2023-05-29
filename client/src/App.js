@@ -6,10 +6,10 @@ import Welcome from './components/Welcome';
 function App() {
   return (
     <main>
-      <Header/>
       <Routes>
         <Route path="/" element={<Welcome/>} />
       </Routes>
+      <Header/>
     </main>
   );
 }

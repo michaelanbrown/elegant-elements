@@ -6,7 +6,7 @@ function Welcome() {
     return (
         <div>
             <br />
-            <img src={"https://media.tenor.com/el3gs-lJ5f0AAAAC/karen-run.gif"} alt="Welcome Home" width="60%" height="60%"/>
+            <img src={"https://i.imgur.com/upX3ZLK.png"} alt="Elegant Elements" width="20%" height="20%"/>
         </div>
     )
 }
