@@ -7,6 +7,7 @@ class Customization < ApplicationRecord
     validates :personalization, presence: true
     validate :word_personalization
     validate :phrase_personalization
+    validate :date_personalization
 
     private
     
@@ -23,6 +24,14 @@ class Customization < ApplicationRecord
 
         if (custom_type == "phrase" && personalization.index(" ").to_i <= 0)
             errors.add(:personalization, "Needs to be multiple words")
+        end
+    end
+
+    def date_personalization
+        return if (custom_type == "date" && personalization.slice(2) == "." && personalization.slice(5) == ".")
+
+        if (custom_type == "date" && (personalization.slice(2) != "." || personalization.slice(5) != "."))
+            errors.add(:personalization, "Needs to be a date")
         end
     end
 end
