@@ -6,7 +6,7 @@ class Order < ApplicationRecord
 
     validates :total, numericality: { greater_than: 0 }
     validates :discount, numericality: { less_than: 1 }
-    validates :shipping, presence: true
+    validates :shipping, presence: true, numericality: { equal_to: 7.00 }
     validates :status, presence: true
     validate :within_24_hours, on: :update
 
