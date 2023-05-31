@@ -12,6 +12,13 @@ class ProductsController < ApplicationController
 
     def create
         product = Product.create!(product_params)
+        if product.jewelry == "necklace"
+            product.update(price: 10.00)
+        elsif product.jewelry == "bracelet"
+            product.update(price: 9.00)
+        elsif product.jewelry == "keychain"
+            product.update(price: 8.00)
+        end
         render json: product, status: :created
     end
 
