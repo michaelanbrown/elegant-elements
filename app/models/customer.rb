@@ -1,5 +1,6 @@
 class Customer < ApplicationRecord
     has_many :orders
+    has_many :addresses
 
     validates :name, presence: true
     validates :username, presence: true, uniqueness: true
