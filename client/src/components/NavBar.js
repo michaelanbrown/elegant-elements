@@ -9,7 +9,7 @@ export default function NavBar ()  {
     return (
         <nav className="NavBar">
           <br/>
-            <NavLink className="active" to="/">Welcome</NavLink>
+            <NavLink className="Navelements" to="/">Welcome</NavLink>
         </nav>
     )
 }

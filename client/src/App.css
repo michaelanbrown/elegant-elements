@@ -44,11 +44,25 @@ body {
   color: white;
 }
 
-.active {
-  color: white;
-}
-
 .elegant-header{
   color: white;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.NavBar{
+  position: fixed;
+  top: 0%;
+  right: 3%
+}
+
+.Navelements{
+  color: white
+}
+
+.Header{
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -30px;
+  padding: 0 0 0 0;
 }
