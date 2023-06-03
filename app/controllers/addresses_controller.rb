@@ -9,6 +9,12 @@ class AddressesController < ApplicationController
         render json: order, status: :created
     end
 
+    def update
+        address = Address.find_by(id: params[:id])
+        address.update!(address_params)
+        render json: address, status: :accepted
+    end
+
     private
 
     def address_params
