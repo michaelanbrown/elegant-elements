@@ -1,4 +1,6 @@
 class AddressesController < ApplicationController
+    before_action :find_address, only: [:show, :update]
+    before_action :authorize_customer_on_address, only: [:update, :destroy]
 
     def index 
         render json: Address.all, status: :ok
@@ -10,9 +12,13 @@ class AddressesController < ApplicationController
     end
 
     def update
-        address = Address.find_by(id: params[:id])
-        address.update!(address_params)
-        render json: address, status: :accepted
+        @address.update!(address_params)
+        render json: @address, status: :accepted
+    end
+
+    def destroy
+        @address.destroy
+        head :no_content 
     end
 
     private
