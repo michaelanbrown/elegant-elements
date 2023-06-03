@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2023_06_03_224352) do
     t.string "unit"
     t.string "city"
     t.string "state"
-    t.string "zip"
+    t.integer "zip"
     t.integer "customer_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

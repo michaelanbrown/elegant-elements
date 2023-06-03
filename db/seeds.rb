@@ -22,3 +22,5 @@ p1 = Product.create(jewelry: "necklace", price: 10.00, quantity: 1, customizatio
 p2 = Product.create(jewelry: "bracelet", price: 9.00, quantity: 1, customization_id: c1.id, order_id: o1.id)
 p3 = Product.create(jewelry: "keychain", price: 8.00, quantity: 2, customization_id: c2.id, order_id: o3.id)
 p4 = Product.create(jewelry: "necklace", price: 10.00, quantity: 1, customization_id: c2.id, order_id: o3.id)
+
+a1 = Address.create(street: "1234 Main st", unit: nil, city: "Sacramento", state: "CA", zip: )
