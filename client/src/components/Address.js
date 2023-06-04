@@ -33,6 +33,8 @@ function Address({ address, addresses, setAddresses, custAddresses, setCustAddre
     return(
         <div className='address'>
             <br/>
+            {address.name}
+            <br/>
             {address.street}{address.unit ? ", Unit: " : null}{address.unit ? address.unit : null}
             <br/>
             {address.city}, {address.state} {address.zip}

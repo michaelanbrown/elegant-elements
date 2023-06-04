@@ -8,13 +8,14 @@ function CreateAddress({ addresses, setAddresses, custAddresses, setCustAddresse
     const [errors, setErrors] = useState([])
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
+        name: "",
         street: "",
         unit: "",
         city: "",
         state: "",
         zip: "",
     })
-    const {street, unit, city, state, zip} = formData
+    const {name, street, unit, city, state, zip} = formData
 
     function handleChange(e) {
         setFormData({
@@ -26,6 +27,7 @@ function CreateAddress({ addresses, setAddresses, custAddresses, setCustAddresse
     function onSubmit(e){
         e.preventDefault()
         const address = {
+            name,
             street,
             unit,
             city,
@@ -42,6 +44,7 @@ function CreateAddress({ addresses, setAddresses, custAddresses, setCustAddresse
             if(res.ok){
                 res.json().then(address => {
                     setAddresses([...addresses, address])
+                    setCustAddresses([...custAddresses, address])
                     navigate(`/account`)
                 })
             } else {
@@ -56,6 +59,8 @@ function CreateAddress({ addresses, setAddresses, custAddresses, setCustAddresse
             <br/>
             <br/>
             <form onSubmit={onSubmit}>
+                Name: <input className='addressform' type="text" name="name" value={name} onChange={handleChange} />
+                <br/>
                 Street: <input className='addressform' type="text" name="street" value={street} onChange={handleChange} />
                 <br/>
                 Unit: <input className='addressform' type="password" name="unit" value={unit} onChange={handleChange} />

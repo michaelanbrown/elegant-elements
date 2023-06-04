@@ -14,7 +14,6 @@ function App() {
   const [customers, setCustomers] = useState([])
   const [addresses, setAddresses] = useState([])
   const [errors, setErrors] = useState([])
-  const [custAddresses, setCustAddresses] = useState([])
 
   useEffect(() => {
     fetch("/authorized_user")
@@ -23,13 +22,13 @@ function App() {
         res.json()
         .then((customer) => {
           setCurrentCustomer(customer);
-          setCustAddresses(currentCustomer.addresses)
         });
       }
     })
     getCustomers();
     getAddresses();
   },[])
+
 
   function getCustomers() {
     fetch("/customers")
@@ -60,8 +59,7 @@ function App() {
         <Route path="/" element={<Welcome/>} />
         <Route path="/signup" element={<Signup customers={customers} setCustomers={setCustomers}/>} />
         <Route path="/login" element={<Login/>} />
-        <Route path="/account" element={<Account addresses={addresses} setAddresses={setAddresses} custAddresses={custAddresses} setCustAddresses={setCustAddresses}/>} />
-        <Route path="/new-address" element={<CreateAddress addresses={addresses} setAddresses={setAddresses} custAddresses={custAddresses} setCustAddresses={setCustAddresses}/>}></Route>
+        <Route path="/account/*" element={<Account addresses={addresses} setAddresses={setAddresses}/>} />
       </Routes>
     </main>
   );
