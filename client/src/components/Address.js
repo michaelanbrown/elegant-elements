@@ -5,15 +5,15 @@ import { UserContext } from './context/User';
 function Address({ address, addresses, setAddresses }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
 
-    // function deleteAddress(){
-    //     fetch(`${address.id}`, {
-    //         method: 'DELETE'
-    //     })
-    //     .then(res => {
-    //         if(res.ok)
-    //         console.log(res)
-    //     })
-    // }
+    function deleteAddress(){
+        fetch(`/addresses/${address.id}`, {
+            method: 'DELETE'
+        })
+        .then(res => {
+            if(res.ok)
+            console.log(res)
+        })
+    }
 
     return(
         <div className='address'>
@@ -23,7 +23,7 @@ function Address({ address, addresses, setAddresses }) {
             {address.city}, {address.state} {address.zip}
             <br/>
             <br/>
-            <button>Delete</button>
+            <button onClick={deleteAddress}>Delete</button>
             <br/>
             <br/>
         </div>

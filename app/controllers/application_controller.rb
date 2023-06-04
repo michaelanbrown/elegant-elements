@@ -29,21 +29,21 @@ class ApplicationController < ActionController::API
   end
 
   def find_address
-    @address = Address.find(id: params[:id])
+    @address = Address.find(params[:id])
   end
 
   def authorize_customer_on_order
-    permitted = @order.customer_id == current_customer.id
+    permitted = @order.customer_id == @current_customer.id
     render json: { errors: "Not authorized" }, status: :unauthorized unless permitted
   end
 
   def authorize_customer_on_product
-    permitted = @product.order.customer_id == current_customer.id
+    permitted = @product.order.customer_id == @current_customer.id
     render json: { errors: "Not authorized" }, status: :unauthorized unless permitted
   end
 
   def authorize_customer_on_address
-    permitted = @address.customer_id == current_customer.id
+    permitted = @address.customer.id == @current_customer.id
     render json: { errors: "Not authorized" }, status: :unauthorized unless permitted
   end
 

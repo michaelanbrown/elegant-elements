@@ -1,7 +1,6 @@
 class SessionsController < ApplicationController
     skip_before_action :authenticate_customer
 
-
     def create
         customer = Customer.find_by_username(params[:username])
         if customer&.authenticate(params[:password])
