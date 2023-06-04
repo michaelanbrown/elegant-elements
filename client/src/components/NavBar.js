@@ -27,6 +27,8 @@ export default function NavBar ()  {
             <br/>
             <NavLink className="Navelements" to="/login">Login</NavLink>
             <br/>
+            { currentCustomer ? <NavLink className="Navelements" to="/account">Account Information</NavLink> : null }
+            { currentCustomer ? <br/> : null }
             { currentCustomer ? <button className="logout" onClick={handleLogOut}>Logout</button> : null }
         </nav>
     )
