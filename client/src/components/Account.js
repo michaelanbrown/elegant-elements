@@ -4,9 +4,8 @@ import { UserContext } from './context/User';
 import Address from './Address';
 import { Link } from 'react-router-dom';
 
-function Account({ addresses, setAddresses }) {
+function Account({ addresses, setAddresses, custAddresses, setCustAddresses }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
-    const [custAddresses, setCustAddresses] = useState(currentCustomer.addresses)
 
     useEffect(() => {
         setCustAddresses(currentCustomer.addresses)
