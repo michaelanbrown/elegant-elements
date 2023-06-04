@@ -23,10 +23,10 @@ export default function NavBar ()  {
           <br/>
             <NavLink className="Navelements" to="/">Welcome</NavLink>
             <br/>
-            <NavLink className="Navelements" to="/signup">Signup</NavLink>
-            <br/>
-            <NavLink className="Navelements" to="/login">Login</NavLink>
-            <br/>
+            { currentCustomer ? null : <NavLink className="Navelements" to="/signup">Signup</NavLink> }
+            { currentCustomer ? null : <br/> }
+            { currentCustomer ? null : <NavLink className="Navelements" to="/login">Login</NavLink> }
+            { currentCustomer ? null : <br/> }
             { currentCustomer ? <NavLink className="Navelements" to="/account">Account Information</NavLink> : null }
             { currentCustomer ? <br/> : null }
             { currentCustomer ? <button className="logout" onClick={handleLogOut}>Logout</button> : null }
