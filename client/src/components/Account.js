@@ -1,34 +1,12 @@
 import React, { useContext } from 'react';
 import '../App.css'
 import { UserContext } from './context/User';
+import Address from './Address';
 
 function Account({ addresses, setAddresses }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
 
-    function deleteAddress(){
-        fetch(`${address.id}`, {
-            method: 'DELETE'
-        })
-        .then(res => {
-            if(res.ok)
-            console.log(res)
-        })
-    }
-
-    const addressMap = currentCustomer.addresses ? currentCustomer.addresses.map(address => {
-        return <div className="addresses" key={address.id}>
-            {address.street}
-            <br/>
-            {address.unit ? address.unit : null}
-            <br/>
-            {address.city}, {address.state} {address.zip}
-            <br/>
-            <br/>
-            <button onClick={deleteAddress}>Delete</button>
-            <br/>
-            <br/>
-        </div>
-    }) : null
+    const addressMap = currentCustomer ? currentCustomer.addresses.map(address => <Address key={address.id} address={address} addresses={addresses} setAddresses={setAddresses}/>) : null
 
     return (
         <div>
@@ -41,7 +19,7 @@ function Account({ addresses, setAddresses }) {
             Addresses:
             <br/>
             <br/>
-            {currentCustomer.addresses ? addressMap : null}
+            {addressMap}
         </div>
     )
 }
