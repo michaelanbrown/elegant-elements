@@ -33,16 +33,19 @@ class ApplicationController < ActionController::API
   end
 
   def authorize_customer_on_order
+    find_order
     permitted = @order.customer_id == @current_customer.id
     render json: { errors: "Not authorized" }, status: :unauthorized unless permitted
   end
 
   def authorize_customer_on_product
+    find_product
     permitted = @product.order.customer_id == @current_customer.id
     render json: { errors: "Not authorized" }, status: :unauthorized unless permitted
   end
 
   def authorize_customer_on_address
+    find_address
     permitted = @address.customer.id == @current_customer.id
     render json: { errors: "Not authorized" }, status: :unauthorized unless permitted
   end
