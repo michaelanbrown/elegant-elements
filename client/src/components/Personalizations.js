@@ -8,6 +8,9 @@ function Personalizations({ cust }) {
     return (
         <div className='customization'>
             {customType} - {cust.personalization}
+            <br/>
+            <button>Order Again</button>
+            <br className='break'/>
         </div>
     )
 }

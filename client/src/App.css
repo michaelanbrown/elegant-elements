@@ -133,3 +133,10 @@ body {
   height: 30%;
   font-size: 150%;
 }
+
+.break{
+  content: "";
+  margin: 2em;
+  display: block;
+  font-size: 24%;
+}
