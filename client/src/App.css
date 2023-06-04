@@ -110,3 +110,12 @@ body {
 .link{
   color: white;
 }
+
+.addressform{
+  display:flex;
+  width: 300px;
+  height: 30px;
+  margin: auto;
+  font-family:Arial;
+  font-size:30px;
+}
