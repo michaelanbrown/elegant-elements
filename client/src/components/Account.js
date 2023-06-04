@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import '../App.css'
 import { UserContext } from './context/User';
 import Address from './Address';
+import { Link } from 'react-router-dom';
 
 function Account({ addresses, setAddresses }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
@@ -19,6 +20,9 @@ function Account({ addresses, setAddresses }) {
             <br/>
             Email: {currentCustomer.email}
             <br/>
+            <br/>
+            <br/>
+            <Link className='link' to={`/new-address`}>Add An Address</Link>
             <br/>
             <br/>
             Addresses:

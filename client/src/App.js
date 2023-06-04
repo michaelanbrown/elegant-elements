@@ -7,6 +7,7 @@ import Welcome from './components/Welcome';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Account from './components/Account';
+import CreateAddress from './components/CreateAddress';
 
 function App() {
   const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
@@ -58,6 +59,7 @@ function App() {
         <Route path="/signup" element={<Signup customers={customers} setCustomers={setCustomers}/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/account" element={<Account addresses={addresses} setAddresses={setAddresses}/>} />
+        <Route path="/new-address" element={<CreateAddress/>}></Route>
       </Routes>
     </main>
   );
