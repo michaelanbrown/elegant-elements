@@ -24,6 +24,6 @@ class AddressesController < ApplicationController
     private
 
     def address_params
-        params.permit(:street, :unit, :city, :state, :zip).merge(customer_id: current_customer.id)
+        params.permit(:street, :unit, :city, :state, :zip, :name).merge(customer_id: current_customer.id)
     end
 end

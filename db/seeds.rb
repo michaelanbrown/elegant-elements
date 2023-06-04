@@ -14,9 +14,9 @@ c1 = Customization.create(custom_type: "phrase", price: 4.00, personalization: "
 c2 = Customization.create(custom_type: "word", price: 2.00, personalization: "Smiles")
 c3 = Customization.create(custom_type: "date", price: 2.00, personalization: "01.26.2021")
 
-a1 = Address.create(street: "1234 Main St", unit: nil, city: "Sacramento", state: "CA", zip: "93642", customer_id: u1.id)
-a2 = Address.create(street: "589 Real Dr", unit: "4A", city: "New York City", state: "NY", zip: "00512", customer_id: u2.id)
-a3 = Address.create(street: "654 Beach Cir", unit: nil, city: "Myrtle Beach", state: "SC", zip: "36542", customer_id: u3.id)
+a1 = Address.create(name: "Carla Jones", street: "1234 Main St", unit: nil, city: "Sacramento", state: "CA", zip: "93642", customer_id: u1.id)
+a2 = Address.create(name: "Vanessa Atkins", street: "589 Real Dr", unit: "4A", city: "New York City", state: "NY", zip: "00512", customer_id: u2.id)
+a3 = Address.create(name: "Jack Crane", street: "654 Beach Cir", unit: nil, city: "Myrtle Beach", state: "SC", zip: "36542", customer_id: u3.id)
 
 o1 = Order.create(customer_id: u1.id, address_id: a1.id, total: 20.00, discount: 0.00, shipping: 7.00, status: "completed")
 o2 = Order.create(customer_id: u2.id, address_id: a2.id, total: 19.00, discount: 0.00, shipping: 7.00, status: "canceled")
