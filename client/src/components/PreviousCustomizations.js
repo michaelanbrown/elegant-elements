@@ -9,14 +9,14 @@ function PreviousCustomizations({ orders }) {
 
     const custOrders = orders.map(order => {
         if (order.customer_id == currentCustomer.id) {
-            order.customizations.map(cust => custCustomizations.push(cust))
-            return order.customizations
+            return order.customizations.map(cust => custCustomizations.push(cust))
         } else {
             return null
         }
     })
 
-    const personalizationMap = custCustomizations ? <Personalizations custCustomizations={custCustomizations}/> : null
+
+    const personalizationMap = custCustomizations ? custCustomizations.map(cust => <Personalizations key={cust.id} cust={cust}/>) : null
 
     return (
         <div>
