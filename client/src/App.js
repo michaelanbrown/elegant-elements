@@ -14,6 +14,8 @@ function App() {
   const [customers, setCustomers] = useState([])
   const [addresses, setAddresses] = useState([])
   const [errors, setErrors] = useState([])
+  const [customizations, setCustomizations] = useState([])
+  const [orders, setOrders] = useState([])
 
   useEffect(() => {
     fetch("/authorized_user")
@@ -27,14 +29,26 @@ function App() {
     })
     getCustomers();
     getAddresses();
+    getCustomizations();
+    getOrders();
   },[])
-
 
   function getCustomers() {
     fetch("/customers")
     .then((res) => {
       if(res.ok){
         res.json().then(setCustomers)
+      } else {
+        res.json().then(json => setErrors([json.error]))
+      }
+    })
+  }
+
+  function getCustomizations() {
+    fetch("/customizations")
+    .then((res) => {
+      if(res.ok){
+        res.json().then(setCustomizations)
       } else {
         res.json().then(json => setErrors([json.error]))
       }
@@ -52,6 +66,17 @@ function App() {
     })
   }
 
+  function getOrders() {
+    fetch("/orders")
+    .then((res) => {
+      if(res.ok){
+        res.json().then(setOrders)
+      } else {
+        res.json().then(json => setErrors([json.error]))
+      }
+    })
+  }
+
   return (
     <main>
       <Header/>
@@ -60,7 +85,7 @@ function App() {
         <Route path="/signup" element={<Signup customers={customers} setCustomers={setCustomers}/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/account/*" element={<Account addresses={addresses} setAddresses={setAddresses}/>} />
-        <Route path="/previous-customizations" element={<PreviousCustomizations/>} />
+        <Route path="/previous-customizations" element={<PreviousCustomizations customizations={customizations} setCustomizations={setCustomizations}/>} />
       </Routes>
     </main>
   );
