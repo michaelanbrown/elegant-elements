@@ -2,8 +2,19 @@ import React, { useContext } from 'react';
 import '../App.css'
 import { UserContext } from './context/User';
 
-function Account() {
+function Account({ addresses, setAddresses }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
+
+    function deleteAddress(){
+        fetch(`${address.id}`, {
+            method: 'DELETE'
+        })
+        .then(res => {
+            if(res.ok)
+            console.log(res)
+        })
+    }
+
     const addressMap = currentCustomer.addresses ? currentCustomer.addresses.map(address => {
         return <div className="addresses" key={address.id}>
             {address.street}
@@ -11,6 +22,9 @@ function Account() {
             {address.unit ? address.unit : null}
             <br/>
             {address.city}, {address.state} {address.zip}
+            <br/>
+            <br/>
+            <button onClick={deleteAddress}>Delete</button>
             <br/>
             <br/>
         </div>

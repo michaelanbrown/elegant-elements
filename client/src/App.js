@@ -11,6 +11,7 @@ import Account from './components/Account';
 function App() {
   const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
   const [customers, setCustomers] = useState([])
+  const [addresses, setAddresses] = useState([])
   const [errors, setErrors] = useState([])
 
   useEffect(() => {
@@ -24,6 +25,7 @@ function App() {
       }
     })
     getCustomers();
+    getAddresses();
   },[])
 
   function getCustomers() {
@@ -37,6 +39,16 @@ function App() {
     })
   }
 
+  function getAddresses() {
+    fetch("/addresses")
+    .then((res) => {
+      if(res.ok){
+        res.json().then(setAddresses)
+      } else {
+        res.json().then(json => setErrors([json.error]))
+      }
+    })
+  }
 
   return (
     <main>
@@ -45,7 +57,7 @@ function App() {
         <Route path="/" element={<Welcome/>} />
         <Route path="/signup" element={<Signup customers={customers} setCustomers={setCustomers}/>} />
         <Route path="/login" element={<Login/>} />
-        <Route path="/account" element={<Account/>} />
+        <Route path="/account" element={<Account addresses={addresses} setAddresses={setAddresses}/>} />
       </Routes>
     </main>
   );
