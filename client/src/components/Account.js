@@ -11,7 +11,7 @@ function Account({ addresses, setAddresses }) {
         setCustAddresses(currentCustomer.addresses)
     }, [currentCustomer]) 
 
-    const addressMap = custAddresses ? custAddresses.map(address => <Address key={address.id} address={address} addresses={addresses} setAddresses={setAddresses}/>) : null
+    const addressMap = custAddresses ? custAddresses.map(address => <Address key={address.id} address={address} addresses={addresses} setAddresses={setAddresses} custAddresses={custAddresses} setCustAddresses={setCustAddresses}/>) : null
 
     return (
         <div>

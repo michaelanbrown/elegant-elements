@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import '../App.css'
 import { UserContext } from './context/User';
 
-function Address({ address, addresses, setAddresses }) {
+function Address({ address, addresses, setAddresses, custAddresses, setCustAddresses }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
 
     function deleteAddress(address) {
@@ -12,6 +12,12 @@ function Address({ address, addresses, setAddresses }) {
             }
         })
         setAddresses(deletingAddress)
+        const deletingCustAddress = custAddresses.filter((addie) => {
+            if (addie.id !== address.id) {
+                return address
+            }
+        })
+        setCustAddresses(deletingCustAddress)
     }
 
     function deleteCustomerAddress(){
