@@ -8,7 +8,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 
 function App() {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
   const [customers, setCustomers] = useState([])
   const [errors, setErrors] = useState([])
 
@@ -17,8 +17,8 @@ function App() {
     .then((res) => {
       if (res.ok) {
         res.json()
-        .then((user) => {
-          setCurrentUser(user);
+        .then((customer) => {
+          setCurrentCustomer(customer);
         });
       }
     })

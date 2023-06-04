@@ -4,7 +4,7 @@ import '../App.css'
 import { UserContext } from './context/User';
 
 function Login() {
-    const { currentUser, setCurrentUser } = useContext(UserContext);
+    const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
 
     const [errors, setErrors] = useState([])
     const [formData, setFormData] = useState({
@@ -17,7 +17,7 @@ function Login() {
 
     function onSubmit(e){
         e.preventDefault()
-        const user = {
+        const customer = {
             username,
             password
         }
@@ -25,12 +25,12 @@ function Login() {
         fetch("/login",{
           method:'POST',
           headers:{'Content-Type': 'application/json'},
-          body:JSON.stringify(user)
+          body:JSON.stringify(customer)
         })
         .then(res => {
             if(res.ok){
-                res.json().then(user => {
-                    setCurrentUser(user)
+                res.json().then(customer => {
+                    setCurrentCustomer(customer)
                     navigate(`/`)
                 })
             } else {

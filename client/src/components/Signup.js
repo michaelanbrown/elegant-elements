@@ -4,7 +4,7 @@ import '../App.css'
 import { UserContext } from './context/User';
 
 function Signup({ customers, setCustomers }) {
-    const { currentUser, setCurrentUser } = useContext(UserContext);
+    const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [errors, setErrors] = useState([])
     const [formData, setFormData] = useState({
         name:'',
@@ -18,7 +18,7 @@ function Signup({ customers, setCustomers }) {
 
     function onSubmit(e){
         e.preventDefault()
-        const user = {
+        const customer = {
             name,
             username,
             email,
@@ -27,13 +27,13 @@ function Signup({ customers, setCustomers }) {
         fetch(`/customers`,{
           method:'POST',
           headers:{'Content-Type': 'application/json'},
-          body:JSON.stringify(user)
+          body:JSON.stringify(customer)
         })
         .then(res => {
             if(res.ok){
-                res.json().then(user => {
-                    setCurrentUser(user)
-                    setCustomers([...customers, user])
+                res.json().then(customer => {
+                    setCurrentCustomer(customer)
+                    setCustomers([...customers, customer])
                     navigate(`/`)
                 })
             } else {

@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from './context/User';
 
 export default function NavBar ()  {
-    const { currentUser, setCurrentUser } = useContext(UserContext);
+    const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const navigate = useNavigate();
     const handleLogOut = () => {
         fetch(`/logout`, {
@@ -12,7 +12,7 @@ export default function NavBar ()  {
         })
         .then(res =>{
           if(res.ok){
-            setCurrentUser(false)
+            setCurrentCustomer(false)
             navigate(`/`)
           }
         })
@@ -27,7 +27,7 @@ export default function NavBar ()  {
             <br/>
             <NavLink className="Navelements" to="/login">Login</NavLink>
             <br/>
-            { currentUser ? <button className="logout" onClick={handleLogOut}>Logout</button> : null }
+            { currentCustomer ? <button className="logout" onClick={handleLogOut}>Logout</button> : null }
         </nav>
     )
 }
