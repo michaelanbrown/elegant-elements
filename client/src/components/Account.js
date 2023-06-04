@@ -5,7 +5,7 @@ import { UserContext } from './context/User';
 function Account() {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const addressMap = currentCustomer.addresses ? currentCustomer.addresses.map(address => {
-        return <div key={address.id}>
+        return <div className="addresses" key={address.id}>
             {address.street}
             <br/>
             {address.unit ? address.unit : null}
@@ -23,7 +23,11 @@ function Account() {
             Email: {currentCustomer.email}
             <br/>
             <br/>
-            Addresses: {currentCustomer.addresses ? addressMap : null}
+            <br/>
+            Addresses:
+            <br/>
+            <br/>
+            {currentCustomer.addresses ? addressMap : null}
         </div>
     )
 }
