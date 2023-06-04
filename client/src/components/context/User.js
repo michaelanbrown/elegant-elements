@@ -3,10 +3,10 @@ import React, { useState } from "react"
 const UserContext = React.createContext();
 
 function UserProvider({ children }) {
-    const [currentCustomer, setCurrentCustomer] = useState(false)
+    const [currentUser, setCurrentUser] = useState(false)
 
   return (
-    <UserContext.Provider value={{ currentCustomer, setCurrentCustomer }}>
+    <UserContext.Provider value={{ currentUser, setCurrentUser }}>
       {children}
     </UserContext.Provider>
   );
