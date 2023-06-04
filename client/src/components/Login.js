@@ -51,7 +51,7 @@ function Login() {
                 <form onSubmit={onSubmit}>
                     Username: <input type="text" name="username" value={username} onChange={handleChange} />
                     <br/>
-                    Password: <input type="text" name="password" value={password} onChange={handleChange} />
+                    Password: <input type="password" name="password" value={password} onChange={handleChange} />
                     <br/>
                     <input type="submit" value="Log in" />
                 </form>
