@@ -1,12 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../App.css'
 import { UserContext } from './context/User';
 import Address from './Address';
 
 function Account({ addresses, setAddresses }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
+    const [custAddresses, setCustAddresses] = useState(currentCustomer.addresses)
 
-    const addressMap = currentCustomer ? currentCustomer.addresses.map(address => <Address key={address.id} address={address} addresses={addresses} setAddresses={setAddresses}/>) : null
+    useEffect(() => {
+        setCustAddresses(currentCustomer.addresses)
+    }, [currentCustomer]) 
+
+    const addressMap = custAddresses ? custAddresses.map(address => <Address key={address.id} address={address} addresses={addresses} setAddresses={setAddresses}/>) : null
 
     return (
         <div>
