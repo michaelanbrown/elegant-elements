@@ -5,6 +5,7 @@ class OrderSerializer < ActiveModel::Serializer
   has_many :customizations
 
   belongs_to :customer
+  belongs_to :address
 
   def total
     @product_total = object.products.map { |p| p.price * p.quantity }.sum

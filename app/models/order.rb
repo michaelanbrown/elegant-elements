@@ -3,6 +3,7 @@ class Order < ApplicationRecord
     has_many :customizations, through: :products
 
     belongs_to :customer
+    belongs_to : address
 
     validates :total, numericality: { greater_than: 0 }
     validates :discount, numericality: { less_than: 1 }

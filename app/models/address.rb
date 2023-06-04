@@ -1,5 +1,6 @@
 class Address < ApplicationRecord
     belongs_to :customer
+    has_many :orders
 
     validates :street, presence: true
     validates :city, presence: true
