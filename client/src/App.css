@@ -56,7 +56,9 @@ body {
 }
 
 .Navelements{
-  color: white
+  color: white;
+  font-size: 20px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .Header{
@@ -69,4 +71,14 @@ body {
 .error{
   color: rgb(156, 13, 13);
   font-weight: bold;
+}
+
+.welcome{
+  font-size: 20px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.welcomebig{
+  font-size: 50px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
