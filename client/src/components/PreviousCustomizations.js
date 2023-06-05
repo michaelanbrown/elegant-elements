@@ -15,7 +15,6 @@ function PreviousCustomizations({ orders }) {
         }
     })
 
-
     const personalizationMap = custCustomizations ? custCustomizations.map(cust => <Personalizations key={cust.id} cust={cust}/>) : null
 
     return (
