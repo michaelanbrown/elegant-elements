@@ -6,6 +6,9 @@ class CustomerSerializer < ActiveModel::Serializer
 
   def products
     @order_ids = object.orders.map{ |o| o.id}
-    @order_ids.map { |o| Order.find(o).products}
+    @product_arrays = @order_ids.map { |o| Product.where(order_id: o)}
+    @prods = []
+    @product_arrays.map{|p| p.map{|p| @prods.push(p)}}
+    @prods
   end
 end
