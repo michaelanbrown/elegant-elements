@@ -1,9 +1,8 @@
 import React, { useContext, useState }  from 'react';
 import '../App.css'
 import { UserContext } from './context/User';
-import Personalizations from './Personalizations';
 
-function PreviousCustomizations({ orders }) {
+function PreviousOrders({ orders }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [custCustomizations, setCustCustomizations] = useState([])
 
@@ -15,13 +14,13 @@ function PreviousCustomizations({ orders }) {
         }
     })
 
-    const personalizationMap = custCustomizations ? custCustomizations.map(cust => <Personalizations key={cust.id} cust={cust}/>) : null
+    
 
     return (
         <div>
-            {personalizationMap}
+           
         </div>
     )
 }
 
-export default PreviousCustomizations;
+export default PreviousOrders;
