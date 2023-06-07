@@ -24,6 +24,9 @@ function ProductsList({ product, customizations }) {
             <br className='break'/>
             Jewelry: {productType}
             { customizationLine }
+            <button>Order Again</button>
+            <br/>
+            <br/>
         </div>
     )
 }
