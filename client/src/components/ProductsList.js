@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../App.css'
-import { UserContext } from './context/User';
 
 function ProductsList({ product, customizations }) {
-    const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [custCustomization, setCustCustomization] = useState(false)
     const productType = product.jewelry.slice(0,1).toUpperCase() + product.jewelry.slice(1,product.jewelry.length)
     
