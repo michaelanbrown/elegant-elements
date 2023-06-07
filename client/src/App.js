@@ -85,7 +85,7 @@ function App() {
         <Route path="/signup" element={<Signup customers={customers} setCustomers={setCustomers}/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/account/*" element={<Account addresses={addresses} setAddresses={setAddresses}/>} />
-        <Route path="/previous-products/*" element={<PreviousProducts/>} />
+        <Route path="/previous-products/*" element={<PreviousProducts customizations={customizations}/>} />
       </Routes>
     </main>
   );

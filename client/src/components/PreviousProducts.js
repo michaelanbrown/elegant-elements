@@ -3,7 +3,7 @@ import '../App.css'
 import { UserContext } from './context/User';
 import ProductsList from './ProductsList';
 
-function PreviousProducts({  }) {
+function PreviousProducts({ customizations }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [custProducts, setCustProducts] = useState([])
 
@@ -11,7 +11,7 @@ function PreviousProducts({  }) {
         setCustProducts(currentCustomer.products)
     }, [currentCustomer])
 
-    const productMap = custProducts ? custProducts.map(product => <ProductsList key={product.id} product={product}/>) : null
+    const productMap = custProducts ? custProducts.map(product => <ProductsList key={product.id} product={product} customizations={customizations}/>) : null
 
     return (
         <div>
