@@ -140,3 +140,16 @@ body {
   display: block;
   font-size: 24%;
 }
+
+.customization{
+  display: inline-block;
+  padding: 0;
+  border-radius: 0%;
+  border-color: white;
+  border-style: dotted;
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-bottom: 1%;
+  width: 40%;
+  height: 27%;
+}
