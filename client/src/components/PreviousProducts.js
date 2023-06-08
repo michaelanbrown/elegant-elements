@@ -11,11 +11,11 @@ function PreviousProducts({ customizations }) {
         setCustProducts(currentCustomer.products)
     }, [currentCustomer])
 
-    const productMap = custProducts ? custProducts.map(product => <ProductsList key={product.id} product={product} customizations={customizations}/>) : <div>No previous products available</div>
+    const productMap = custProducts ? custProducts.map(product => <ProductsList key={product.id} product={product} customizations={customizations}/>) : null
 
     return (
         <div>
-           {productMap}
+           {(currentCustomer.products == undefined || currentCustomer.products.length == 0) ? <div>No Previous Products Available </div> : productMap}
         </div>
     )
 }
