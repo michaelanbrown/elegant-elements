@@ -5,7 +5,7 @@ class Order < ApplicationRecord
     belongs_to :customer
     belongs_to :address
 
-    validates :total, numericality: { greater_than: 0 }
+    validates :total, numericality: { greater_than: 0 }, on: :update
     validates :discount, numericality: { less_than: 1 }
     validates :shipping, presence: true, numericality: { equal_to: 7.00 }
     validates :status, presence: true
@@ -23,10 +23,10 @@ class Order < ApplicationRecord
     end
 
     def in_progress
-        orders = Order.where(customer_id: current_customer.id)
-        return if (status == "in progress" && orders.find_by(status: "in progress") == false)
+        orders = Order.where(customer_id: customer_id)
+        return if (status == "in progress" && orders.find_by(status: "in progress").to_s.length == 0)
 
-        if (status == "in progress" && orders.find_by(status: "in progress"))
+        if (status == "in progress" && orders.find_by(status: "in progress").to_s.length > 0)
             errors.add(:status, "You already have an order in progress")
         end
     end

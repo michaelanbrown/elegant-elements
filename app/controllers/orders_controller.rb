@@ -23,7 +23,7 @@ class OrdersController < ApplicationController
     private
 
     def order_params
-        params.permit(:total, :discount).merge(customer_id: current_customer.id)
+        params.permit(:total, :discount).merge(customer_id: @current_customer.id, address_id: Address.where(customer_id: @current_customer.id).first.id)
     end
 
     def update_order_params
