@@ -3,7 +3,6 @@ import '../App.css'
 
 function ProductsList({ product, customizations }) {
     const [custCustomization, setCustCustomization] = useState(false)
-    const productType = product.jewelry.slice(0,1).toUpperCase() + product.jewelry.slice(1,product.jewelry.length)
     
     useEffect(() => {
         (customizations.map(cust => {
@@ -20,7 +19,7 @@ function ProductsList({ product, customizations }) {
     return (
         <div className='customization'>
             <br className='break'/>
-            Jewelry: {productType}
+            Jewelry: {product.jewelry}
             { customizationLine }
             <button>Order Again</button>
             <br/>
