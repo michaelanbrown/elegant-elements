@@ -3,4 +3,8 @@ class ProductSerializer < ActiveModel::Serializer
 
   has_one :order
   has_one :customization
+
+  def jewelry
+    @jewelry = object.jewelry.capitalize
+  end
 end

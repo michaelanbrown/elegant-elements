@@ -9,6 +9,6 @@ class CustomerSerializer < ActiveModel::Serializer
     @product_arrays = @order_ids.map { |o| Product.where(order_id: o)}
     @prods = []
     @product_arrays.map{|p| p.map{|p| @prods.push(p)}}
-    @prods
+    @prods.each{|p| p.jewelry = p.jewelry.capitalize}
   end
 end
