@@ -23,6 +23,7 @@ class ProductsController < ApplicationController
     end
 
     def update
+        byebug
         @product.update!(update_product_params)
         render json: @product, status: :accepted
     end
@@ -35,7 +36,7 @@ class ProductsController < ApplicationController
     private
 
     def product_params
-        params.permit(:jewelry, :price, :quantity, :customization_id, :order_id)
+        params.permit(:jewelry, :quantity, :customization_id, :order_id)
     end
     
     def update_product_params

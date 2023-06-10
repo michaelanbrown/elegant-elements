@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import '../App.css'
 import { UserContext } from './context/User';
+import { useNavigate } from 'react-router-dom';
 
 function ProductsList({ product, customizations, orders, setOrders }) {
+    const navigate = useNavigate();
     const [custCustomization, setCustCustomization] = useState(false)
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [errors, setErrors] = useState([])
@@ -11,6 +13,13 @@ function ProductsList({ product, customizations, orders, setOrders }) {
         discount: 0
     })
     const {total, discount} = formData
+    const [reOrderProduct, setReOrderProduct] = useState({
+        jewelry: product.jewelry.toLowerCase(),
+        customization_id: product.customization_id,
+        quantity: 1,
+        order_id: ""
+    })
+    const {jewelry, customization_id, quantity, order_id} = reOrderProduct
     
     useEffect(() => {
         (customizations.map(cust => {
@@ -38,11 +47,30 @@ function ProductsList({ product, customizations, orders, setOrders }) {
               if(res.ok){
                   res.json().then(order => {
                       setOrders([...orders, order])
+                    const product = {
+                        jewelry,
+                        customization_id,
+                        quantity,
+                        order_id: order.id
+                    }
+                      fetch("/products",{
+                        method:'POST',
+                        headers:{'Content-Type': 'application/json'},
+                        body:JSON.stringify(product)
+                      })
+                      .then(res => {
+                          if(res.ok){
+                              res.json().then(navigate(`/`)
+                              )
+                          } else {
+                              res.json().then(json => setErrors([json.errors]))
+                          }
+                      }) 
                   })
               } else {
                   res.json().then(json => setErrors([json.errors]))
               }
-          }) 
+          })
     }
 
     return (

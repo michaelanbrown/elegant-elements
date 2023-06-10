@@ -3,7 +3,7 @@ class Product < ApplicationRecord
     belongs_to :customization
 
     validates :jewelry, presence: true, inclusion: { in: %w(necklace bracelet keychain) }
-    validates :price, numericality: { greater_than: 0 }
+    validates :price, numericality: { greater_than: 0 }, on: :update
     validates :quantity, numericality: { greater_than: 0 }
     validate :within_24_hours, on: [:update, :destroy]
 
