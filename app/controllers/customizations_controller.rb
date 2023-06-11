@@ -22,6 +22,6 @@ class CustomizationsController < ApplicationController
     private
 
     def customization_params
-        params.permit(:custom_type, :price, :personalization)
+        params.permit(:custom_type, :personalization)
     end
 end
