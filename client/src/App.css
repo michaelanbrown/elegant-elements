@@ -170,3 +170,13 @@ body {
   justify-content: center;
   margin-bottom: 7%;
 }
+
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: #90c7a5;
+  border-radius: 50%;
+  display: inline-block;
+  color: black;
+  font-weight: bold;
+}
