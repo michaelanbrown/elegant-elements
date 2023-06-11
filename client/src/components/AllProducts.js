@@ -6,6 +6,11 @@ function AllProducts({ product }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const productName = product.name.slice(0,1).toUpperCase() + product.name.slice(1, product.name.length)
     const [viewOrderForm, setViewOrderForm] = useState(false)
+    const [customForm, setCustomForm] = useState({
+        custom_type: "",
+        personalization: ""
+    })
+
     function onViewClick(){
         setViewOrderForm(!viewOrderForm)
     }
@@ -18,6 +23,7 @@ function AllProducts({ product }) {
                 <p className="productform">Custom Handstamped {productName}
                 <br/>
                 {viewOrderForm == false && currentCustomer ? <button onClick={onViewClick}>Add to Order</button> : null}</p>
+                {viewOrderForm ? <div></div> : null}
             </div>
         </div>
     )

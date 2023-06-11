@@ -11,6 +11,11 @@ class CustomizationsController < ApplicationController
 
     def create
         customization = Customization.create!(customization_params)
+        if customization.custom_type == "phrase"
+            customization.update(price: 4.00)
+        elsif customization.custom_type == "word" || customization.custom_type == "date"
+            customization.update(price: 2.00)
+        end
         render json: customization, status: :created
     end
 
