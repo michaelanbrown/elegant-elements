@@ -37,10 +37,6 @@ class ProductsController < ApplicationController
     def product_params
         params.permit(:jewelry, :quantity, :customization_id).merge(order_id: Order.find_by(status: "in progress", customer_id: current_customer.id).id)
     end
-
-    def product_params_without_merge_order
-        params.permit(:jewelry, :quantity, :customization_id, :order_id)
-    end
     
     def update_product_params
         params.permit(:jewelry, :price, :quantity)
