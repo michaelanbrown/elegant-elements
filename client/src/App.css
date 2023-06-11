@@ -156,12 +156,10 @@ body {
 }
 
 .productimg{
-  display: flex;
   float: left;
 }
 
 .productform{
-  display: flex;
   float: right;
   padding-left: 10%;
 }
