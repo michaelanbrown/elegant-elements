@@ -23,6 +23,8 @@ export default function NavBar ()  {
           <br/>
             <NavLink className="Navelements" to="/">Welcome</NavLink>
             <br/>
+            <NavLink className="Navelements" to="/products">Available Products</NavLink>
+            <br/>
             { currentCustomer ? null : <NavLink className="Navelements" to="/signup">Signup</NavLink> }
             { currentCustomer ? null : <br/> }
             { currentCustomer ? null : <NavLink className="Navelements" to="/login">Login</NavLink> }
