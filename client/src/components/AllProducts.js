@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import '../App.css'
+import { UserContext } from './context/User';
 
 function AllProducts({ product }) {
+    const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const productName = product.name.slice(0,1).toUpperCase() + product.name.slice(1, product.name.length)
     const [viewOrderForm, setViewOrderForm] = useState(false)
     function onViewClick(){
@@ -15,7 +17,7 @@ function AllProducts({ product }) {
                 <br/>
                 <p className="productform">Custom Handstamped {productName}
                 <br/>
-                {viewOrderForm == false ? <button onClick={onViewClick}>Add to Order</button> : null}</p>
+                {viewOrderForm == false && currentCustomer ? <button onClick={onViewClick}>Add to Order</button> : null}</p>
             </div>
         </div>
     )
