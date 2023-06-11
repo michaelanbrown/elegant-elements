@@ -23,7 +23,6 @@ class ProductsController < ApplicationController
     end
 
     def update
-        byebug
         @product.update!(update_product_params)
         render json: @product, status: :accepted
     end
@@ -36,6 +35,10 @@ class ProductsController < ApplicationController
     private
 
     def product_params
+        params.permit(:jewelry, :quantity, :customization_id).merge(order_id: Order.find_by(status: "in progress", customer_id: current_customer.id).id)
+    end
+
+    def product_params_without_merge_order
         params.permit(:jewelry, :quantity, :customization_id, :order_id)
     end
     

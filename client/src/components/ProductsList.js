@@ -4,9 +4,9 @@ import { UserContext } from './context/User';
 import { useNavigate } from 'react-router-dom';
 
 function ProductsList({ product, customizations, orders, setOrders }) {
+    const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const navigate = useNavigate();
     const [custCustomization, setCustCustomization] = useState(false)
-    const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [errors, setErrors] = useState([])
     const [formData, setFormData] = useState({
         total: 0,
@@ -47,31 +47,31 @@ function ProductsList({ product, customizations, orders, setOrders }) {
               if(res.ok){
                   res.json().then(order => {
                       setOrders([...orders, order])
-                    const product = {
-                        jewelry,
-                        customization_id,
-                        quantity,
-                        order_id: order.id
-                    }
-                      fetch("/products",{
-                        method:'POST',
-                        headers:{'Content-Type': 'application/json'},
-                        body:JSON.stringify(product)
-                      })
-                      .then(res => {
-                          if(res.ok){
-                              res.json().then(navigate(`/`)
-                              )
-                          } else {
-                              res.json().then(json => setErrors([json.errors]))
-                          }
-                      }) 
                   })
+                } else {
+                    res.json().then(json => setErrors([json.errors]))
+                }
+          })
+          const product = {
+            jewelry,
+            customization_id,
+            quantity
+        }
+          fetch("/products",{
+            method:'POST',
+            headers:{'Content-Type': 'application/json'},
+            body:JSON.stringify(product)
+          })
+          .then(res => {
+              if(res.ok){
+                  res.json().then(navigate(`/`)
+                  )
               } else {
-                  res.json().then(json => setErrors([json.errors]))
+                  res.json().then(json => setErrors([...errors, json.errors]))
               }
           })
     }
+
 
     return (
         <div className='customization'>
