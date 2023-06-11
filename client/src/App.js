@@ -9,6 +9,7 @@ import Signup from './components/Signup';
 import Account from './components/Account';
 import PreviousProducts from './components/PreviousProducts';
 import Products from './components/Products';
+import PreviousOrders from './components/PreviousOrders';
 
 function App() {
   const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
@@ -88,6 +89,7 @@ function App() {
         <Route path="/products" element={<Products orders={orders} setOrders={setOrders}/>} />
         <Route path="/account/*" element={<Account addresses={addresses} setAddresses={setAddresses}/>} />
         <Route path="/previous-products/*" element={<PreviousProducts customizations={customizations} orders={orders} setOrders={setOrders}/>} />
+        <Route path="/previous-orders" element={<PreviousOrders/>} />
       </Routes>
     </main>
   );

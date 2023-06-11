@@ -33,6 +33,8 @@ export default function NavBar ()  {
             { currentCustomer ? <br/> : null }
             { currentCustomer ? <NavLink className="Navelements" to="/previous-products">Previous Products</NavLink> : null }
             { currentCustomer ? <br/> : null }
+            { currentCustomer ? <NavLink className="Navelements" to="/previous-orders">Previous Orders</NavLink> : null }
+            { currentCustomer ? <br/> : null }
             { currentCustomer ? <button className="logout" onClick={handleLogOut}>Logout</button> : null }
         </nav>
     )
