@@ -16,10 +16,9 @@ function ProductsList({ product, customizations, orders, setOrders }) {
     const [reOrderProduct, setReOrderProduct] = useState({
         jewelry: product.jewelry.toLowerCase(),
         customization_id: product.customization_id,
-        quantity: 1,
-        order_id: ""
+        quantity: 1
     })
-    const {jewelry, customization_id, quantity, order_id} = reOrderProduct
+    const {jewelry, customization_id, quantity} = reOrderProduct
     
     useEffect(() => {
         (customizations.map(cust => {

@@ -85,7 +85,7 @@ function App() {
         <Route path="/" element={<Welcome/>} />
         <Route path="/signup" element={<Signup customers={customers} setCustomers={setCustomers} getCustomers={getCustomers} getAddresses={getAddresses} getCustomizations={getCustomizations} getOrders={getOrders}/>} />
         <Route path="/login" element={<Login/>} />
-        <Route path="/products" element={<Products/>} />
+        <Route path="/products" element={<Products orders={orders} setOrders={setOrders}/>} />
         <Route path="/account/*" element={<Account addresses={addresses} setAddresses={setAddresses}/>} />
         <Route path="/previous-products/*" element={<PreviousProducts customizations={customizations} orders={orders} setOrders={setOrders}/>} />
       </Routes>
