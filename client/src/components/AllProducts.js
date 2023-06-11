@@ -44,11 +44,12 @@ function AllProducts({ product, orders, setOrders }) {
     function handleTypeChange(e) {
         setCustomForm({
             ...customForm,
-            [e.target.id] : document.getElementById('type').value
+            [e.target.id] : document.getElementById('custom_type').value
         });
     }
 
-    function onOrder(){
+    function onOrder(e){
+        e.preventDefault()
         const order = {
             total,
             discount
@@ -68,9 +69,9 @@ function AllProducts({ product, orders, setOrders }) {
                 }
           })
           const customization = {
-            total,
-            discount
-        }
+            custom_type,
+            personalization
+            }
           fetch("/customizations",{
             method:'POST',
             headers:{'Content-Type': 'application/json'},
@@ -112,6 +113,13 @@ function AllProducts({ product, orders, setOrders }) {
         }
     }
 
+    function upClick() {
+            setOrderProduct({
+                ...orderProduct,
+                quantity: quantity + 1
+            })
+    }
+
     return (
         <div>
             <div className="productcontainer">
@@ -122,10 +130,10 @@ function AllProducts({ product, orders, setOrders }) {
                 {viewOrderForm == false && currentCustomer ? <button onClick={onViewClick}>Add to Order</button> : null}
                 {viewOrderForm ? <div>
                     <br/>
-                    <form>
+                    <form onSubmit={onOrder}>
                         Customization Type:
                         <br/>
-                        <select id="type" onChange={handleTypeChange}>
+                        <select id="custom_type" onChange={handleTypeChange}>
                             {typeOptions}
                         </select>
                         <br/>
@@ -137,7 +145,7 @@ function AllProducts({ product, orders, setOrders }) {
                         <br/>
                         <input type="button" value="-" onClick={downClick} />
                         {" "}{quantity}{" "}
-                        <input type="button" value="+" onChange={handleChange} />
+                        <input type="button" value="+" onClick={upClick} />
                         <br/>
                         <br/>
                         <input type="submit" value="Submit"/>
