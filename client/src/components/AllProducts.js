@@ -4,6 +4,9 @@ import '../App.css'
 function AllProducts({ product }) {
     const productName = product.name.slice(0,1).toUpperCase() + product.name.slice(1, product.name.length)
     const [viewOrderForm, setViewOrderForm] = useState(false)
+    function onViewClick(){
+        setViewOrderForm(!viewOrderForm)
+    }
 
     return (
         <div>
@@ -12,7 +15,7 @@ function AllProducts({ product }) {
                 <br/>
                 <p className="productform">Custom Handstamped {productName}
                 <br/>
-                <button>Add to Order</button></p>
+                {viewOrderForm == false ? <button onClick={onViewClick}>Add to Order</button> : null}</p>
             </div>
         </div>
     )
