@@ -3,7 +3,7 @@ import '../App.css'
 import { UserContext } from './context/User';
 import { useNavigate } from 'react-router-dom';
 
-function ProductsList({ product, customizations, orders, setOrders }) {
+function ProductsList({ product, customizations, orders, setOrders, productCount, setProductCount }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const navigate = useNavigate();
     const [custCustomization, setCustCustomization] = useState(false)
@@ -63,8 +63,9 @@ function ProductsList({ product, customizations, orders, setOrders }) {
           })
           .then(res => {
               if(res.ok){
-                  res.json().then(navigate(`/`)
-                  )
+                  res.json().then(product => {navigate(`/`)
+                  setProductCount(productCount + 1)
+              })
               } else {
                   res.json().then(json => setErrors([...errors, json.errors]))
               }

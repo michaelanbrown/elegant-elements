@@ -19,6 +19,7 @@ function App() {
   const [errors, setErrors] = useState([])
   const [customizations, setCustomizations] = useState([])
   const [orders, setOrders] = useState([])
+  const [productCount, setProductCount] = useState(currentCustomer.in_progress_product_count)
 
   useEffect(() => {
     fetch("/authorized_user")
@@ -27,6 +28,7 @@ function App() {
         res.json()
         .then((customer) => {
           setCurrentCustomer(customer);
+          setProductCount(customer.in_progress_product_count)
         });
       }
     })
@@ -82,14 +84,14 @@ function App() {
 
   return (
     <main>
-      <Header/>
+      <Header productCount={productCount}/>
       <Routes>
         <Route path="/" element={<Welcome/>} />
         <Route path="/signup" element={<Signup customers={customers} setCustomers={setCustomers} getCustomers={getCustomers} getAddresses={getAddresses} getCustomizations={getCustomizations} getOrders={getOrders}/>} />
         <Route path="/login" element={<Login/>} />
-        <Route path="/products" element={<Products orders={orders} setOrders={setOrders}/>} />
+        <Route path="/products" element={<Products orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
         <Route path="/account/*" element={<Account addresses={addresses} setAddresses={setAddresses}/>} />
-        <Route path="/previous-products/*" element={<PreviousProducts customizations={customizations} orders={orders} setOrders={setOrders}/>} />
+        <Route path="/previous-products/*" element={<PreviousProducts customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
         <Route path="/previous-orders" element={<PreviousOrders/>} />
         <Route path="/cart" element={<Cart/>} />
       </Routes>

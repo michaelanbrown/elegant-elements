@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from './context/User';
 
-export default function NavBar ()  {
+export default function NavBar ({ productCount })  {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const navigate = useNavigate();
     const handleLogOut = () => {
@@ -36,7 +36,7 @@ export default function NavBar ()  {
             { currentCustomer ? <NavLink className="Navelements" to="/previous-orders">Previous Orders</NavLink> : null }
             { currentCustomer ? <br/> : null }
             { currentCustomer ? <NavLink className="Navelements" to="/cart">Cart 🛒</NavLink> : null }
-            {currentCustomer.in_progress_product_count > 0 ? <span className="dot">{currentCustomer.in_progress_product_count}</span> : null}
+            {currentCustomer.in_progress_product_count > 0 ? <span className="dot">{productCount}</span> : null}
             { currentCustomer ? <br/> : null }
             { currentCustomer ? <button className="logout" onClick={handleLogOut}>Logout</button> : null }
         </nav>
