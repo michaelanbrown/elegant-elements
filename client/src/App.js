@@ -93,7 +93,7 @@ function App() {
         <Route path="/account/*" element={<Account addresses={addresses} setAddresses={setAddresses}/>} />
         <Route path="/previous-products/*" element={<PreviousProducts customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
         <Route path="/previous-orders" element={<PreviousOrders/>} />
-        <Route path="/cart" element={<Cart/>} />
+        <Route path="/cart" element={<Cart orders={orders} setOrders={setOrders}/>} />
       </Routes>
     </main>
   );
