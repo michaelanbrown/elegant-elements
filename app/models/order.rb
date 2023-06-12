@@ -15,9 +15,9 @@ class Order < ApplicationRecord
     private
 
     def within_24_hours
-        return if Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i)
+        return if object.status == "in progress" || Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i)
 
-        if Time.at(created_at.to_i) < Time.at(Time.now-1.day.to_i)
+        if object.status !== "in progress" && Time.at(created_at.to_i) < Time.at(Time.now-1.day.to_i)
             errors.add(:status, "must be within 24 hours of order")
         end
     end

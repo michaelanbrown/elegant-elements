@@ -63,7 +63,7 @@ function ProductsList({ product, customizations, orders, setOrders, productCount
           })
           .then(res => {
               if(res.ok){
-                  res.json().then(product => {navigate(`/`)
+                  res.json().then(product => {navigate(`/cart`)
                   setProductCount(productCount + 1)
               })
               } else {
