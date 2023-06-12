@@ -1,13 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react';
 import '../App.css'
 import { UserContext } from './context/User';
+import ProductCartCard from './ProductCartCard';
 
 function Cart({ orders, setOrders }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
-    const [progressOrder, setProgressOrder] = useState([])
+    const [progressOrder, setProgressOrder] = useState(false)
 
     useEffect(() => {
-        const cartOrders = currentCustomer.orders ? currentCustomer.orders.map(order => {
+        const cartOrder = currentCustomer.orders ? currentCustomer.orders.map(order => {
             if (order.status == "in progress") {
                 setProgressOrder(order)
                 return order
@@ -17,11 +18,20 @@ function Cart({ orders, setOrders }) {
         }) : null
     }, [currentCustomer])
 
-    console.log(progressOrder)
+    const order = orders.filter(order => {
+        if (order.id == progressOrder.id) {
+            return order
+        } else {
+            return null
+        }
+    })
+
+    const productMap = order[0] ? order[0].products.map(product => <ProductCartCard product={product} key={product.id}/>) : null
 
     return (
         <div>
-            
+            <h1>Current Cart</h1>
+            { productMap }
         </div>
     )
 }
