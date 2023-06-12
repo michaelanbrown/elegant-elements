@@ -120,7 +120,7 @@ function getOrders() {
         <Route path="/account/*" element={<Account addresses={addresses} setAddresses={setAddresses}/>} />
         <Route path="/previous-products/*" element={<PreviousProducts custProducts={custProducts} order={order} setOrder={setOrder} customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
         <Route path="/previous-orders" element={<PreviousOrders/>} />
-        <Route path="/cart" element={<Cart order={order} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations}/>} />
+        <Route path="/cart" element={<Cart order={order} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations} custProducts={custProducts} setCustProducts={setCustProducts}/>} />
       </Routes>
     </main>
   );

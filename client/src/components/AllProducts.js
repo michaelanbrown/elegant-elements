@@ -94,6 +94,8 @@ function AllProducts({ product, orders, setOrders, order, setOrder, productCount
                           if(res.ok){
                               res.json().then(product => {navigate(`/cart`)
                               setProductCount(productCount + 1)
+                              setOrder({...order,
+                                products: [...order[0].products, product]})
                             })
                           } else {
                               res.json().then(json => setErrors([...errors, json.errors]))
@@ -105,6 +107,7 @@ function AllProducts({ product, orders, setOrders, order, setOrder, productCount
                 }
           })
     }
+
 
     function downClick() {
         if (quantity > 1) {

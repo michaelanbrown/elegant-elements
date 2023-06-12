@@ -3,7 +3,7 @@ import '../App.css'
 import { UserContext } from './context/User';
 import ProductCartCard from './ProductCartCard';
 
-function Cart({ order, orders, setOrders, customizations, productCount, setProductCount }) {
+function Cart({ order, orders, custProducts, setCustProducts, setOrders, customizations, productCount, setProductCount }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     // const [progressOrder, setProgressOrder] = useState(false)
     const [orderTotalAddition, setOrderTotalAddition] = useState(0)
@@ -27,7 +27,8 @@ function Cart({ order, orders, setOrders, customizations, productCount, setProdu
     //     }
     // })
 
-    const productMap = order[0] && order ? order[0].products.map(product => <ProductCartCard order={order} product={product} key={product.id} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} orderTotalAddition={orderTotalAddition} setOrderTotalAddition={setOrderTotalAddition}/>) : null
+
+    const productMap = order[0] && order ? order[0].products.map(product => <ProductCartCard order={order} custProducts={custProducts} setCustProducts={setCustProducts} product={product} key={product.id} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} orderTotalAddition={orderTotalAddition} setOrderTotalAddition={setOrderTotalAddition}/>) : null
 
     return (
         <div>

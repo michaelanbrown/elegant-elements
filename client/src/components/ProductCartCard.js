@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../App.css'
 
-function ProductCartCard({ product, customizations, orderTotalAddition, setOrderTotalAddition, productCount, setProductCount, orders, setOrders }) {
+function ProductCartCard({ product, custProducts, setCustProducts, customizations, orderTotalAddition, setOrderTotalAddition, productCount, setProductCount, orders, setOrders }) {
     const [keepChanges, setKeepChanges] = useState(false)
     const [currentProduct, setCurrentProduct] = useState(product)
     const availableProducts = [{
@@ -54,6 +54,15 @@ function ProductCartCard({ product, customizations, orderTotalAddition, setOrder
             }
     })}
 
+    function deleteProduct(deletedProduct) {
+        const deletingProduct = custProducts.filter((prod) => {
+            if (prod.id !== deleteProduct.id) {
+                return deletedProduct
+            }
+        })
+        setCustProducts(deletingProduct)
+    }
+
     function deleteProduct() {
         fetch(`products/${currentProduct.id}`, {
             method:"DELETE"
@@ -66,6 +75,7 @@ function ProductCartCard({ product, customizations, orderTotalAddition, setOrder
                 quantity: 0
             })
             setProductCount(productCount - 1)
+            deleteProduct(product)
           }
         })
     }
