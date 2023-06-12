@@ -10,15 +10,24 @@ class Order < ApplicationRecord
     validates :shipping, presence: true, numericality: { equal_to: 7.00 }
     validates :status, presence: true
     validate :within_24_hours, on: :update
+    validate :order_cannot_update, on: :update
     validate :in_progress
 
     private
 
     def within_24_hours
-        return if object.status == "in progress" || Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i)
+        return if object.status == "in progress" || (object.status == "pending" && Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i))
 
-        if object.status !== "in progress" && Time.at(created_at.to_i) < Time.at(Time.now-1.day.to_i)
-            errors.add(:status, "must be within 24 hours of order")
+        if object.status == "completed"
+            errors.add(:status, "the order has been fulfilled")
+        end
+    end
+
+    def order_cannot_update
+        return if object.status == "in progress" || (object.status == "pending" && Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i))
+
+        if object.status == "completed" || object.status == "canceled"
+            errors.add(:status, "the order has been fulfilled or canceled")
         end
     end
 

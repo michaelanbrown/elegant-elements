@@ -1,5 +1,5 @@
 class CustomerSerializer < ActiveModel::Serializer
-  attributes :id, :name, :email, :username, :password_digest, :products, :in_progress_product_count, :editable
+  attributes :id, :name, :email, :username, :password_digest, :products, :in_progress_product_count
 
   has_many :orders
   has_many :addresses
