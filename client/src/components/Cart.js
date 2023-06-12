@@ -3,31 +3,31 @@ import '../App.css'
 import { UserContext } from './context/User';
 import ProductCartCard from './ProductCartCard';
 
-function Cart({ orders, setOrders, customizations }) {
+function Cart({ order, orders, setOrders, customizations, productCount, setProductCount }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
-    const [progressOrder, setProgressOrder] = useState(false)
+    // const [progressOrder, setProgressOrder] = useState(false)
     const [orderTotalAddition, setOrderTotalAddition] = useState(0)
 
-    useEffect(() => {
-        const cartOrder = currentCustomer.orders ? currentCustomer.orders.map(order => {
-            if (order.status == "in progress") {
-                setProgressOrder(order)
-                return order
-            } else {
-                return null
-            }
-        }) : null
-    }, [currentCustomer])
+    // useEffect(() => {
+    //     const cartOrder = currentCustomer.orders ? currentCustomer.orders.map(order => {
+    //         if (order.status == "in progress") {
+    //             setProgressOrder(order)
+    //             return order
+    //         } else {
+    //             return null
+    //         }
+    //     }) : null
+    // }, [currentCustomer])
 
-    const order = orders.filter(order => {
-        if (order.id == progressOrder.id) {
-            return order
-        } else {
-            return null
-        }
-    })
+    // const order = orders.filter(order => {
+    //     if (order.id == progressOrder.id) {
+    //         return order
+    //     } else {
+    //         return null
+    //     }
+    // })
 
-    const productMap = order[0] ? order[0].products.map(product => <ProductCartCard product={product} key={product.id} orders={orders} setOrders={setOrders} customizations={customizations} orderTotalAddition={orderTotalAddition} setOrderTotalAddition={setOrderTotalAddition}/>) : null
+    const productMap = order[0] ? order[0].products.map(product => <ProductCartCard order={order} product={product} key={product.id} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} orderTotalAddition={orderTotalAddition} setOrderTotalAddition={setOrderTotalAddition}/>) : null
 
     return (
         <div>

@@ -94,6 +94,7 @@ function AllProducts({ product, orders, setOrders, productCount, setProductCount
                           if(res.ok){
                               res.json().then(product => {navigate(`/cart`)
                               setProductCount(productCount + 1)
+                              
                             })
                           } else {
                               res.json().then(json => setErrors([...errors, json.errors]))

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../App.css'
 
-function ProductCartCard({ product, customizations, orderTotalAddition, setOrderTotalAddition, orders, setOrders }) {
+function ProductCartCard({ product, customizations, orderTotalAddition, setOrderTotalAddition, productCount, setProductCount, orders, setOrders }) {
     const [keepChanges, setKeepChanges] = useState(false)
     const [currentProduct, setCurrentProduct] = useState(product)
     const availableProducts = [{
@@ -65,6 +65,7 @@ function ProductCartCard({ product, customizations, orderTotalAddition, setOrder
                 ...currentProduct,
                 quantity: 0
             })
+            setProductCount(productCount - 1)
           }
         })
     }
@@ -96,12 +97,12 @@ function ProductCartCard({ product, customizations, orderTotalAddition, setOrder
                 <br/>
                 Custom Handstamped { currentProduct.jewelry }
                 <p>{currentProduct.jewelry}: ${currentProduct.price/currentProduct.quantity}</p>
-                <p>Customization Type: {currentCustomization[0].custom_type} - ${currentCustomization[0].price} </p>
-                <div>Custom Stamp: {currentCustomization[0].personalization}</div>
+                <p>Customization Type: {currentCustomization[0] ? currentCustomization[0].custom_type : null} - ${currentCustomization[0] ? currentCustomization[0].price : null} </p>
+                <div>Custom Stamp: {currentCustomization[0] ? currentCustomization[0].personalization : null}</div>
                 <p>Quantity: <input type="button" value="-" onClick={downClick} />
                     {" "}{quantity}{" "}
                 <input type="button" value="+" onClick={upClick}/></p>
-                <p>Item Total: ${((currentProduct.price + (currentCustomization[0].price * currentProduct.quantity))/currentProduct.quantity)*quantity}</p>
+                <p>Item Total: ${currentCustomization[0] ? ((currentProduct.price + (currentCustomization[0].price * currentProduct.quantity))/currentProduct.quantity)*quantity : null}</p>
                 { keepChanges ? <button onClick={quantityUpdate}>Keep Changes?</button> : null}
                 <br/>
                 <button onClick={deleteProduct}>Remove Item</button>

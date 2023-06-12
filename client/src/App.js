@@ -20,6 +20,8 @@ function App() {
   const [customizations, setCustomizations] = useState([])
   const [orders, setOrders] = useState([])
   const [productCount, setProductCount] = useState(currentCustomer.in_progress_product_count)
+  const [order, setOrder] = useState(false)
+  const [progressOrder, setProgressOrder] = useState(false)
 
   useEffect(() => {
     fetch("/authorized_user")
@@ -28,15 +30,49 @@ function App() {
         res.json()
         .then((customer) => {
           setCurrentCustomer(customer);
+          getCustomers();
+          getAddresses();
+          getCustomizations();
           setProductCount(customer.in_progress_product_count)
+          const cartOrder = customer.orders ? customer.orders.map(order => {
+            if (order.status == "in progress") {
+                setProgressOrder(order)
+                return order
+            } else {
+                return null
+            }
+          }) : null
+          fetch("/orders")
+          .then((res) => {
+            if(res.ok){
+              res.json().then(orders => {
+                setOrders(orders)
+                setOrder(orders.filter(order => {
+                  if (order.status == "in progress" && order.customer_id == customer.id) {
+                      return order
+                  } else {
+                      return null
+                  }
+              }))})
+            } else {
+              res.json().then(json => setErrors([json.error]))
+            }
+          })
         });
       }
     })
-    getCustomers();
-    getAddresses();
-    getCustomizations();
-    getOrders();
   },[])
+
+function getOrders() {
+  fetch("/orders")
+  .then((res) => {
+    if(res.ok){
+      res.json().then(setOrders)
+    } else {
+      res.json().then(json => setErrors([json.error]))
+    }
+  })
+}
 
   function getCustomers() {
     fetch("/customers")
@@ -71,17 +107,6 @@ function App() {
     })
   }
 
-  function getOrders() {
-    fetch("/orders")
-    .then((res) => {
-      if(res.ok){
-        res.json().then(setOrders)
-      } else {
-        res.json().then(json => setErrors([json.error]))
-      }
-    })
-  }
-
   return (
     <main>
       <Header productCount={productCount}/>
@@ -91,9 +116,9 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/products" element={<Products orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
         <Route path="/account/*" element={<Account addresses={addresses} setAddresses={setAddresses}/>} />
-        <Route path="/previous-products/*" element={<PreviousProducts customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
+        <Route path="/previous-products/*" element={<PreviousProducts order={order} setOrder={setOrder} customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
         <Route path="/previous-orders" element={<PreviousOrders/>} />
-        <Route path="/cart" element={<Cart orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations}/>} />
+        <Route path="/cart" element={<Cart order={order} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations}/>} />
       </Routes>
     </main>
   );
