@@ -7,4 +7,8 @@ class ProductSerializer < ActiveModel::Serializer
   def jewelry
     @jewelry = object.jewelry.capitalize
   end
+
+  def price
+    @price = object.price * object.quantity
+  end
 end

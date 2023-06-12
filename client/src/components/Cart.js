@@ -3,11 +3,10 @@ import '../App.css'
 import { UserContext } from './context/User';
 import ProductCartCard from './ProductCartCard';
 
-function Cart({ orders, setOrders, customizations, setCustomizations }) {
+function Cart({ orders, setOrders, customizations }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [progressOrder, setProgressOrder] = useState(false)
     const [orderTotalAddition, setOrderTotalAddition] = useState(0)
-
 
     useEffect(() => {
         const cartOrder = currentCustomer.orders ? currentCustomer.orders.map(order => {
@@ -28,7 +27,7 @@ function Cart({ orders, setOrders, customizations, setCustomizations }) {
         }
     })
 
-    const productMap = order[0] ? order[0].products.map(product => <ProductCartCard product={product} key={product.id} customizations={customizations} setCustomizations={setCustomizations} orderTotalAddition={orderTotalAddition} setOrderTotalAddition={setOrderTotalAddition}/>) : null
+    const productMap = order[0] ? order[0].products.map(product => <ProductCartCard product={product} key={product.id} orders={orders} setOrders={setOrders} customizations={customizations} orderTotalAddition={orderTotalAddition} setOrderTotalAddition={setOrderTotalAddition}/>) : null
 
     return (
         <div>
