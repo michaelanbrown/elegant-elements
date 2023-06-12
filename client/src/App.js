@@ -21,6 +21,7 @@ function App() {
   const [orders, setOrders] = useState([])
   const [productCount, setProductCount] = useState(currentCustomer.in_progress_product_count)
   const [order, setOrder] = useState(false)
+  const [custProducts, setCustProducts] = useState([])
   const [progressOrder, setProgressOrder] = useState(false)
 
   useEffect(() => {
@@ -30,6 +31,7 @@ function App() {
         res.json()
         .then((customer) => {
           setCurrentCustomer(customer);
+          setCustProducts(customer.products)
           getCustomers();
           getAddresses();
           getCustomizations();
@@ -114,9 +116,9 @@ function getOrders() {
         <Route path="/" element={<Welcome/>} />
         <Route path="/signup" element={<Signup customers={customers} setCustomers={setCustomers} getCustomers={getCustomers} getAddresses={getAddresses} getCustomizations={getCustomizations} getOrders={getOrders}/>} />
         <Route path="/login" element={<Login/>} />
-        <Route path="/products" element={<Products orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
+        <Route path="/products" element={<Products order={order} setOrder={setOrder} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
         <Route path="/account/*" element={<Account addresses={addresses} setAddresses={setAddresses}/>} />
-        <Route path="/previous-products/*" element={<PreviousProducts order={order} setOrder={setOrder} customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
+        <Route path="/previous-products/*" element={<PreviousProducts custProducts={custProducts} order={order} setOrder={setOrder} customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
         <Route path="/previous-orders" element={<PreviousOrders/>} />
         <Route path="/cart" element={<Cart order={order} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations}/>} />
       </Routes>

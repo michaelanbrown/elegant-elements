@@ -27,7 +27,7 @@ function Cart({ order, orders, setOrders, customizations, productCount, setProdu
     //     }
     // })
 
-    const productMap = order[0] ? order[0].products.map(product => <ProductCartCard order={order} product={product} key={product.id} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} orderTotalAddition={orderTotalAddition} setOrderTotalAddition={setOrderTotalAddition}/>) : null
+    const productMap = order[0] && order ? order[0].products.map(product => <ProductCartCard order={order} product={product} key={product.id} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} orderTotalAddition={orderTotalAddition} setOrderTotalAddition={setOrderTotalAddition}/>) : null
 
     return (
         <div>

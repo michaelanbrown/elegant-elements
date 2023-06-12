@@ -3,7 +3,7 @@ import '../App.css'
 import { UserContext } from './context/User';
 import { useNavigate } from 'react-router-dom';
 
-function AllProducts({ product, orders, setOrders, productCount, setProductCount }) {
+function AllProducts({ product, orders, setOrders, order, setOrder, productCount, setProductCount }) {
     const options = ["", "phrase", "word", "date"]
     const navigate = useNavigate();
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
@@ -50,19 +50,19 @@ function AllProducts({ product, orders, setOrders, productCount, setProductCount
 
     function onOrder(e){
         e.preventDefault()
-        const order = {
+        const newOrder = {
             total,
             discount
         }
         fetch("/orders",{
             method:'POST',
             headers:{'Content-Type': 'application/json'},
-            body:JSON.stringify(order)
+            body:JSON.stringify(newOrder)
           })
           .then(res => {
               if(res.ok){
-                  res.json().then(order => {
-                      setOrders([...orders, order])
+                  res.json().then(newOrder => {
+                      setOrders([...orders, newOrder])
                   })
                 } else {
                     res.json().then(json => setErrors([json.errors]))
@@ -94,7 +94,6 @@ function AllProducts({ product, orders, setOrders, productCount, setProductCount
                           if(res.ok){
                               res.json().then(product => {navigate(`/cart`)
                               setProductCount(productCount + 1)
-                              
                             })
                           } else {
                               res.json().then(json => setErrors([...errors, json.errors]))
