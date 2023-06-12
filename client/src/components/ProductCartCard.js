@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../App.css'
 
-function ProductCartCard({ product, customizations, setCustomizations }) {
+function ProductCartCard({ product, customizations, setCustomizations, orderTotalAddition, setOrderTotalAddition }) {
     const availableProducts = [{
         name: "necklace",
         img: "https://cdn.shopify.com/s/files/1/0008/8932/3571/products/DSC_0019_800x800_1200x1200.jpg?v=1541563917"
@@ -20,6 +20,7 @@ function ProductCartCard({ product, customizations, setCustomizations }) {
             return prod
         }
     })
+    const [errors, setErrors] = useState([])
 
     const currentCustomization = customizations.filter(custom => {
         if(custom.id == product.customization_id) {
@@ -29,36 +30,59 @@ function ProductCartCard({ product, customizations, setCustomizations }) {
         }
     })
 
+    const [productUpdate, setProductUpdate] = useState({
+        quantity: product.quantity
+    });
+    const {quantity} = productUpdate
 
-    // function downClick() {
-    //     if (quantity > 1) {
-    //         setOrderProduct({
-    //             ...orderProduct,
-    //             quantity: quantity - 1
-    //         })
-    //     }
-    // }
+    function onQuantityUpdate(e) {
+        e.preventDefault();
+        fetch(`${product.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type" : "application/json",
+                "Accept" : "application/json"
+            },
+            body: JSON.stringify(productUpdate)
+        }).then((res) => {
+            if(res.ok){
+              res.json()
+              .then(product => {
+                })
+            } else {
+              res.json().then(json => setErrors([json.errors]))
+            }
+    })}
 
-    // function upClick() {
-    //         setOrderProduct({
-    //             ...orderProduct,
-    //             quantity: quantity + 1
-    //         })
-    // }
+    function downClick() {
+        if (quantity > 1) {
+            setProductUpdate({
+                quantity: quantity - 1
+            })
+            setOrderTotalAddition(orderTotalAddition - ((product.price + currentCustomization[0].price)/product.quantity))
+        }
+    }
+
+    function upClick() {
+            setProductUpdate({
+                quantity: quantity + 1
+            })
+            setOrderTotalAddition(orderTotalAddition + ((product.price + currentCustomization[0].price)/product.quantity))
+    }
 
 
     return (
         <div className="productCard">
-            <img className="productimg" src={ productImg[0].img } alt={product.name} width="43%" height="43%"/>
+            <img className="productimg" src={ productImg[0].img } alt={product.name} width="44%" height="44%"/>
             <br/>
             Custom Handstamped { product.jewelry }
             <p>{product.jewelry}: ${product.price}</p>
             <p>Customization Type: {currentCustomization[0].custom_type} - ${currentCustomization[0].price} </p>
             <div>Custom Stamp: {currentCustomization[0].personalization}</div>
-            <p>Quantity: <input type="button" value="-" />
-                {" "}{product.quantity}{" "}
-            <input type="button" value="+"/></p>
-            <p>Total: ${product.price + currentCustomization[0].price}</p>
+            <p>Quantity: <input type="button" value="-" onClick={downClick} />
+                {" "}{quantity}{" "}
+            <input type="button" value="+" onClick={upClick}/></p>
+            <p>Item Total: ${((product.price + currentCustomization[0].price)/product.quantity)*quantity}</p>
             <br/>
         </div>
     )

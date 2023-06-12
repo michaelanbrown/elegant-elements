@@ -6,6 +6,8 @@ import ProductCartCard from './ProductCartCard';
 function Cart({ orders, setOrders, customizations, setCustomizations }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [progressOrder, setProgressOrder] = useState(false)
+    const [orderTotalAddition, setOrderTotalAddition] = useState(0)
+
 
     useEffect(() => {
         const cartOrder = currentCustomer.orders ? currentCustomer.orders.map(order => {
@@ -26,12 +28,19 @@ function Cart({ orders, setOrders, customizations, setCustomizations }) {
         }
     })
 
-    const productMap = order[0] ? order[0].products.map(product => <ProductCartCard product={product} key={product.id} customizations={customizations} setCustomizations={setCustomizations}/>) : null
+    const productMap = order[0] ? order[0].products.map(product => <ProductCartCard product={product} key={product.id} customizations={customizations} setCustomizations={setCustomizations} orderTotalAddition={orderTotalAddition} setOrderTotalAddition={setOrderTotalAddition}/>) : null
 
     return (
         <div>
             <h1>Current Cart</h1>
             { productMap }
+            <br/>
+            <br/>
+            <p>Flat Rate Shipping: ${ order[0] ? order[0].shipping : null}</p>
+            <p>Order Total: ${ order[0] ? order[0].total + orderTotalAddition : null}</p>
+            <button>Submit Order</button>
+            {" "}
+            {" "}
         </div>
     )
 }
