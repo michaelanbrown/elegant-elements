@@ -3,7 +3,7 @@ import '../App.css'
 import { UserContext } from './context/User';
 import { useNavigate } from 'react-router-dom';
 
-function ProductsList({ order, setOrder, product, customizations, orders, setOrders, productCount, setProductCount }) {
+function ProductsList({ order, setOrder, orderProducts, product, customizations, orders, setOrders, productCount, setProductCount }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const navigate = useNavigate();
     const [custCustomization, setCustCustomization] = useState(false)
@@ -27,7 +27,8 @@ function ProductsList({ order, setOrder, product, customizations, orders, setOrd
                 return cust
             }
         }))
-    }, [customizations])
+    }, [customizations, order])
+
 
     const customType = custCustomization.custom_type ? custCustomization.custom_type : null
     const customizationLine = custCustomization ? <p>Customization: {customType} - "{ custCustomization.personalization }" </p> : null
@@ -45,8 +46,7 @@ function ProductsList({ order, setOrder, product, customizations, orders, setOrd
           .then(res => {
               if(res.ok){
                   res.json().then(order => {
-                      setOrders([...orders, order])
-                      
+                      setOrders([...orders, order])   
                   })
                 } else {
                     res.json().then(json => setErrors([json.errors]))
@@ -64,25 +64,27 @@ function ProductsList({ order, setOrder, product, customizations, orders, setOrd
           })
           .then(res => {
               if(res.ok){
-                  res.json().then(product => {navigate(`/cart`)
+                  res.json().then(product => {
                   setProductCount(productCount + 1)
-              })
+                  setOrder([{order,
+                products: [...orderProducts, product]}])
+                })
+                navigate(`/cart`)
               } else {
                   res.json().then(json => setErrors([...errors, json.errors]))
               }
           })
     }
 
-
     return (
-        <div className='customization'>
-            <br className='break'/>
-            Jewelry: {product.jewelry}
-            { customizationLine }
-            <button onClick={onClick}>Order Again</button>
-            <br/>
-            <br/>
-        </div>
+            <div className='customization'>
+                <br className='break'/>
+                Jewelry: {product.jewelry}
+                { customizationLine }
+                <button onClick={onClick}>Order Again</button>
+                <br/>
+                <br/>
+            </div>
     )
 }
 

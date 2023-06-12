@@ -5,27 +5,12 @@ import ProductCartCard from './ProductCartCard';
 
 function Cart({ order, orders, custProducts, setCustProducts, setOrders, customizations, productCount, setProductCount }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
-    // const [progressOrder, setProgressOrder] = useState(false)
     const [orderTotalAddition, setOrderTotalAddition] = useState(0)
+    const [customerAddresses, setCustomerAddresses] = useState([])
 
-    // useEffect(() => {
-    //     const cartOrder = currentCustomer.orders ? currentCustomer.orders.map(order => {
-    //         if (order.status == "in progress") {
-    //             setProgressOrder(order)
-    //             return order
-    //         } else {
-    //             return null
-    //         }
-    //     }) : null
-    // }, [currentCustomer])
-
-    // const order = orders.filter(order => {
-    //     if (order.id == progressOrder.id) {
-    //         return order
-    //     } else {
-    //         return null
-    //     }
-    // })
+    useEffect(() => {
+        setCustomerAddresses(currentCustomer.addressess)
+    }, [currentCustomer])
 
 
     const productMap = order[0] && order ? order[0].products.map(product => <ProductCartCard order={order} custProducts={custProducts} setCustProducts={setCustProducts} product={product} key={product.id} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} orderTotalAddition={orderTotalAddition} setOrderTotalAddition={setOrderTotalAddition}/>) : null
@@ -33,7 +18,7 @@ function Cart({ order, orders, custProducts, setCustProducts, setOrders, customi
     return (
         <div>
             <h1>Current Cart</h1>
-            { productMap }
+            { productMap ? productMap : null }
             <br/>
             <br/>
             <p>Flat Rate Shipping: ${ order[0] ? order[0].shipping : null}</p>
