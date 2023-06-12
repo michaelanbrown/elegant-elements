@@ -48,12 +48,7 @@ function ProductCartCard({ product, customizations, orderTotalAddition, setOrder
         }).then((res) => {
             if(res.ok){
               res.json()
-              .then(prod => {
-                setCurrentProduct({
-                    ...currentProduct,
-                    quantity: prod.quantity
-                })
-                })
+              .then(setKeepChanges(false))
             } else {
               res.json().then(json => setErrors([json.errors]))
             }
@@ -75,7 +70,7 @@ function ProductCartCard({ product, customizations, orderTotalAddition, setOrder
             setProductUpdate({
                 quantity: quantity - 1
             })
-            setOrderTotalAddition(orderTotalAddition - ((currentProduct.price + currentCustomization[0].price)/currentProduct.quantity))
+            setOrderTotalAddition(orderTotalAddition - ((currentProduct.price/currentProduct.quantity) + currentCustomization[0].price))
             setKeepChanges(true)
         }
     }
@@ -84,10 +79,10 @@ function ProductCartCard({ product, customizations, orderTotalAddition, setOrder
             setProductUpdate({
                 quantity: quantity + 1
             })
-            setOrderTotalAddition(orderTotalAddition + ((currentProduct.price + currentCustomization[0].price)/currentProduct.quantity))
+            setOrderTotalAddition(orderTotalAddition + ((currentProduct.price/currentProduct.quantity) + currentCustomization[0].price))
             setKeepChanges(true)
     }
-console.log(currentProduct)
+
 
     return (
         <>
@@ -96,13 +91,13 @@ console.log(currentProduct)
                 <img className="productimg" src={ productImg[0].img } alt={currentProduct.name} width="44%" height="44%"/>
                 <br/>
                 Custom Handstamped { currentProduct.jewelry }
-                <p>{currentProduct.jewelry}: ${currentProduct.price}</p>
+                <p>{currentProduct.jewelry}: ${currentProduct.price/currentProduct.quantity}</p>
                 <p>Customization Type: {currentCustomization[0].custom_type} - ${currentCustomization[0].price} </p>
                 <div>Custom Stamp: {currentCustomization[0].personalization}</div>
                 <p>Quantity: <input type="button" value="-" onClick={downClick} />
                     {" "}{quantity}{" "}
                 <input type="button" value="+" onClick={upClick}/></p>
-                <p>Item Total: ${((currentProduct.price + (currentCustomization[0].price*currentProduct.quantity))/currentProduct.quantity)*quantity}</p>
+                <p>Item Total: ${((currentProduct.price + (currentCustomization[0].price * currentProduct.quantity))/currentProduct.quantity)*quantity}</p>
                 { keepChanges ? <button onClick={quantityUpdate}>Keep Changes?</button> : null}
                 <br/>
                 <button onClick={deleteProduct}>Remove Item</button>
