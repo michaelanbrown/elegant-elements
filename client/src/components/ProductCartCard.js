@@ -55,12 +55,16 @@ function ProductCartCard({ product, customizations, orderTotalAddition, setOrder
     })}
 
     function deleteProduct() {
-        fetch(`${currentProduct.id}`, {
+        fetch(`products/${currentProduct.id}`, {
             method:"DELETE"
         })
         .then(res =>{
           if(res.ok){
-            
+            setOrderTotalAddition(orderTotalAddition - (currentProduct.price + (currentCustomization[0].price * currentProduct.quantity)))
+            setCurrentProduct({
+                ...currentProduct,
+                quantity: 0
+            })
           }
         })
     }
