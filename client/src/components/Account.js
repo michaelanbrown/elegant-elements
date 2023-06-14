@@ -14,7 +14,7 @@ function Account({ addresses, setAddresses }) {
         setCustAddresses(currentCustomer.addresses)
     }, [currentCustomer])
 
-    const addressMap = custAddresses ? custAddresses.map(address => <Address key={address.id} address={address} addresses={addresses} setAddresses={setAddresses} custAddresses={custAddresses} setCustAddresses={setCustAddresses}/>) : null
+    const addressMap = custAddresses ? custAddresses.map(address => <Address key={address.id} custAddresses={custAddresses} setCustAddresses={setCustAddresses} address={address} addresses={addresses} setAddresses={setAddresses}/>) : null
 
     return (
         <div>
@@ -26,7 +26,7 @@ function Account({ addresses, setAddresses }) {
             <br/>
             <Link className='link' to={`/account/new-address`}>Add An Address</Link>
             <Routes>
-                <Route path="/new-address/" element={<CreateAddress addresses={addresses} setAddresses={setAddresses} custAddresses={custAddresses} setCustAddresses={setCustAddresses}/>}/>
+                <Route path="/new-address/" element={<CreateAddress custAddresses={custAddresses} setCustAddresses={setCustAddresses} addresses={addresses} setAddresses={setAddresses}/>}/>
             </Routes>
             <br/>
             <br/>

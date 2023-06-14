@@ -5,6 +5,7 @@ import { UserContext } from './context/User';
 function Address({ address, addresses, setAddresses, custAddresses, setCustAddresses }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [active, setActive] = useState(false)
+    const [errors, setErrors] = useState([])
     const [formData, setFormData] = useState({
         name: address.name,
         street: address.street,
@@ -51,15 +52,45 @@ function Address({ address, addresses, setAddresses, custAddresses, setCustAddre
         setActive(!active)
     }
 
+    function updateAddresses(updatedAddress) {
+        const updatingAddress = custAddresses.map((currentAddress) => {
+            if (currentAddress.id === address.id) {
+                return {updatedAddress, id: address.id}
+            } else {
+                return currentAddress
+            }
+        })
+        setCustAddresses(updatingAddress)
+        setActive(!active)
+    }
+
+    function addressUpdate(e) {
+        e.preventDefault()
+        fetch(`addresses/${address.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type" : "application/json",
+                "Accept" : "application/json"
+            },
+            body: JSON.stringify(formData)
+        }).then((res) => {
+            if(res.ok){
+              res.json(updateAddresses(formData))
+              .then()
+            } else {
+              res.json().then(json => setErrors([json.errors]))
+            }
+    })}
+
     return(
         active == false ? <>
             <div className='address'>
                 <br/>
-                {address.name}
+                {name}
                 <br/>
-                {address.street}{address.unit ? ", Unit: " : null}{address.unit ? address.unit : null}
+                {street}{unit ? ", Unit: " : null}{unit ? unit : null}
                 <br/>
-                {address.city}, {address.state} {address.zip}
+                {city}, {state} {zip}
                 <br/>
                 <br/>
                 <button onClick={onUpdateClick}>Update</button> or <button onClick={deleteCustomerAddress}>Delete</button>
@@ -68,7 +99,7 @@ function Address({ address, addresses, setAddresses, custAddresses, setCustAddre
             </div>
         </> :
         <>
-            <form >
+            <form onSubmit={addressUpdate}>
                 Name: <input type="text" name="name" value={name} onChange={handleChange} />
                 <br/>
                 Street: <input type="text" name="street" value={street} onChange={handleChange} />
