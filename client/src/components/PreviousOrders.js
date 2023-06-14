@@ -2,20 +2,21 @@ import React, { useContext, useState, useEffect } from 'react';
 import '../App.css'
 import { UserContext } from './context/User';
 
-function PreviousOrders() {
+function PreviousOrders({ orders }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [customerOrders, setCustomerOrders] = useState([])
     
     useEffect(() => {
-        const editableOrders = currentCustomer.orders ? currentCustomer.orders.map(order => {
-            if (order.editable == true && order.status == "pending") {
-                setCustomerOrders([...customerOrders, order])
+        setCustomerOrders(orders.filter(order => {
+            if (order.customer_id == currentCustomer.id) {
                 return order
             } else {
                 return null
             }
-        }) : null
-    }, [currentCustomer])
+        }))
+    }, [orders])
+
+    console.log(customerOrders)
 
     return (
         <div>

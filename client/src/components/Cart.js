@@ -56,6 +56,7 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
               .then(order => {
                 setOrder([])
                 updateOrders(order)
+                setProductCount(0)
                 })
             } else {
               res.json().then(json => setErrors([json.errors]))
