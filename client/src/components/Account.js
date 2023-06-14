@@ -6,13 +6,10 @@ import { Link } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
 import CreateAddress from './CreateAddress';
 
-function Account({ addresses, setAddresses }) {
+function Account({ addresses, setAddresses, custAddresses, setCustAddresses }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
-    const [custAddresses, setCustAddresses] = useState([])
 
-    useEffect(() => {
-        setCustAddresses(currentCustomer.addresses)
-    }, [currentCustomer])
+    console.log(custAddresses)
 
     const addressMap = custAddresses ? custAddresses.map(address => <Address key={address.id} custAddresses={custAddresses} setCustAddresses={setCustAddresses} address={address} addresses={addresses} setAddresses={setAddresses}/>) : null
 
