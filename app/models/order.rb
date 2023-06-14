@@ -5,7 +5,6 @@ class Order < ApplicationRecord
     belongs_to :customer
     belongs_to :address
 
-    validates :total, numericality: { greater_than: 0 }, on: :update
     validates :discount, numericality: { less_than: 1 }
     validates :shipping, presence: true, numericality: { equal_to: 7.00 }
     validates :status, presence: true
@@ -16,17 +15,17 @@ class Order < ApplicationRecord
     private
 
     def within_24_hours
-        return if object.status == "in progress" || (object.status == "pending" && Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i))
+        return if status == "in progress" || (status == "pending" && Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i))
 
-        if object.status == "completed"
+        if status == "completed"
             errors.add(:status, "the order has been fulfilled")
         end
     end
 
     def order_cannot_update
-        return if object.status == "in progress" || (object.status == "pending" && Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i))
+        return if status == "in progress" || (status == "pending" && Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i))
 
-        if object.status == "completed" || object.status == "canceled"
+        if status == "completed" || status == "canceled"
             errors.add(:status, "the order has been fulfilled or canceled")
         end
     end

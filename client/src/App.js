@@ -20,7 +20,7 @@ function App() {
   const [customizations, setCustomizations] = useState([])
   const [orders, setOrders] = useState([])
   const [productCount, setProductCount] = useState(currentCustomer.in_progress_product_count)
-  const [order, setOrder] = useState(false)
+  const [order, setOrder] = useState([])
   const [orderProducts, setOrderProducts] = useState([])
   const [custProducts, setCustProducts] = useState([])
   const [progressOrder, setProgressOrder] = useState(false)
@@ -124,7 +124,7 @@ function getOrders() {
         <Route path="/account/*" element={<Account addresses={addresses} setAddresses={setAddresses} custAddresses={custAddresses} setCustAddresses={setCustAddresses}/>} />
         <Route path="/previous-products/*" element={<PreviousProducts orderProducts={orderProducts} custProducts={custProducts} order={order} setOrder={setOrder} customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
         <Route path="/previous-orders" element={<PreviousOrders/>} />
-        <Route path="/cart" element={<Cart custAddresses={custAddresses} setCustAddresses={setCustAddresses} order={order} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations} custProducts={custProducts} setCustProducts={setCustProducts}/>} />
+        <Route path="/cart" element={<Cart custAddresses={custAddresses} setCustAddresses={setCustAddresses} order={order} setOrder={setOrder} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations} custProducts={custProducts} setCustProducts={setCustProducts}/>} />
       </Routes>
     </main>
   );

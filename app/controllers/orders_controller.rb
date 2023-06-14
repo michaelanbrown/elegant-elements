@@ -27,6 +27,6 @@ class OrdersController < ApplicationController
     end
 
     def update_order_params
-        params.permit(:status)
+        params.permit(:status, :address_id)
     end
 end
