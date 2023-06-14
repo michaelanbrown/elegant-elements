@@ -63,7 +63,7 @@ function CreateAddress({ addresses, setAddresses, custAddresses, setCustAddresse
                 <br/>
                 Street: <input className='addressform' type="text" name="street" value={street} onChange={handleChange} />
                 <br/>
-                Unit: <input className='addressform' type="password" name="unit" value={unit} onChange={handleChange} />
+                Unit: <input className='addressform' type="text" name="unit" value={unit} onChange={handleChange} />
                 <br/>
                 City: <input className='addressform' type="text" name="city" value={city} onChange={handleChange} />
                 <br/>
