@@ -7,6 +7,7 @@ function Address({ address, addresses, setAddresses, custAddresses, setCustAddre
     const [active, setActive] = useState(false)
     const [errors, setErrors] = useState([])
     const [formData, setFormData] = useState({
+        id: address.id,
         name: address.name,
         street: address.street,
         unit: address.unit,
@@ -53,15 +54,21 @@ function Address({ address, addresses, setAddresses, custAddresses, setCustAddre
     }
 
     function updateAddresses(updatedAddress) {
-        const updatingAddress = custAddresses.map((currentAddress) => {
+        const updatingCustAddress = custAddresses.map((currentAddress) => {
             if (currentAddress.id === address.id) {
-                return {updatedAddress, id: address.id}
+                return updatedAddress
             } else {
                 return currentAddress
             }
         })
-        setCustAddresses(updatingAddress)
+        setCustAddresses(updatingCustAddress)
         setActive(!active)
+        const updatingAddress = addresses.filter((addie) => {
+            if (addie.id !== address.id) {
+                return address
+            }
+        })
+        setAddresses(updatingAddress)
     }
 
     function addressUpdate(e) {
