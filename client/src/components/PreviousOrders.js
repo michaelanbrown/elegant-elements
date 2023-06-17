@@ -3,7 +3,7 @@ import '../App.css'
 import { UserContext } from './context/User';
 import OrderCard from './OrderCard';
 
-function PreviousOrders({ orders, products }) {
+function PreviousOrders({ orders, setOrders, products }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [customerOrders, setCustomerOrders] = useState([])
     
@@ -41,11 +41,11 @@ function PreviousOrders({ orders, products }) {
         }
     })
 
-    const canceledOrderMap = canceledOrders.map(order => <OrderCard products={products} order={order} key={order.id}/>)
+    const canceledOrderMap = canceledOrders.map(order => <OrderCard products={products} orders={orders} setOrders={setOrders} order={order} key={order.id}/>)
 
-    const completedOrderMap = completedOrders.map(order => <OrderCard products={products} order={order} key={order.id}/>)
+    const completedOrderMap = completedOrders.map(order => <OrderCard products={products} orders={orders} order={order} setOrders={setOrders} key={order.id}/>)
 
-    const submittedOrderMap = submittedOrders.map(order => <OrderCard products={products} order={order} key={order.id}/>)
+    const submittedOrderMap = submittedOrders.map(order => <OrderCard products={products} orders={orders} order={order} setOrders={setOrders} key={order.id}/>)
 
     return (
         <div>

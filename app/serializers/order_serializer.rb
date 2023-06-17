@@ -14,9 +14,7 @@ class OrderSerializer < ActiveModel::Serializer
   end
 
   def editable
-    if object.status == "in progress"
-      return true
-    elsif object.status == "pending" && Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i)
+    if object.status == "submitted" && Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i)
       return true
     else
       return false
