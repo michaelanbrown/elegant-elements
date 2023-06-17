@@ -45,12 +45,31 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
         });
     }
 
-
     function handleTypeChange(e) {
-        setCustomForm({
-            ...customForm,
-            [e.target.id] : document.getElementById('custom_type').value
-        });
+
+        if(document.getElementById('custom_type').value == "phrase") {
+            setCustomForm({
+                ...customForm,
+                [e.target.id] : document.getElementById('custom_type').value,
+                price : 4.00
+            });
+        } else {
+            if(document.getElementById('custom_type').value == "word") {
+                setCustomForm({
+                    ...customForm,
+                    [e.target.id] : document.getElementById('custom_type').value,
+                    price : 2.00
+                });
+        } else {
+            if (document.getElementById('custom_type').value == "date") {
+                setCustomForm({
+                    ...customForm,
+                    [e.target.id] : document.getElementById('custom_type').value,
+                    price : 2.00
+                });
+            }
+        }
+        }
     }
 
     function onOrder(e){
@@ -77,6 +96,11 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
             custom_type,
             personalization
             }
+            const customizationWithPrice = {
+                custom_type,
+                personalization,
+                price: customForm.price  
+            }
           fetch("/customizations",{
             method:'POST',
             headers:{'Content-Type': 'application/json'},
@@ -102,7 +126,8 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
                               res.json().then(product => {navigate(`/cart`)
                               setProductCount(productCount + 1)
                               setOrder({...order,
-                                products: [...order.products, product]})
+                                products: [...order.products, product],
+                                total: order.total + product.price * quantity + customization.price * quantity})
                             })
                           } else {
                               res.json().then(json => setErrors([...errors, json.errors]))

@@ -101,7 +101,6 @@ function ProductCartCard({ product, order, setOrder, custProducts, setCustProduc
             setOrderTotalAddition(orderTotalAddition + ((currentProduct.price/currentProduct.quantity) + currentCustomization[0].price))
             setKeepChanges(true)
     }
-    console.log(currentProduct)
 
     return (
         <>
