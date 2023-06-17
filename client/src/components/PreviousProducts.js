@@ -7,7 +7,7 @@ function PreviousProducts({ orderProducts, custProducts, order, setOrder, custom
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
 
 
-    const productMap = custProducts ? custProducts.map(product => <ProductsList key={product.id} orderProducts={orderProducts} product={product} order={order} setOrder={setOrder} customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>) : null
+    const productMap = custProducts ? custProducts.map(product => <ProductsList key={product.id} productPrice={product.price} orderProducts={orderProducts} product={product} order={order} setOrder={setOrder} customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>) : null
 
     return (
         <div>

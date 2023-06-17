@@ -127,7 +127,7 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
                               setProductCount(productCount + 1)
                               setOrder({...order,
                                 products: [...order.products, product],
-                                total: order.total + product.price * quantity + customization.price * quantity})
+                                total: order.total + ((product.price + customization.price) * quantity)})
                             })
                           } else {
                               res.json().then(json => setErrors([...errors, json.errors]))

@@ -3,7 +3,7 @@ import '../App.css'
 import { UserContext } from './context/User';
 import { useNavigate } from 'react-router-dom';
 
-function ProductsList({ order, setOrder, orderProducts, product, customizations, orders, setOrders, productCount, setProductCount }) {
+function ProductsList({ order, setOrder, orderProducts, productPrice, product, customizations, orders, setOrders, productCount, setProductCount }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const navigate = useNavigate();
     const [custCustomization, setCustCustomization] = useState(false)
@@ -34,19 +34,19 @@ function ProductsList({ order, setOrder, orderProducts, product, customizations,
     const customizationLine = custCustomization ? <p>Customization: {customType} - "{ custCustomization.personalization }" </p> : null
 
     function onClick() {
-        const order = {
+        const newOrder = {
             total,
             discount
         }
         fetch("/orders",{
             method:'POST',
             headers:{'Content-Type': 'application/json'},
-            body:JSON.stringify(order)
+            body:JSON.stringify(newOrder)
           })
           .then(res => {
               if(res.ok){
-                  res.json().then(order => {
-                      setOrders([...orders, order])   
+                  res.json().then(newOrder => {
+                      setOrders([...orders, newOrder])   
                   })
                 } else {
                     res.json().then(json => setErrors([json.errors]))
@@ -55,7 +55,8 @@ function ProductsList({ order, setOrder, orderProducts, product, customizations,
           const product = {
             jewelry,
             customization_id,
-            quantity
+            quantity,
+            price: productPrice * quantity
         }
           fetch("/products",{
             method:'POST',
@@ -66,15 +67,17 @@ function ProductsList({ order, setOrder, orderProducts, product, customizations,
               if(res.ok){
                   res.json().then(product => {
                   setProductCount(productCount + 1)
-                  setOrder([{order,
-                products: [...orderProducts, product]}])
-                })
+                  setOrder({order,
+                    products: [...order.products, product],
+                    total: order.total + ((product.price + product.customization.price) * quantity)})
+                    })
                 navigate(`/cart`)
               } else {
                   res.json().then(json => setErrors([...errors, json.errors]))
               }
           })
     }
+    console.log(order)
 
     return (
             <div className='customization'>
