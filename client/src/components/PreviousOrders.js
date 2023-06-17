@@ -16,7 +16,29 @@ function PreviousOrders({ orders }) {
         }))
     }, [orders])
 
-    console.log(customerOrders)
+    const canceledOrders = customerOrders.filter(order => {
+        if(order.status == "canceled") {
+            return order
+        } else {
+            return null
+        }
+    })
+
+    const completedOrders = customerOrders.filter(order => {
+        if(order.status == "completed") {
+            return order
+        } else {
+            return null
+        }
+    })
+
+    const submittedOrders = customerOrders.filter(order => {
+        if(order.status == "submitted") {
+            return order
+        } else {
+            return null
+        }
+    })
 
     return (
         <div>
