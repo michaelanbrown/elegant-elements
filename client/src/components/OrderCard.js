@@ -16,7 +16,6 @@ function OrderCard({ order, products }) {
 
     const productMap = currentProducts.map(product => <OrderProductCard product={product} key={product.id}/>)
 
-
     return (
         <div className='address'>
             {order.created_at}
@@ -30,7 +29,12 @@ function OrderCard({ order, products }) {
             <br/>
             <br/>
             {productMap}
-            Total Cost: ${order.total}
+            Shipping: ${order.shipping}
+            <br/>
+            {order.status == "submitted" ? <div>Total Cost: ${order.total}
+            <br/>
+            <br/>
+            <button>Cancel Order</button></div> : null}
         </div>
     )
 }

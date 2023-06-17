@@ -43,12 +43,34 @@ function PreviousOrders({ orders, products }) {
 
     const canceledOrderMap = canceledOrders.map(order => <OrderCard products={products} order={order} key={order.id}/>)
 
+    const completedOrderMap = completedOrders.map(order => <OrderCard products={products} order={order} key={order.id}/>)
+
+    const submittedOrderMap = submittedOrders.map(order => <OrderCard products={products} order={order} key={order.id}/>)
+
     return (
         <div>
-            Canceled Orders:
+            {canceledOrderMap.length !== 0 ? <div>
+                Canceled Order(s):
+                <br/>
+                <br/>
+                {canceledOrderMap}
+            </div> : null}
             <br/>
             <br/>
-            {canceledOrderMap}
+            {completedOrderMap.length !== 0 ? <div>
+                Fulfilled Order(s):
+                <br/>
+                <br/>
+                {completedOrderMap}
+            </div> : null}
+            <br/>
+            <br/>
+            {submittedOrderMap.length !== 0 ? <div>
+                Submitted Order(s):
+                <br/>
+                <br/>
+                {submittedOrderMap}
+            </div> : null}
         </div>
     )
 }
