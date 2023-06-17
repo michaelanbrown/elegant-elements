@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import '../App.css'
 import { UserContext } from './context/User';
 import { useNavigate } from 'react-router-dom';
 
-function AllProducts({ product, orders, setOrders, order, setOrder, productCount, setProductCount }) {
+function AllProducts({ product, productPrice, customizations, setCustomizations, orders, setOrders, order, setOrder, productCount, setProductCount }) {
     const options = ["", "phrase", "word", "date"]
     const navigate = useNavigate();
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
@@ -30,6 +30,10 @@ function AllProducts({ product, orders, setOrders, order, setOrder, productCount
     })
     const {total, discount} = orderData
 
+    useEffect(() => {
+        const orderSetting = order && order[0] ? setOrder(order[0]) : null
+    }, [order])
+
     function onViewClick(){
         setViewOrderForm(!viewOrderForm)
     }
@@ -40,6 +44,7 @@ function AllProducts({ product, orders, setOrders, order, setOrder, productCount
             [e.target.name] : e.target.value
         });
     }
+
 
     function handleTypeChange(e) {
         setCustomForm({
@@ -80,10 +85,12 @@ function AllProducts({ product, orders, setOrders, order, setOrder, productCount
           .then(res => {
               if(res.ok){
                   res.json().then(customization => {
+                    setCustomizations([...customizations, customization])
                     const product = {
                         jewelry,
                         customization_id: customization.id,
-                        quantity
+                        quantity,
+                        price: productPrice * quantity
                     }
                       fetch("/products",{
                         method:'POST',
@@ -95,7 +102,7 @@ function AllProducts({ product, orders, setOrders, order, setOrder, productCount
                               res.json().then(product => {navigate(`/cart`)
                               setProductCount(productCount + 1)
                               setOrder({...order,
-                                products: [...order[0].products, product]})
+                                products: [...order.products, product]})
                             })
                           } else {
                               res.json().then(json => setErrors([...errors, json.errors]))
@@ -107,7 +114,6 @@ function AllProducts({ product, orders, setOrders, order, setOrder, productCount
                 }
           })
     }
-
 
     function downClick() {
         if (quantity > 1) {

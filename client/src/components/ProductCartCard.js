@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../App.css'
 
-function ProductCartCard({ product, custProducts, setCustProducts, customizations, orderTotalAddition, setOrderTotalAddition, productCount, setProductCount, orders, setOrders }) {
+function ProductCartCard({ product, order, setOrder, custProducts, setCustProducts, customizations, orderTotalAddition, setOrderTotalAddition, productCount, setProductCount, orders, setOrders }) {
     const [keepChanges, setKeepChanges] = useState(false)
     const [currentProduct, setCurrentProduct] = useState(product)
     const availableProducts = [{
@@ -77,6 +77,10 @@ function ProductCartCard({ product, custProducts, setCustProducts, customization
             setProductCount(productCount - 1)
             deleteProduct(product)
           }
+          if (productCount == 0) {
+            setOrder({...order,
+                products: []})
+          }
         })
     }
 
@@ -97,7 +101,7 @@ function ProductCartCard({ product, custProducts, setCustProducts, customization
             setOrderTotalAddition(orderTotalAddition + ((currentProduct.price/currentProduct.quantity) + currentCustomization[0].price))
             setKeepChanges(true)
     }
-
+    console.log(currentProduct)
 
     return (
         <>
