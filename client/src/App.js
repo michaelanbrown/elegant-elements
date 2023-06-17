@@ -22,6 +22,7 @@ function App() {
   const [productCount, setProductCount] = useState(currentCustomer.in_progress_product_count)
   const [order, setOrder] = useState([])
   const [orderProducts, setOrderProducts] = useState([])
+  const [products, setProducts] = useState([])
   const [custProducts, setCustProducts] = useState([])
   const [progressOrder, setProgressOrder] = useState(false)
   const [custAddresses, setCustAddresses] = useState([])
@@ -37,6 +38,7 @@ function App() {
           getCustomers();
           getAddresses();
           getCustomizations();
+          getProducts();
           setCustAddresses(customer.addresses)
           setProductCount(customer.in_progress_product_count)
           const cartOrder = customer.orders ? customer.orders.map(order => {
@@ -91,6 +93,17 @@ function getOrders() {
     })
   }
 
+  function getProducts() {
+    fetch("/products")
+    .then((res) => {
+      if(res.ok){
+        res.json().then(setProducts)
+      } else {
+        res.json().then(json => setErrors([json.error]))
+      }
+    })
+  }
+
   function getCustomizations() {
     fetch("/customizations")
     .then((res) => {
@@ -118,12 +131,12 @@ function getOrders() {
       <Header productCount={productCount}/>
       <Routes>
         <Route path="/" element={<Welcome/>} />
-        <Route path="/signup" element={<Signup customers={customers} setCustomers={setCustomers} getCustomers={getCustomers} getAddresses={getAddresses} getCustomizations={getCustomizations} getOrders={getOrders}/>} />
+        <Route path="/signup" element={<Signup customers={customers} setCustomers={setCustomers} getProducts={getProducts} getCustomers={getCustomers} getAddresses={getAddresses} getCustomizations={getCustomizations} getOrders={getOrders}/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/products" element={<Products customizations={customizations} setCustomizations={setCustomizations} order={order} setOrder={setOrder} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
         <Route path="/account/*" element={<Account addresses={addresses} setAddresses={setAddresses} custAddresses={custAddresses} setCustAddresses={setCustAddresses}/>} />
         <Route path="/previous-products/*" element={<PreviousProducts orderProducts={orderProducts} custProducts={custProducts} order={order} setOrder={setOrder} customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
-        <Route path="/previous-orders" element={<PreviousOrders orders={orders}/>} />
+        <Route path="/previous-orders" element={<PreviousOrders orders={orders} products={products}/>} />
         <Route path="/cart" element={<Cart custAddresses={custAddresses} setCustAddresses={setCustAddresses} order={order} setOrder={setOrder} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations} custProducts={custProducts} setCustProducts={setCustProducts}/>} />
       </Routes>
     </main>

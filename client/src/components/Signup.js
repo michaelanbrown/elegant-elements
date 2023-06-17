@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../App.css'
 import { UserContext } from './context/User';
 
-function Signup({ customers, setCustomers, getCustomers, getAddresses, getCustomizations, getOrders }) {
+function Signup({ customers, setCustomers, getProducts, getCustomers, getAddresses, getCustomizations, getOrders }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [errors, setErrors] = useState([])
     const [formData, setFormData] = useState({
@@ -36,6 +36,7 @@ function Signup({ customers, setCustomers, getCustomers, getAddresses, getCustom
                     setCustomers([...customers, customer])
                     getCustomers();
                     getAddresses();
+                    getProducts();
                     getCustomizations();
                     getOrders();
                     navigate(`/`)

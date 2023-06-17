@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import '../App.css'
 import { UserContext } from './context/User';
+import OrderCard from './OrderCard';
 
-function PreviousOrders({ orders }) {
+function PreviousOrders({ orders, products }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [customerOrders, setCustomerOrders] = useState([])
     
@@ -40,9 +41,14 @@ function PreviousOrders({ orders }) {
         }
     })
 
+    const canceledOrderMap = canceledOrders.map(order => <OrderCard products={products} order={order} key={order.id}/>)
+
     return (
         <div>
-            
+            Canceled Orders:
+            <br/>
+            <br/>
+            {canceledOrderMap}
         </div>
     )
 }
