@@ -77,7 +77,6 @@ function ProductsList({ order, setOrder, orderProducts, productPrice, product, c
               }
           })
     }
-    console.log(order)
 
     return (
             <div className='customization'>

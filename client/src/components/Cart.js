@@ -63,7 +63,7 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
               res.json().then(json => setErrors([json.errors]))
             }
     })}
-    console.log(order)
+    
 
     return (
         order.products && productCount !== 0 ?

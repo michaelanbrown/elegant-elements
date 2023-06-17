@@ -8,7 +8,7 @@ function PreviousOrders({ orders }) {
     
     useEffect(() => {
         setCustomerOrders(orders.filter(order => {
-            if (order.customer_id == currentCustomer.id) {
+            if (order.customer_id == currentCustomer.id && order.status !== "in progress") {
                 return order
             } else {
                 return null

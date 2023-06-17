@@ -23,4 +23,12 @@ class OrderSerializer < ActiveModel::Serializer
     end
   end
 
+  def created_at
+    object.created_at.strftime("%B %Y")
+  end
+
+  def updated_at
+    object.created_at.strftime("%B %Y")
+  end
+
 end
