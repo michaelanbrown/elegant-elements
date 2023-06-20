@@ -9,6 +9,7 @@ function OrderCard({ orders, setOrders, order, products }) {
     const [formData, setFormData] = useState({
         status: "canceled"
     })
+    const [search, setSearch] = useState('')
 
     const currentProducts = products.filter(product => {
         if (product.order_id == order.id) {
@@ -50,28 +51,30 @@ function OrderCard({ orders, setOrders, order, products }) {
               res.json().then(json => setErrors([json.errors]))
             }
     })}
-console.log(order)
 
     return (
-        <div className='address'>
-            {order.updated_at}
-            <br/>
-            <br/>
-            {order.address.name}
-            <br/>
-            {order.address.street}
-            <br/>
-            {order.address.city}, {order.address.state} {order.address.zip}
-            <br/>
-            <br/>
-            {productMap}
-            Shipping: ${order.shipping}
-            <br/>
-            Total Cost: ${order.total}
-            {order.status == "submitted" ? <div>
-            <br/>
-            <br/>
-            <button onClick={orderUpdate}>Cancel Order</button></div> : null}
+        <div>
+            
+            <div className='address'>
+                {order.updated_at}
+                <br/>
+                <br/>
+                {order.address.name}
+                <br/>
+                {order.address.street}
+                <br/>
+                {order.address.city}, {order.address.state} {order.address.zip}
+                <br/>
+                <br/>
+                {productMap}
+                Shipping: ${order.shipping}
+                <br/>
+                Total Cost: ${order.total}
+                {order.status == "submitted" ? <div>
+                <br/>
+                <br/>
+                <button onClick={orderUpdate}>Cancel Order</button></div> : null}
+            </div>
         </div>
     )
 }
