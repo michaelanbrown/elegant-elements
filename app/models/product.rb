@@ -11,17 +11,17 @@ class Product < ApplicationRecord
     private
 
     def within_24_hours
-        return if order.status == "in progress" || (order.status == "pending" && Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i))
+        return if order.status == "in progress" || (order.status == "submitted" && Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i))
 
-        if  order.status == "pending" && Time.at(created_at.to_i) < Time.at(Time.now-1.day.to_i)
+        if  order.status == "submitted" && Time.at(created_at.to_i) < Time.at(Time.now-1.day.to_i)
             errors.add(:status, "must be within 24 hours of order")
         end
     end
 
     def product_cannot_update
-        return if order.status == "in progress" || (order.status == "pending" && Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i))
+        return if order.status == "in progress" || (order.status == "submitted" && Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i))
 
-        if order.status == "completed" || order.status == "canceled"
+        if order.status == "fulfilled" || order.status == "canceled"
             errors.add(:status, "the order has been fulfilled or canceled")
         end
     end

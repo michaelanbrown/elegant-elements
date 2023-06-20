@@ -16,7 +16,7 @@ class Order < ApplicationRecord
     def order_cannot_update
         return if (status == "in progress" || (status == "submitted" && Time.at(created_at.to_i) > Time.at(Time.now-1.day.to_i)))
 
-        if (status == "completed")
+        if (status == "fulfilled")
             errors.add(:status, "the order has been fulfilled")
         end
     end

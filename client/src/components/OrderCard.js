@@ -52,27 +52,25 @@ function OrderCard({ orders, setOrders, order, products }) {
     })}
 
     return (
-        <div>
-            <div className='address'>
-                {order.updated_at}
-                <br/>
-                <br/>
-                {order.address.name}
-                <br/>
-                {order.address.street}
-                <br/>
-                {order.address.city}, {order.address.state} {order.address.zip}
-                <br/>
-                <br/>
-                {productMap}
-                Shipping: ${order.shipping}
-                <br/>
-                Total Cost: ${order.total}
-                {order.status == "submitted" ? <div>
-                <br/>
-                <br/>
-                <button onClick={orderUpdate}>Cancel Order</button></div> : null}
-            </div>
+        <div className='address'>
+            {order.updated_at}
+            <br/>
+            <br/>
+            {order.address.name}
+            <br/>
+            {order.address.street}
+            <br/>
+            {order.address.city}, {order.address.state} {order.address.zip}
+            <br/>
+            <br/>
+            {productMap}
+            Shipping: ${order.shipping}
+            <br/>
+            Total Cost: ${order.total}
+            {order.status == "submitted" ? <div>
+            <br/>
+            <br/>
+            <button onClick={orderUpdate}>Cancel Order</button></div> : null}
         </div>
     )
 }
