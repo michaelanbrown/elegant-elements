@@ -7,6 +7,7 @@ function PreviousProducts({ orderProducts, custProducts, order, setOrder, custom
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const products = ["Necklace", "Bracelet", " Keychain"]
     const [productSearch, setProductSearch] = useState('')
+    const [customSearch, setCustomSearch] = useState('')
     const [filteredProducts, setFilteredProducts] = useState(custProducts)
 
     useEffect(() => {
@@ -31,8 +32,8 @@ function PreviousProducts({ orderProducts, custProducts, order, setOrder, custom
     return (
         <div>
             <select className="addressselect" onChange={handleTypeChange}>
-                <option key="blank" value={""}>{"Filter by Product"}</option>
-                {productOptions}
+            <option key="blank" value={""}>{"Filter by Product"}</option>
+            {productOptions}
             </select>
             <br/>
             <br/>
