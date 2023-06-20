@@ -9,7 +9,6 @@ function OrderCard({ orders, setOrders, order, products }) {
     const [formData, setFormData] = useState({
         status: "canceled"
     })
-    const [search, setSearch] = useState('')
 
     const currentProducts = products.filter(product => {
         if (product.order_id == order.id) {
@@ -54,7 +53,6 @@ function OrderCard({ orders, setOrders, order, products }) {
 
     return (
         <div>
-            
             <div className='address'>
                 {order.updated_at}
                 <br/>

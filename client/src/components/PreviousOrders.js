@@ -6,6 +6,8 @@ import OrderCard from './OrderCard';
 function PreviousOrders({ orders, setOrders, products }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [customerOrders, setCustomerOrders] = useState([])
+    const [search, setSearch] = useState('')
+    const statuses = ["canceled", "completed", "submitted"]
     
     useEffect(() => {
         setCustomerOrders(orders.filter(order => {
@@ -47,8 +49,22 @@ function PreviousOrders({ orders, setOrders, products }) {
 
     const submittedOrderMap = submittedOrders.map(order => <OrderCard products={products} orders={orders} order={order} setOrders={setOrders} key={order.id}/>)
 
+    const statusOptions = statuses.map(option => {
+        return (<option value={option} key={option}>{option.slice(0,1).toUpperCase() + option.slice(1, option.length)}</option>)
+    })
+
+    function handleTypeChange(e) {
+        setSearch(e.target.value);
+    }
+
     return (
         <div>
+            <select className="addressselect" onChange={handleTypeChange}>
+                <option key="blank" value={""}>{"Filter by Status"}</option>
+                {statusOptions}
+            </select>
+            <br/>
+            <br/>
             {canceledOrderMap.length !== 0 ? <div>
                 Canceled Order(s):
                 <br/>
