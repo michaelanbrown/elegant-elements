@@ -5,13 +5,40 @@ import ProductsList from './ProductsList';
 
 function PreviousProducts({ orderProducts, custProducts, order, setOrder, customizations, orders, setOrders, productCount, setProductCount }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
+    const products = ["Necklace", "Bracelet", " Keychain"]
+    const [productSearch, setProductSearch] = useState('')
+    const [filteredProducts, setFilteredProducts] = useState(custProducts)
 
+    useEffect(() => {
+        setFilteredProducts(custProducts)
+    }, [custProducts])
 
-    const productMap = custProducts ? custProducts.map(product => <ProductsList key={product.id} productPrice={product.price} orderProducts={orderProducts} product={product} order={order} setOrder={setOrder} customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>) : null
+    const productMap = filteredProducts ? filteredProducts.map(product => <ProductsList key={product.id} productSearch={productSearch} productPrice={product.price} orderProducts={orderProducts} product={product} order={order} setOrder={setOrder} customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>) : null
+
+    const productOptions = products.map(option => {
+        return (<option value={option} key={option}>{option}</option>)
+    })
+
+    function handleTypeChange(e) {
+        setProductSearch(e.target.value);
+        if (e.target.value == '') {
+            setFilteredProducts(custProducts)
+        } else {
+            setFilteredProducts(custProducts.filter(product => product.jewelry == e.target.value))
+        }
+    }
 
     return (
         <div>
-           {(currentCustomer.products == undefined || currentCustomer.products.length == 0) ? <div>No Previous Products Available </div> : productMap}
+            <select className="addressselect" onChange={handleTypeChange}>
+                <option key="blank" value={""}>{"Filter by Product"}</option>
+                {productOptions}
+            </select>
+            <br/>
+            <br/>
+            <div>
+            {(currentCustomer.products == undefined || currentCustomer.products.length == 0 || filteredProducts.length == 0) ? <div>No Previous Products Available </div> : productMap}
+            </div>
         </div>
     )
 }
