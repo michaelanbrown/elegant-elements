@@ -4,7 +4,7 @@ import { UserContext } from './context/User';
 import { useNavigate } from 'react-router-dom';
 
 function AllProducts({ product, productPrice, customizations, setCustomizations, orders, setOrders, order, setOrder, productCount, setProductCount }) {
-    const options = ["", "phrase", "word", "date"]
+    const options = ["phrase", "word", "date"]
     const navigate = useNavigate();
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const productName = product.name.slice(0,1).toUpperCase() + product.name.slice(1, product.name.length)
@@ -89,7 +89,7 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
                       setOrders([...orders, newOrder])
                   })
                 } else {
-                    res.json().then(json => setErrors([json.errors]))
+                    res.json().then(json => console.log(json.errors))
                 }
           })
           const customization = {
@@ -130,12 +130,12 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
                                 total: order.total + ((product.price + customization.price) * quantity)})
                             })
                           } else {
-                              res.json().then(json => setErrors([...errors, json.errors]))
+                              res.json().then(json => setErrors(...errors, json.errors))
                           }
                       })
                   })
                 } else {
-                    res.json().then(json => setErrors([...errors, json.errors]))
+                    res.json().then(json => setErrors(...errors, json.errors.filter(error => error !== 'Custom type is not included in the list')))
                 }
           })
     }
@@ -167,13 +167,14 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
                 {viewOrderForm ? <div>
                     <br/>
                     <form onSubmit={onOrder}>
-                        Customization Type:
+                        Custom Type:
                         <br/>
                         <select id="custom_type" onChange={handleTypeChange}>
+                            <option key={""}>{""}</option>
                             {typeOptions}
                         </select>
                         <br/>
-                        Customization:
+                        Personalization:
                         <br/>
                         <input type="text" name="personalization" value={personalization} onChange={handleChange} />
                         <br/>
@@ -187,6 +188,7 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
                         <input type="submit" value="Submit"/>
                     </form>
                 </div> : null}
+                { errors ? errors.map(error => <div className='error' key={error}>{error}</div>) :null }
                 </div>
             </div>
         </div>

@@ -60,7 +60,7 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
                 setProductCount(0)
                 })
             } else {
-              res.json().then(json => setErrors([json.errors]))
+              res.json().then(json => setErrors(json.errors))
             }
     })}
     
@@ -82,8 +82,11 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
                             {addressOptions}
                         </select>
                         <br/>
-                        <br/>
                         <button>Submit Order</button>
+                        <br/>
+                        { errors ? errors.map(error => <div className='error' key={error}>{error}</div>) :null }
+                        <br/>
+                        <br/>
                     </form>
             </div> : <h1>Current Cart is Empty</h1>
     )

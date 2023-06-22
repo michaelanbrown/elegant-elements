@@ -84,6 +84,7 @@ function ProductsList({ order, setOrder, orderProducts, productPrice, product, c
                 Jewelry: {product.jewelry}
                 { customizationLine }
                 <button onClick={onClick}>Order Again</button>
+                { errors ? errors.map(error => <div className='error' key={error}>{error}</div>) :null }
                 <br/>
                 <br/>
             </div>

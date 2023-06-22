@@ -48,7 +48,7 @@ function CreateAddress({ addresses, setAddresses, custAddresses, setCustAddresse
                     navigate(`/account`)
                 })
             } else {
-                res.json().then(json => setErrors([json.errors]))
+                res.json().then(json => setErrors(json.errors))
             }
         }) 
     }

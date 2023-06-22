@@ -85,7 +85,7 @@ function Address({ address, addresses, setAddresses, custAddresses, setCustAddre
               res.json(updateAddresses(formData))
               .then()
             } else {
-              res.json().then(json => setErrors([json.errors]))
+              res.json().then(json => setErrors(json.errors))
             }
     })}
 
@@ -103,6 +103,7 @@ function Address({ address, addresses, setAddresses, custAddresses, setCustAddre
                 <button onClick={onUpdateClick}>Update</button> or <button onClick={deleteCustomerAddress}>Delete</button>
                 <br/>
                 <br/>
+                { errors ? errors.map(error => <div className='error' key={error}>{error}</div>) : null }
             </div>
         </> :
         <>
@@ -121,6 +122,7 @@ function Address({ address, addresses, setAddresses, custAddresses, setCustAddre
                 <br/>
                 <input type="submit" value="Submit" />
             </form>
+            { errors ? errors.map(error => <div className='error' key={error}>{error}</div>) : null }
             <br/>
             <br/>
         </>

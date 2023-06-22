@@ -71,6 +71,7 @@ function OrderCard({ orders, setOrders, order, products }) {
             <br/>
             <br/>
             <button onClick={orderUpdate}>Cancel Order</button></div> : null}
+            { errors ? errors.map(error => <div className='error' key={error}>{error}</div>) :null }
         </div>
     )
 }
