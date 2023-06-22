@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../App.css'
 import { UserContext } from './context/User';
 
-function Login() {
+function Login({ setProductCount }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
 
     const [errors, setErrors] = useState([])
@@ -31,6 +31,7 @@ function Login() {
             if(res.ok){
                 res.json().then(customer => {
                     setCurrentCustomer(customer)
+                    setProductCount(customer.in_progress_product_count)
                     navigate(`/`)
                 })
             } else {
