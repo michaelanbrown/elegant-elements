@@ -125,9 +125,17 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
                           if(res.ok){
                               res.json().then(product => {navigate(`/cart`)
                               setProductCount(productCount + 1)
-                              setOrder({...order,
-                                products: [...order.products, product],
-                                total: order.total + ((product.price + customization.price) * quantity)})
+                              if (order.products) {
+                                setOrder({...order,
+                                    products: [...order.products, product],
+                                    total: order.total + ((product.price + customization.price) * quantity)})
+                              }
+                              else {
+                                setOrder({...order,
+                                    shipping: 7,
+                                    products: [product],
+                                    total: ((product.price + customization.price) * quantity)})
+                              }
                             })
                           } else {
                               res.json().then(json => setErrors(...errors, json.errors))

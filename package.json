@@ -8,6 +8,28 @@
     "build": "npm install --prefix client && npm run build --prefix client",
     "clean": "rm -rf public",
     "deploy": "cp -a client/build/. public/",
-    "heroku-postbuild": "npm run clean && npm run build && npm run deploy"
+    "heroku-postbuild": "npm run clean && npm run build && npm run deploy",
+    "start": "node server.js"
+  },
+  "version": "1.0.0",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelanbrown/elegant-elements.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michaelanbrown/elegant-elements/issues"
+  },
+  "homepage": "https://github.com/michaelanbrown/elegant-elements#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "stripe": "^12.10.0"
   }
 }
