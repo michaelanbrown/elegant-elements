@@ -197,3 +197,16 @@ body {
 .addressOption{ 
   height: 100px;
 }
+
+.checkMark{
+  height: 100px;
+  width: 100px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border-color: #90c7a5;
+  border: 5px solid  #90c7a5;
+  display: inline-block;
+  color: #90c7a5;
+  font-weight: bold;
+  font-size: 70px;
+}

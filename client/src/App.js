@@ -11,6 +11,7 @@ import PreviousProducts from './components/PreviousProducts';
 import Products from './components/Products';
 import PreviousOrders from './components/PreviousOrders';
 import Cart from './components/Cart';
+import Success from './components/Success';
 
 function App() {
   const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
@@ -138,6 +139,7 @@ function getOrders() {
         <Route path="/previous-products/*" element={<PreviousProducts orderProducts={orderProducts} custProducts={custProducts} order={order} setOrder={setOrder} customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
         <Route path="/previous-orders" element={<PreviousOrders orders={orders} setOrders={setOrders} products={products}/>} />
         <Route path="/cart" element={<Cart custAddresses={custAddresses} setCustAddresses={setCustAddresses} order={order} setOrder={setOrder} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations} custProducts={custProducts} setCustProducts={setCustProducts}/>} />
+        <Route path="/success" element={<Success/>} />
       </Routes>
     </main>
   );
