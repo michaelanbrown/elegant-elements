@@ -83,7 +83,40 @@ function ProductsList({ order, setOrder, orderProducts, productPrice, product, c
                       })  
                   })
                 } else {
-                    res.json().then(json => console.log(json.errors))
+                    const product = {
+                        jewelry,
+                        customization_id,
+                        quantity,
+                        price: productPrice * quantity
+                    }
+                      fetch("/products",{
+                        method:'POST',
+                        headers:{'Content-Type': 'application/json'},
+                        body:JSON.stringify(product)
+                      })
+                      .then(res => {
+                          if(res.ok){
+                              res.json().then(product => {
+                              setProductCount(productCount + 1)
+                              if (order.products) {
+                                setOrder({...order,
+                                    id: order.id,
+                                    products: [...order.products, product],
+                                    total: order.total + ((product.price + product.customization.price) * quantity)})
+                              }
+                              else {
+                                setOrder({...order,
+                                    id: order.id,
+                                    shipping: 7,
+                                    products: [product],
+                                    total: 7 + ((product.price + product.customization.price) * quantity)})
+                              }
+                                })
+                            navigate(`/cart`)
+                          } else {
+                              res.json().then(json => setErrors([...errors, json.errors]))
+                          }
+                      }) 
                 }
           })
     }

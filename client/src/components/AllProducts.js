@@ -47,21 +47,21 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
 
     function handleTypeChange(e) {
 
-        if(document.getElementById('custom_type').value == "phrase") {
+        if(document.getElementById('custom_type').value === "phrase") {
             setCustomForm({
                 ...customForm,
                 [e.target.id] : document.getElementById('custom_type').value,
                 price : 4.00
             });
         } else {
-            if(document.getElementById('custom_type').value == "word") {
+            if(document.getElementById('custom_type').value === "word") {
                 setCustomForm({
                     ...customForm,
                     [e.target.id] : document.getElementById('custom_type').value,
                     price : 2.00
                 });
         } else {
-            if (document.getElementById('custom_type').value == "date") {
+            if (document.getElementById('custom_type').value === "date") {
                 setCustomForm({
                     ...customForm,
                     [e.target.id] : document.getElementById('custom_type').value,
@@ -145,7 +145,62 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
                       })
                   })
                 } else {
-                    res.json().then(json => console.log(json.errors))
+                    const customization = {
+                        custom_type,
+                        personalization
+                        }
+                        const customizationWithPrice = {
+                            custom_type,
+                            personalization,
+                            price: customForm.price  
+                        }
+                      fetch("/customizations",{
+                        method:'POST',
+                        headers:{'Content-Type': 'application/json'},
+                        body:JSON.stringify(customization)
+                      })
+                      .then(res => {
+                          if(res.ok){
+                              res.json().then(customization => {
+                                setCustomizations([...customizations, customization])
+                                const product = {
+                                    jewelry,
+                                    customization_id: customization.id,
+                                    quantity,
+                                    price: productPrice * quantity
+                                }
+                                  fetch("/products",{
+                                    method:'POST',
+                                    headers:{'Content-Type': 'application/json'},
+                                    body:JSON.stringify(product)
+                                  })
+                                  .then(res => {
+                                      if(res.ok){
+                                          res.json().then(product => {navigate(`/cart`)
+                                          setProductCount(productCount + 1)
+                                          if (order.products) {
+                                            setOrder({...order,
+                                                id: order.id,
+                                                products: [...order.products, product],
+                                                total: order.total + ((product.price + customization.price) * quantity)})
+                                          }
+                                          else {
+                                            setOrder({...order,
+                                                id: order.id,
+                                                shipping: 7,
+                                                products: [product],
+                                                total: 7 + ((product.price + customization.price) * quantity)})
+                                          }
+                                        })
+                                      } else {
+                                          res.json().then(json => setErrors(...errors, json.errors))
+                                      }
+                                  })
+                              })
+                            } else {
+                                res.json().then(json => setErrors(...errors, json.errors.filter(error => error !== 'Custom type is not included in the list')))
+                            }
+                      })
                 }
           })
     }
