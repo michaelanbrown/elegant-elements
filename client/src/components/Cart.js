@@ -42,6 +42,27 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
         setOrders(updatingOrders)
     }
 
+    const checkout = async() => {
+        const product = {
+            stripe_key: "price_1NMftNK92FCM7B9EsdMaHKOW",
+            quantity: 1
+        }
+        await fetch('http://localhost:4001/checkout', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({items: order.products, product})
+        }).then(res => {
+            return res.json();
+        }).then(res => {
+            if(res.url) {
+                window.location.assign(res.url)
+            }
+        })
+    }
+
+
     function orderUpdate(e) {
         e.preventDefault()
         fetch(`orders/${orderId}`, {
@@ -55,6 +76,7 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
             if(res.ok){
               res.json()
               .then(order => {
+                checkout()
                 setOrder([])
                 updateOrders(order)
                 setProductCount(0)
@@ -63,6 +85,7 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
               res.json().then(json => setErrors(json.errors))
             }
     })}
+    console.log(order)
 
     return (
         order.products && productCount !== 0 ?

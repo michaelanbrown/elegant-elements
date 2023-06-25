@@ -9,6 +9,7 @@
 // Keychain with phrase: price_1NMenLK92FCM7B9Evqz9gwyi
 // Keychain with word: price_1NMeneK92FCM7B9Eh0250qlD
 // Keychain with date: price_1NMenxK92FCM7B9EDMnruaBL
+// Shipping: price_1NMftNK92FCM7B9EsdMaHKOW
 const express = require('express');
 var cors = require('cors');
 const stripe = require('stripe')('sk_test_51NMeYtK92FCM7B9Ee0AlRZsplGSXOjRB8Oe32bo5p779yweLtzp9W8xRm84zD0B7uA4v3LtfBZyhQ7KBjKI7Lm6F006xcRE91U');
@@ -24,7 +25,7 @@ app.post("/checkout", async (req, res) => {
     items.forEach((item) => {
         lineItems.push(
             {
-                price: item.id,
+                price: item.stripe_key,
                 quantity: item.quantity
             }
         )
@@ -33,8 +34,8 @@ app.post("/checkout", async (req, res) => {
     const session = await stripe.checkout.sessions.create({
         line_items: lineItems,
         mode: 'payment',
-        success_url: "http://localhost:4001/success",
-        cancel_url: "http://localhost:4001/cancel"
+        success_url: "http://localhost:4000/success",
+        cancel_url: "http://localhost:4000/cancel"
     });
 
     res.send(JSON.stringify({

@@ -87,63 +87,65 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
               if(res.ok){
                   res.json().then(newOrder => {
                       setOrders([...orders, newOrder])
-                  })
-                } else {
-                    res.json().then(json => console.log(json.errors))
-                }
-          })
-          const customization = {
-            custom_type,
-            personalization
-            }
-            const customizationWithPrice = {
-                custom_type,
-                personalization,
-                price: customForm.price  
-            }
-          fetch("/customizations",{
-            method:'POST',
-            headers:{'Content-Type': 'application/json'},
-            body:JSON.stringify(customization)
-          })
-          .then(res => {
-              if(res.ok){
-                  res.json().then(customization => {
-                    setCustomizations([...customizations, customization])
-                    const product = {
-                        jewelry,
-                        customization_id: customization.id,
-                        quantity,
-                        price: productPrice * quantity
-                    }
-                      fetch("/products",{
+                      const customization = {
+                        custom_type,
+                        personalization
+                        }
+                        const customizationWithPrice = {
+                            custom_type,
+                            personalization,
+                            price: customForm.price  
+                        }
+                      fetch("/customizations",{
                         method:'POST',
                         headers:{'Content-Type': 'application/json'},
-                        body:JSON.stringify(product)
+                        body:JSON.stringify(customization)
                       })
                       .then(res => {
                           if(res.ok){
-                              res.json().then(product => {navigate(`/cart`)
-                              setProductCount(productCount + 1)
-                              if (order.products) {
-                                setOrder({...order,
-                                    products: [...order.products, product],
-                                    total: order.total + ((product.price + customization.price) * quantity)})
-                              }
-                              else {
-                                setOrder({...order,
-                                    shipping: 7,
-                                    products: [product],
-                                    total: ((product.price + customization.price) * quantity)})
-                              }
-                            })
-                          } else {
-                              res.json().then(json => setErrors(...errors, json.errors))
-                          }
+                              res.json().then(customization => {
+                                setCustomizations([...customizations, customization])
+                                const product = {
+                                    jewelry,
+                                    customization_id: customization.id,
+                                    quantity,
+                                    price: productPrice * quantity
+                                }
+                                  fetch("/products",{
+                                    method:'POST',
+                                    headers:{'Content-Type': 'application/json'},
+                                    body:JSON.stringify(product)
+                                  })
+                                  .then(res => {
+                                      if(res.ok){
+                                          res.json().then(product => {navigate(`/cart`)
+                                          setProductCount(productCount + 1)
+                                          if (order.products) {
+                                            setOrder({...order,
+                                                id: newOrder.id,
+                                                products: [...order.products, product],
+                                                total: order.total + ((product.price + customization.price) * quantity)})
+                                          }
+                                          else {
+                                            setOrder({...order,
+                                                id: newOrder.id,
+                                                shipping: 7,
+                                                products: [product],
+                                                total: 7 + ((product.price + customization.price) * quantity)})
+                                          }
+                                        })
+                                      } else {
+                                          res.json().then(json => setErrors(...errors, json.errors))
+                                      }
+                                  })
+                              })
+                            } else {
+                                res.json().then(json => setErrors(...errors, json.errors.filter(error => error !== 'Custom type is not included in the list')))
+                            }
                       })
                   })
                 } else {
-                    res.json().then(json => setErrors(...errors, json.errors.filter(error => error !== 'Custom type is not included in the list')))
+                    res.json().then(json => console.log(json.errors))
                 }
           })
     }

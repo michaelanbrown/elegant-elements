@@ -11,7 +11,7 @@ function PreviousOrders({ orders, setOrders, products }) {
     
     useEffect(() => {
         setCustomerOrders(orders.filter(order => {
-            if (order.customer_id == currentCustomer.id && order.status !== "in progress") {
+            if (order.customer_id === currentCustomer.id && order.status !== "in progress") {
                 return order
             } else {
                 return null
@@ -20,7 +20,7 @@ function PreviousOrders({ orders, setOrders, products }) {
     }, [orders])
 
     const canceledOrders = customerOrders.filter(order => {
-        if(order.status == "canceled") {
+        if(order.status === "canceled") {
             return order
         } else {
             return null
@@ -28,7 +28,7 @@ function PreviousOrders({ orders, setOrders, products }) {
     })
 
     const fulfilledOrders = customerOrders.filter(order => {
-        if(order.status == "fulfilled") {
+        if(order.status === "fulfilled") {
             return order
         } else {
             return null
@@ -36,7 +36,7 @@ function PreviousOrders({ orders, setOrders, products }) {
     })
 
     const submittedOrders = customerOrders.filter(order => {
-        if(order.status == "submitted") {
+        if(order.status === "submitted") {
             return order
         } else {
             return null
@@ -63,7 +63,7 @@ function PreviousOrders({ orders, setOrders, products }) {
                 <option key="blank" value={""}>{"Filter by Status"}</option>
                 {statusOptions}
             </select>
-            {canceledOrderMap.length !== 0 && (search == '' || search == 'canceled') ? <div>
+            {canceledOrderMap.length !== 0 && (search === '' || search === 'canceled') ? <div>
                 <br/>
                 <br/>
                 Canceled Order(s):
@@ -71,8 +71,8 @@ function PreviousOrders({ orders, setOrders, products }) {
                 <br/>
                 {canceledOrderMap}
             </div> : null}
-            {search == 'canceled' && canceledOrderMap.length == 0 ? <p>You don't have any canceled orders.</p> : null}
-            {fulfilledOrderMap.length !== 0 && (search == '' || search == 'fulfilled') ? <div>
+            {search === 'canceled' && canceledOrderMap.length === 0 ? <p>You don't have any canceled orders.</p> : null}
+            {fulfilledOrderMap.length !== 0 && (search === '' || search === 'fulfilled') ? <div>
                 <br/>
                 <br/>
                 Fulfilled Order(s):
@@ -80,8 +80,8 @@ function PreviousOrders({ orders, setOrders, products }) {
                 <br/>
                 {fulfilledOrderMap}
             </div> : null}
-            {search == 'fulfilled' && fulfilledOrderMap.length == 0 ? <p>You don't have any fulfilled orders.</p> : null}
-            {submittedOrderMap.length !== 0 && (search == '' || search == 'submitted') ? <div>
+            {search === 'fulfilled' && fulfilledOrderMap.length === 0 ? <p>You don't have any fulfilled orders.</p> : null}
+            {submittedOrderMap.length !== 0 && (search === '' || search == 'submitted') ? <div>
                 <br/>
                 <br/>
                 Submitted Order(s):
@@ -89,7 +89,7 @@ function PreviousOrders({ orders, setOrders, products }) {
                 <br/>
                 {submittedOrderMap}
             </div> : null}
-            {search == 'submitted' && submittedOrderMap.length == 0 ? <p>You don't have any submitted orders.</p> : null}
+            {search === 'submitted' && submittedOrderMap.length === 0 ? <p>You don't have any submitted orders.</p> : null}
         </div>
     )
 }

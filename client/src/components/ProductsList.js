@@ -49,7 +49,7 @@ function ProductsList({ order, setOrder, orderProducts, productPrice, product, c
                       setOrders([...orders, newOrder])   
                   })
                 } else {
-                    res.json().then(json => setErrors([json.errors]))
+                    res.json().then(json => console.log(json.errors))
                 }
           })
           const product = {
@@ -67,9 +67,17 @@ function ProductsList({ order, setOrder, orderProducts, productPrice, product, c
               if(res.ok){
                   res.json().then(product => {
                   setProductCount(productCount + 1)
-                  setOrder({order,
-                    products: [...order.products, product],
-                    total: order.total + ((product.price + product.customization.price) * quantity)})
+                  if (order.products) {
+                    setOrder({...order,
+                        products: [...order.products, product],
+                        total: order.total + ((product.price + product.customization.price) * quantity)})
+                  }
+                  else {
+                    setOrder({...order,
+                        shipping: 7,
+                        products: [product],
+                        total: 7 + ((product.price + product.customization.price) * quantity)})
+                  }
                     })
                 navigate(`/cart`)
               } else {
