@@ -210,3 +210,16 @@ body {
   font-weight: bold;
   font-size: 70px;
 }
+
+.redX{
+  height: 100px;
+  width: 100px;
+  background-color: red;
+  border-radius: 50%;
+  border-color: white;
+  border: 5px solid white;
+  display: inline-block;
+  color: white;
+  font-weight: bold;
+  font-size: 70px;
+}

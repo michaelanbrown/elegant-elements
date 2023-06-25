@@ -8,7 +8,7 @@ function Success({}) {
         <br/>
         <span className="checkMark">✓</span>
         <h1>Thank you for your order!</h1>
-        <p>Your order has been placed and is being processed.</p>
+        <h4>Your order has been placed and is being processed.</h4>
     </div>
   );
 }
