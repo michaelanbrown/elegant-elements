@@ -10,13 +10,18 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
     const [orderId, setOrderId] = useState(null)
     const [formData, setFormData] = useState({
         address_id: "",
-        status: "submitted"
+        status: "submitted" 
     })
+    const shippingStripe = {
+        stripe_key: "price_1NMgq2K92FCM7B9Ez1ZejOIO",
+        quantity: 1
+    }
 
     useEffect(() => {
         const identification = order && order[0] ? setOrderId(order[0].id) : null
         const orderSetting = order && order[0] ? setOrder(order[0]) : null
     }, [order])
+
 
     const productMap = order.products && order ? order.products.map(product => <ProductCartCard order={order} setOrder={setOrder} custProducts={custProducts} setCustProducts={setCustProducts} product={product} key={product.id} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} orderTotalAddition={orderTotalAddition} setOrderTotalAddition={setOrderTotalAddition}/>) : null
 
@@ -43,16 +48,12 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
     }
 
     const checkout = async() => {
-        const product = {
-            stripe_key: "price_1NMftNK92FCM7B9EsdMaHKOW",
-            quantity: 1
-        }
         await fetch('http://localhost:4001/checkout', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({items: order.products, product})
+            body: JSON.stringify({items: [...order.products, shippingStripe]})
         }).then(res => {
             return res.json();
         }).then(res => {
@@ -62,10 +63,9 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
         })
     }
 
-
     function orderUpdate(e) {
         e.preventDefault()
-        fetch(`orders/${orderId}`, {
+        fetch(`orders/${order.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type" : "application/json",
@@ -75,8 +75,8 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
         }).then((res) => {
             if(res.ok){
               res.json()
+              checkout()
               .then(order => {
-                checkout()
                 setOrder([])
                 updateOrders(order)
                 setProductCount(0)
@@ -85,7 +85,6 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
               res.json().then(json => setErrors(json.errors))
             }
     })}
-    console.log(order)
 
     return (
         order.products && productCount !== 0 ?
