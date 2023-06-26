@@ -87,6 +87,7 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
               if(res.ok){
                   res.json().then(newOrder => {
                       setOrders([...orders, newOrder])
+                      setOrder(newOrder)
                       const customization = {
                         custom_type,
                         personalization
@@ -127,7 +128,7 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
                                                 total: order.total + ((product.price + customization.price) * quantity)})
                                           }
                                           else {
-                                            setOrder({...order,
+                                            setOrder({
                                                 id: newOrder.id,
                                                 shipping: 7,
                                                 products: [product],

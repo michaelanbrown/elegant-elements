@@ -8,7 +8,6 @@ import CreateAddress from './CreateAddress';
 
 function Account({ addresses, setAddresses, custAddresses, setCustAddresses }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
-
     const addressMap = custAddresses ? custAddresses.map(address => <Address key={address.id} custAddresses={custAddresses} setCustAddresses={setCustAddresses} address={address} addresses={addresses} setAddresses={setAddresses}/>) : null
 
     return (
@@ -19,7 +18,7 @@ function Account({ addresses, setAddresses, custAddresses, setCustAddresses }) {
             <br/>
             <br/>
             <br/>
-            <Link className='link' to={`/account/new-address`}>Add An Address</Link>
+            <Link className='link' to={`/new-address`}>Add An Address</Link>
             <Routes>
                 <Route path="/new-address/" element={<CreateAddress custAddresses={custAddresses} setCustAddresses={setCustAddresses} addresses={addresses} setAddresses={setAddresses}/>}/>
             </Routes>

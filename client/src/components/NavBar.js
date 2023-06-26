@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from './context/User';
 
-export default function NavBar ({ productCount })  {
+export default function NavBar ({ productCount, custAddresses })  {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const navigate = useNavigate();
     const handleLogOut = () => {
@@ -19,7 +19,7 @@ export default function NavBar ({ productCount })  {
       }
 
     return (
-        <nav className="NavBar">
+      currentCustomer === false || (currentCustomer !== false && custAddresses.length !== 0 && custAddresses !== undefined) ? <nav className="NavBar">
           <br/>
             <NavLink className="Navelements" to="/">Welcome</NavLink>
             <br/>
@@ -39,6 +39,6 @@ export default function NavBar ({ productCount })  {
             { productCount && productCount > 0 ? <span className="dot">{productCount}</span> : null}
             { currentCustomer ? <br/> : null }
             { currentCustomer ? <button className="logout" onClick={handleLogOut}>Logout</button> : null }
-        </nav>
+        </nav> : null
     )
 }

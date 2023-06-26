@@ -58,7 +58,7 @@ function PreviousOrders({ orders, setOrders, products }) {
     }
 
     return (
-        <div>
+        currentCustomer.orders !== undefined && currentCustomer.orders.length !== 0 ? <div>
             <select className="addressselect" onChange={handleTypeChange}>
                 <option key="blank" value={""}>{"Filter by Status"}</option>
                 {statusOptions}
@@ -90,7 +90,7 @@ function PreviousOrders({ orders, setOrders, products }) {
                 {submittedOrderMap}
             </div> : null}
             {search === 'submitted' && submittedOrderMap.length === 0 ? <p>You don't have any submitted orders.</p> : null}
-        </div>
+        </div> : <div>No previous orders.</div>
     )
 }
 

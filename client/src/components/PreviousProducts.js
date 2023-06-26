@@ -38,7 +38,7 @@ function PreviousProducts({ orderProducts, custProducts, order, setOrder, custom
             <br/>
             <br/>
             <div>
-            {(currentCustomer.products == undefined || currentCustomer.products.length == 0 || filteredProducts.length == 0) ? <div>No Previous Products Available </div> : productMap}
+            {(currentCustomer.products === undefined || currentCustomer.products.length === 0 || filteredProducts.length == 0) ? <div>No Previous Products Available </div> : productMap}
             </div>
         </div>
     )

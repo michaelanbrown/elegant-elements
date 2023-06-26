@@ -26,7 +26,8 @@ app.post("/checkout", async (req, res) => {
         lineItems.push(
             {
                 price: item.stripe_key,
-                quantity: item.quantity
+                quantity: item.quantity,
+                receipt_email: item.customer.email
             }
         )
     });

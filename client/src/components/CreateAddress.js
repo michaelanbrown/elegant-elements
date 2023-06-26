@@ -48,7 +48,7 @@ function CreateAddress({ addresses, setAddresses, custAddresses, setCustAddresse
                     navigate(`/account`)
                 })
             } else {
-                res.json().then(json => setErrors(json.errors))
+                res.json().then(json => console.log(json))
             }
         }) 
     }
@@ -74,7 +74,7 @@ function CreateAddress({ addresses, setAddresses, custAddresses, setCustAddresse
                 <input type="submit" value="Submit" />
             </form>
             <br/>
-            { errors ? errors.map(error => <div className='error' key={error}>{error}</div>) :null }
+            { errors ? errors.map(error => <div className='error' key={error}>{error}</div>) : null }
         </div>
     )
 }

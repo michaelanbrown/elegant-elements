@@ -69,7 +69,7 @@ function ProductsList({ order, setOrder, orderProducts, productPrice, product, c
                                     total: order.total + ((product.price + product.customization.price) * quantity)})
                               }
                               else {
-                                setOrder({...order,
+                                setOrder({
                                     id: newOrder.id,
                                     shipping: 7,
                                     products: [product],

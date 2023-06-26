@@ -13,6 +13,7 @@ import PreviousOrders from './components/PreviousOrders';
 import Cart from './components/Cart';
 import Success from './components/Success';
 import Cancel from './components/Cancel';
+import CreateAddress from './components/CreateAddress';
 
 function App() {
   const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
@@ -130,7 +131,7 @@ function getOrders() {
 
   return (
     <main>
-      <Header productCount={productCount}/>
+      <Header productCount={productCount} custAddresses={custAddresses}/>
       <Routes>
         <Route path="/" element={<Welcome/>} />
         <Route path="/signup" element={<Signup customers={customers} setCustomers={setCustomers} getProducts={getProducts} getCustomers={getCustomers} getAddresses={getAddresses} getCustomizations={getCustomizations} getOrders={getOrders}/>} />
@@ -139,6 +140,7 @@ function getOrders() {
         <Route path="/account/*" element={<Account addresses={addresses} setAddresses={setAddresses} custAddresses={custAddresses} setCustAddresses={setCustAddresses}/>} />
         <Route path="/previous-products/*" element={<PreviousProducts orderProducts={orderProducts} custProducts={custProducts} order={order} setOrder={setOrder} customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
         <Route path="/previous-orders" element={<PreviousOrders orders={orders} setOrders={setOrders} products={products}/>} />
+        <Route path="/new-address" element={<CreateAddress custAddresses={custAddresses} setCustAddresses={setCustAddresses} addresses={addresses} setAddresses={setAddresses}/>} />
         <Route path="/cart" element={<Cart custAddresses={custAddresses} setCustAddresses={setCustAddresses} order={order} setOrder={setOrder} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations} custProducts={custProducts} setCustProducts={setCustProducts}/>} />
         <Route path="/success" element={<Success/>} />
         <Route path="/cancel" element={<Cancel/>} />
