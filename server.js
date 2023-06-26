@@ -21,13 +21,13 @@ app.use(express.json());
 
 app.post("/checkout", async (req, res) => {
     const items = req.body.items;
+    const email = req.body.email
     let lineItems = [];
     items.forEach((item) => {
         lineItems.push(
             {
                 price: item.stripe_key,
-                quantity: item.quantity,
-                receipt_email: item.customer.email
+                quantity: item.quantity
             }
         )
     });
@@ -35,6 +35,12 @@ app.post("/checkout", async (req, res) => {
     const session = await stripe.checkout.sessions.create({
         line_items: lineItems,
         mode: 'payment',
+        invoice_creation: {
+            enabled: true},
+        customer_details: {
+            email: email,
+          },
+        customer_email: email,
         success_url: "http://localhost:4000/success",
         cancel_url: "http://localhost:4000/cancel"
     });

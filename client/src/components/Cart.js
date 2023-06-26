@@ -52,7 +52,8 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({items: [...order.products, shippingStripe]})
+            body: JSON.stringify({items: [...order.products, shippingStripe],
+            email: currentCustomer.email})
         }).then(res => {
             return res.json();
         }).then(res => {
