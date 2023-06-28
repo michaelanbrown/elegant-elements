@@ -1,5 +1,5 @@
 class OrderSerializer < ActiveModel::Serializer
-  attributes :id, :customer_id, :total, :discount, :shipping, :status, :editable, :created_at, :updated_at
+  attributes :id, :customer_id, :total, :shipping, :status, :editable, :created_at, :updated_at
 
   has_many :products
   has_many :customizations

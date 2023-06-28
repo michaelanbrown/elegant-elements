@@ -18,9 +18,9 @@ a1 = Address.create!(name: "Carla Jones", street: "1234 Main St", unit: nil, cit
 a2 = Address.create!(name: "Vanessa Atkins", street: "589 Real Dr", unit: "4A", city: "New York City", state: "NY", zip: "00512", customer_id: u2.id)
 a3 = Address.create!(name: "Jack Crane", street: "654 Beach Cir", unit: nil, city: "Myrtle Beach", state: "SC", zip: "36542", customer_id: u3.id)
 
-o1 = Order.create!(customer_id: u1.id, address_id: a1.id, total: 20.00, discount: 0.00, shipping: 7.00, status: "completed")
-o2 = Order.create!(customer_id: u2.id, address_id: a2.id, total: 19.00, discount: 0.00, shipping: 7.00, status: "canceled")
-o3 = Order.create!(customer_id: u3.id, address_id: a3.id, total: 39.00, discount: 0.00, shipping: 7.00, status: "completed")
+o1 = Order.create!(customer_id: u1.id, address_id: a1.id, total: 20.00, shipping: 7.00, status: "completed")
+o2 = Order.create!(customer_id: u2.id, address_id: a2.id, total: 19.00, shipping: 7.00, status: "canceled")
+o3 = Order.create!(customer_id: u3.id, address_id: a3.id, total: 39.00, shipping: 7.00, status: "completed")
 
 p1 = Product.create!(jewelry: "necklace", price: 10.00, quantity: 1, customization_id: c3.id, order_id: o2.id, stripe_key: "price_1NMelzK92FCM7B9ESclbtm6w")
 p2 = Product.create!(jewelry: "bracelet", price: 9.00, quantity: 1, customization_id: c1.id, order_id: o1.id, stripe_key: "price_1NMemOK92FCM7B9Ebm7PmymW")

@@ -25,10 +25,9 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
     })
     const {jewelry, quantity} = orderProduct
     const [orderData, setOrderData] = useState({
-        total: 0,
-        discount: 0
+        total: 0
     })
-    const {total, discount} = orderData
+    const {total} = orderData
 
     useEffect(() => {
         const orderSetting = order && order[0] ? setOrder(order[0]) : null
@@ -75,8 +74,7 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
     function onOrder(e){
         e.preventDefault()
         const newOrder = {
-            total,
-            discount
+            total
         }
         fetch("/orders",{
             method:'POST',

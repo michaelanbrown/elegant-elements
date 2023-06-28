@@ -9,10 +9,9 @@ function ProductsList({ order, setOrder, orderProducts, productPrice, product, c
     const [custCustomization, setCustCustomization] = useState(false)
     const [errors, setErrors] = useState([])
     const [formData, setFormData] = useState({
-        total: 0,
-        discount: 0
+        total: 0
     })
-    const {total, discount} = formData
+    const {total} = formData
     const [reOrderProduct, setReOrderProduct] = useState({
         jewelry: product.jewelry.toLowerCase(),
         customization_id: product.customization_id,
@@ -35,8 +34,7 @@ function ProductsList({ order, setOrder, orderProducts, productPrice, product, c
 
     function onClick() {
         const newOrder = {
-            total,
-            discount
+            total
         }
         fetch("/orders",{
             method:'POST',

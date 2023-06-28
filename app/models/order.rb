@@ -5,7 +5,6 @@ class Order < ApplicationRecord
     belongs_to :customer
     belongs_to :address
 
-    validates :discount, numericality: { less_than: 1 }
     validates :shipping, presence: true, numericality: { equal_to: 7.00 }
     validates :status, presence: true
     validate :order_cannot_update, on: :update

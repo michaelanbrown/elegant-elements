@@ -135,7 +135,7 @@ function getOrders() {
       <Routes>
         <Route path="/" element={<Welcome/>} />
         <Route path="/signup" element={<Signup customers={customers} setCustomers={setCustomers} getProducts={getProducts} getCustomers={getCustomers} getAddresses={getAddresses} getCustomizations={getCustomizations} getOrders={getOrders}/>} />
-        <Route path="/login" element={<Login setProductCount={setProductCount} getProducts={getProducts} getCustomers={getCustomers} getAddresses={getAddresses} getCustomizations={getCustomizations} getOrders={getOrders}/>} />
+        <Route path="/login" element={<Login setCustAddresses={setCustAddresses} setProductCount={setProductCount} getProducts={getProducts} getCustomers={getCustomers} getAddresses={getAddresses} getCustomizations={getCustomizations} getOrders={getOrders}/>} />
         <Route path="/products" element={<Products customizations={customizations} setCustomizations={setCustomizations} order={order} setOrder={setOrder} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
         <Route path="/account/*" element={<Account addresses={addresses} setAddresses={setAddresses} custAddresses={custAddresses} setCustAddresses={setCustAddresses}/>} />
         <Route path="/previous-products/*" element={<PreviousProducts orderProducts={orderProducts} custProducts={custProducts} order={order} setOrder={setOrder} customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />

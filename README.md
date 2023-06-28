@@ -91,25 +91,25 @@ The Addresses model validates:
 
 ### Schemas
 
-#### User
+#### Customer
 
-The Runner schema contains all pertinent information about each user including name, age, username, email, and password.
+The Customer schema contains all pertinent information about each customer including name, email, username, and password.
 
-#### Races
+#### Order
 
-The Race schema contains all pertinent information about each race including the name, year, and a duration which defaults to TBD. They connect to their coach and event via the columns below:
+The Order schema contains all pertinent information about each order including the customer, total, shipping, address, and status. They connect to their customer and address via the columns below:
 
 ```bash
-t.integer "length_id"
+t.integer "customer_id"
 ```
 ```bash
-t.index ["length_id"], name: "index_races_on_length_id"
+t.index ["customer_id"], name: "index_orders_on_customer_id"
 ```
 ```bash
-t.integer "user_id"
+t.bigint "address_id", null: false
 ```
 ```bash
-t.index ["user_id"], name: "index_races_on_user_id"
+t.index ["address_id"], name: "index_orders_on_address_id"
 ```
 
 #### Lengths
