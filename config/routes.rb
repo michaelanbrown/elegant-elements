@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   
   resources :addresses
-  resources :products
-  resources :orders
-  resources :customizations
-  resources :customers
+  resources :products, only: [:index, :show, :create, :update]
+  resources :orders, only: [:index, :show, :create, :update]
+  resources :customizations, only: [:index, :show, :create]
+  resources :customers, only: [:index, :show, :create]
 
   post "/login", to: "sessions#create" 
   delete "/logout", to: "sessions#destroy"

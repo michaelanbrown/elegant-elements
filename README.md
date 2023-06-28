@@ -1,6 +1,14 @@
 # Elegant Elements
 ## Adding a touch of inspiration and elegance to your every day life
 
+### Description
+
+Elegant Elements started with a passion for mental health. Michaela Brown started this company as a tribute to not only those struggling with every day life, but also to those that promote and pursue a positive lifestyle and good mental health.
+
+The pieces of jewelry behind Elegant Elements are meant to contain postiive words, phrases, and dates of happy memories to encourage each individual as they go about their day.
+
+Once the idea came to life, Michaela decided to expand to all words, phrases, etc. that her clients wanted to put on the jewelry, but she will always hope and strive for positivity and a happy head space for her clients.
+
 ### Models
 
 I have incldued five models:
@@ -144,78 +152,85 @@ t.integer "customer_id"
 t.index ["customer_id"], name: "index_addresses_on_customer_id"
 ```
 
-### Description
-
-Track Zone allows users to connect and display their proud accomplishments through their race listings which include the length and achieved time of each race.
-
 ### Method Examples
 
 ```python
 # Index
   def index 
-      render json: User.all, status: :ok
+      render json: Customer.all, status: :ok
   end
 ```
 
 ```python
 # Show
+  def find_customization
+    @customization = Customization.find(params[:id])
+  end
+
   def show
-      render json: current_user, status: :ok
+      render json: @customization, status: :ok
   end
 ```
 
 ```python
 # Create Request
-  def create
-      race = Race.create!(race_params)
-      render json: race, status: :created
+  def order_params
+    params.permit(:total).merge(customer_id: @current_customer.id, address_id: Address.where(customer_id: @current_customer.id).first.id)
   end
 
   private
-
-  def race_params
-    params.permit(:name, :year, :length_id).merge(user_id: current_user.id)
+    
+  def create
+      order = Order.create!(order_params)
+      render json: order, status: :created
   end
 ```
 
 ```python
 # Update Request
-  def update
-    @race.update!(update_race_params)
-    render json: @race, status: :accepted
+  def find_product
+    @product = Product.find(params[:id])
   end
 
-  def update_race_params
-    params.permit(:name, :year, :duration)
+  def update
+      @product.update!(update_product_params)
+      render json: @product, status: :accepted
+  end
+
+  private
+
+  def update_product_params
+      params.permit(:jewelry, :price, :quantity)
   end
 ```
 
 ```python
 # Delete Request
+  def find_address
+    @address = Address.find(params[:id])
+  end
+
   def destroy
-    @race.destroy
-    head :no_content 
-  end 
+      @address.destroy
+      head :no_content 
+  end
 ```
 
 ### Routes
 
 ```python
 # All Used Routes
-  resources :races
-  resources :lengths, only: [:index, :create]
-  resources :users, only: [:index, :show, :create]
+  resources :addresses
+  resources :products, only: [:index, :show, :create, :update]
+  resources :orders, only: [:index, :show, :create, :update]
+  resources :customizations, only: [:index, :show, :create]
+  resources :customers, only: [:index, :show, :create]
 
   post "/login", to: "sessions#create" 
   delete "/logout", to: "sessions#destroy"
-  get "/authorized_user", to: "users#show"
+  get "/authorized_user", to: "customers#show"
 ```
 
-### Fork and Clone
+### Aknowledgements
 
-Feel free to fork and clone this to use as your own!
-Be aware of the seeded data.
-
-### Contributing
-
-Suggestions are welcome.
+These images are not mine. The necklace and keychain images were taken from Shopify, and the bracelet image was taken from Etsy.

@@ -6,6 +6,10 @@ class AddressesController < ApplicationController
         render json: Address.all, status: :ok
     end
 
+    def show
+        render json: @address, status: :ok
+    end
+
     def create
         order = Address.create!(address_params)
         render json: order, status: :created
