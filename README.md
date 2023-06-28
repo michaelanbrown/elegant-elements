@@ -112,9 +112,37 @@ t.bigint "address_id", null: false
 t.index ["address_id"], name: "index_orders_on_address_id"
 ```
 
-#### Lengths
+#### Product
 
-The Event schema contains all pertinent information about each length including the distance and unit of measurement.
+The Product schema contains all pertinent information about each product including the type of jewelry, price, quantity, customization, order, and stripe key. They connect to their customization and order via the columns below:
+
+```bash
+t.integer "customization_id"
+```
+```bash
+t.index ["customization_id"], name: "index_products_on_customization_id"
+```
+```bash
+t.integer "order_id"
+```
+```bash
+t.index ["order_id"], name: "index_products_on_order_id"
+```
+
+#### Customization
+
+The Customization schema contains all pertinent information about each customization including the customization type, personalized message, and price.
+
+#### Address
+
+The Address schema contains all pertinent information about each address including the shipped to's name, street, unit (if applicable), city, state, zip code, amd customer. They connect to their customization and order via the columns below:
+
+```bash
+t.integer "customer_id"
+```
+```bash
+t.index ["customer_id"], name: "index_addresses_on_customer_id"
+```
 
 ### Description
 
