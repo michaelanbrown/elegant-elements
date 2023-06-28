@@ -48,25 +48,24 @@ The Races model validates:
 3. validates :status, presence: true
 4. validate :order_cannot_update, on: :update
     - order_cannot_update is a custom validation that will only allow the order to be updated if the status is in progress or the status is submitted and the order was created within 24 hours.
-    - If the order statuss is fulfilled, then an error message will be rendered that states "the order has been fulfilled"
+    - If the order status is fulfilled, then an error message will be rendered that states "the order has been fulfilled"
+    - This validation only runs when an order is updated (i.e. a PATCH request)
 5. validate :in_progress
-
-
-    def in_progress
-        orders = Order.where(customer_id: customer_id)
-        return if (status == "in progress" && orders.find_by(status: "in progress").to_s.length == 0)
-
-        if (status == "in progress" && orders.find_by(status: "in progress").to_s.length > 0)
-            errors.add(:status, "You already have an order in progress")
-        end
-    end
+    - in_progress is a custom validation that only allows one order to be in the in progress status at a time
 
 #### Products
 
 The Lengths model validates:
-1. :distance, numericality: { greater_than: 0 }
-2. :measurement, presence: true, inclusion: { in: %w(km mi m) }
-3. validates_uniqueness_of :distance, scope: :measurement
+1. validates :jewelry, presence: true, inclusion: { in: %w(necklace bracelet keychain) }
+2. validates :price, numericality: { greater_than: 0 }, on: :update
+3. validates :quantity, numericality: { greater_than: 0 }
+4. validate :within_24_hours, on: [:update, :destroy]
+    - within_24_hours is a custom validation that will only allow the product to be updated or deleted if the order status is in progress or the order status is submitted and the order was created within 24 hours.
+    - If the order status is submitted and the product was not created within the last 24 hours, then an error message will be rendered that states "must be within 24 hours of order".
+5. validate :product_cannot_update, on: [:update, :destroy]
+    - product_cannot_update is a custom validation that will only allow the product to be updated or deleted if the order status is in progress or the order status is submitted and the order was created within 24 hours.
+    - If the order status is fulfilled, then an error message will be rendered that states "the order has been fulfilled".
+    - This validation only runs when a product is updated (i.e. a PATCH request) or deleted (i.e. a DESTROY request).
 
 ### Customizations
 
