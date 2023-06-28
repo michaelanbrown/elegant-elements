@@ -35,14 +35,14 @@ The Addresses model belongs_to :customer and has_many :orders.
 
 #### Customers
 
-The Users model validates:
+The Customers model validates:
 1. validates :name, presence: true
 2. validates :username, presence: true, uniqueness: true
 3. validates :email, presence: true, uniqueness: true
 
 #### Orders
 
-The Races model validates:
+The Orders model validates:
 1. validates :discount, numericality: { less_than: 1 }
 2. validates :shipping, presence: true, numericality: { equal_to: 7.00 }
 3. validates :status, presence: true
@@ -55,7 +55,7 @@ The Races model validates:
 
 #### Products
 
-The Lengths model validates:
+The Products model validates:
 1. validates :jewelry, presence: true, inclusion: { in: %w(necklace bracelet keychain) }
 2. validates :price, numericality: { greater_than: 0 }, on: :update
 3. validates :quantity, numericality: { greater_than: 0 }
@@ -67,9 +67,27 @@ The Lengths model validates:
     - If the order status is fulfilled, then an error message will be rendered that states "the order has been fulfilled".
     - This validation only runs when a product is updated (i.e. a PATCH request) or deleted (i.e. a DESTROY request).
 
-### Customizations
+#### Customizations
 
-### Addresses
+The Customizations model validates:
+1. validates :custom_type, presence: true, inclusion: { in: %w(phrase word date) }
+2. validates :price, numericality: { greater_than: 0 }, on: :update
+3. validates :personalization, presence: true
+4. validate :word_personalization
+    - word_personalization is a custom validation that ensures that if the custom_type is a word, then the personalization does not include a space
+5. validate :phrase_personalization
+    - phrase_personalization is a custom validation that ensures that if the custom_type is a phrase, then the personalization does include a space
+6. validate :date_personalization
+    - date_personalization is a custom validation that ensures that if the custom_type is a date, then the personalization does include a dot at the 3rd and 6th characters.
+
+#### Addresses
+
+The Addresses model validates:
+1. validates :name, presence: true
+2. validates :street, presence: true
+3. validates :city, presence: true
+4. validates :state, presence: true, length: { is: 2 }
+5. validates :zip, presence: true, length: { is: 5 }
 
 ### Schemas
 
