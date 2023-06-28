@@ -29,12 +29,4 @@ class Order < ApplicationRecord
             errors.add(:status, "You already have an order in progress")
         end
     end
-
-    def no_address
-        return if (address)
-
-        if (address == undefined)
-            errors.add(:address, "Please add an address")
-        end
-    end
 end
