@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/michaelanbrown/elegant-elements#readme",
   "dependencies": {
+    "@stripe/react-stripe-js": "^2.1.1",
     "@stripe/stripe-js": "^1.54.1",
     "@types/react-stripe-elements": "^6.0.6",
     "cors": "^2.8.5",
