@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import '../App.css'
 import { UserContext } from './context/User';
 import ProductCartCard from './ProductCartCard';
+import { Elements, StripeProvider } from 'react-stripe-elements';
+import Checkout from './Checkout';
 
 function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustProducts, setOrders, customizations, productCount, setProductCount }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
@@ -47,20 +49,17 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
     }
 
     const checkout = async() => {
-        await fetch('http://localhost:4001/checkout', {
+        const res = await fetch('/checkout', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({items: [...order.products, shippingStripe],
-            email: currentCustomer.email})
-        }).then(res => {
-            return res.json();
-        }).then(res => {
-            if(res.url) {
-                window.location.assign(res.url)
-            }
+            body: JSON.stringify({items: [...order.products, shippingStripe]})
         })
+        const json = await res.json();
+        if (res.ok) {
+            window.location.assign(json.url)
+        }
     }
 
     function orderUpdate(e) {
@@ -88,7 +87,10 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
 
     return (
         order.products && productCount !== 0 ?
-            <div>
+        <StripeProvider apiKey='pk_test_51NMeYtK92FCM7B9EQ0zptqgDi5YpluL1RMOdZPvIDdJ1nTBQMqV7OvtER3gtzlNRIaGxVvdc6jeMNlQs8EHLz3Ct001tpnBJOK'>
+          <div>
+            <Elements>
+                    <div>
                 <h1>Current Cart</h1>
                     { productMap ? productMap : null }
                     <br/>
@@ -103,13 +105,16 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
                             {addressOptions}
                         </select>
                         <br/>
-                        <button>Submit Order</button>
+                        <Checkout/>
                         <br/>
                         { errors ? errors.map(error => <div className='error' key={error}>{error}</div>) :null }
                         <br/>
                         <br/>
                     </form>
-            </div> : <h1>Current Cart is Empty</h1>
+                    </div> 
+                    </Elements>
+                    </div>
+                    </StripeProvider> : <h1>Current Cart is Empty</h1>
     )
 }
 
