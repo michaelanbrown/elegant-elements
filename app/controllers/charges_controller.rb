@@ -19,8 +19,7 @@ class ChargesController < ApplicationController
       success_url: "http://localhost:4000/success",
       cancel_url: "http://localhost:4000/cancel"
     })
-
-    render json: {url: session.url}, status: :ok
+    render json: {url: session.url, message: session}, status: :ok
     
     rescue Stripe::CardError => e
         render json: { message: 'oops' }, status: :not_acceptable

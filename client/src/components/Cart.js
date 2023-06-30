@@ -5,7 +5,7 @@ import ProductCartCard from './ProductCartCard';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import Checkout from './Checkout';
 
-function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustProducts, setOrders, customizations, productCount, setProductCount }) {
+function Cart({ setSuccess, success, custAddresses, order, setOrder, orders, custProducts, setCustProducts, setOrders, customizations, productCount, setProductCount }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [orderTotalAddition, setOrderTotalAddition] = useState(0)
     const [errors, setErrors] = useState(false)
@@ -48,7 +48,8 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
         setOrders(updatingOrders)
     }
 
-    const checkout = async() => {
+    const checkout = async(e) => {
+        e.preventDefault()
         const res = await fetch('/checkout', {
             method: "POST",
             headers: {
@@ -59,11 +60,12 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
         const json = await res.json();
         if (res.ok) {
             window.location.assign(json.url)
+            orderUpdate()
         }
     }
 
-    function orderUpdate(e) {
-        e.preventDefault()
+
+    function orderUpdate() {
         fetch(`orders/${order.id}`, {
             method: "PATCH",
             headers: {
@@ -74,7 +76,6 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
         }).then((res) => {
             if(res.ok){
               res.json()
-              checkout()
               .then(order => {
                 setOrder([])
                 updateOrders(order)
@@ -97,7 +98,7 @@ function Cart({ custAddresses, order, setOrder, orders, custProducts, setCustPro
                     <br/>
                     <p>Flat Rate Shipping: ${ order ? order.shipping : null}</p>
                     <p>Order Total: ${ order ? order.total + orderTotalAddition : null}</p>
-                    <form onSubmit={orderUpdate}>
+                    <form onSubmit={checkout}>
                         Select the Shipping Address:
                         <br/>
                         <select className="addressselect" onChange={handleTypeChange}>

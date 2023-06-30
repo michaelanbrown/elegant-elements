@@ -29,6 +29,7 @@ function App() {
   const [custProducts, setCustProducts] = useState([])
   const [progressOrder, setProgressOrder] = useState(false)
   const [custAddresses, setCustAddresses] = useState([])
+  const [success, setSuccess] = useState(false)
 
   useEffect(() => {
     fetch("/authorized_user")
@@ -141,9 +142,9 @@ function getOrders() {
         <Route path="/previous-products/*" element={<PreviousProducts orderProducts={orderProducts} custProducts={custProducts} order={order} setOrder={setOrder} customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
         <Route path="/previous-orders" element={<PreviousOrders orders={orders} setOrders={setOrders} products={products}/>} />
         <Route path="/new-address" element={<CreateAddress custAddresses={custAddresses} setCustAddresses={setCustAddresses} addresses={addresses} setAddresses={setAddresses}/>} />
-        <Route path="/cart" element={<Cart custAddresses={custAddresses} setCustAddresses={setCustAddresses} order={order} setOrder={setOrder} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations} custProducts={custProducts} setCustProducts={setCustProducts}/>} />
-        <Route path="/success" element={<Success/>} />
-        <Route path="/cancel" element={<Cancel/>} />
+        <Route path="/cart" element={<Cart success={success} setSuccess={setSuccess} custAddresses={custAddresses} setCustAddresses={setCustAddresses} order={order} setOrder={setOrder} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations} custProducts={custProducts} setCustProducts={setCustProducts}/>} />
+        <Route path="/success" element={<Success setSuccess={setSuccess}/>} />
+        <Route path="/cancel" element={<Cancel setSuccess={setSuccess}/>} />
       </Routes>
     </main>
   );

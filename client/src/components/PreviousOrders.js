@@ -86,6 +86,8 @@ function PreviousOrders({ orders, setOrders, products }) {
                 <br/>
                 Submitted Order(s):
                 <br/>
+                (Payments pending. If an error occurred we will reach out for updated information.)
+                <br/>
                 <br/>
                 {submittedOrderMap}
             </div> : null}
