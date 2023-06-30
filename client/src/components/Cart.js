@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Routes, Route } from "react-router-dom";
 import '../App.css'
 import { UserContext } from './context/User';
 import ProductCartCard from './ProductCartCard';
-import { Elements, StripeProvider } from 'react-stripe-elements';
-import Checkout from './Checkout';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 
 function Cart({ formData, setFormData, custAddresses, order, setOrder, orders, custProducts, setCustProducts, setOrders, customizations, productCount, setProductCount }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
@@ -21,6 +20,46 @@ function Cart({ formData, setFormData, custAddresses, order, setOrder, orders, c
     const shippingStripe = {
         stripe_key: "price_1NMgq2K92FCM7B9Ez1ZejOIO",
         quantity: 1
+    }
+    const stripePromise = loadStripe('pk_test_51NMeYtK92FCM7B9EQ0zptqgDi5YpluL1RMOdZPvIDdJ1nTBQMqV7OvtER3gtzlNRIaGxVvdc6jeMNlQs8EHLz3Ct001tpnBJOK')
+
+    const CheckoutForm = () => {
+        const stripe = useStripe();
+        const elements = useElements();
+
+        const [errorMessage, setErrorMessage] = useState(null)
+
+        const checkout = async(e) => {
+            e.preventDefault()
+            if (elements === null) {
+                return;
+            }
+            const {error: submitError} = await elements.submit();
+            if (submitError) {
+                setErrorMessage(submitError.message);
+                return;
+            }
+            const res = await fetch('/checkout', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({items: [...order.products, shippingStripe]})
+            })
+            const json = await res.json();
+            if (res.ok) {
+                window.location.assign(json.url)
+                orderAddressUpdate()
+            }
+        }
+        return (
+            <form onSubmit={checkout}>
+                <button type="submit" disabled={!stripe || !elements}>
+                    Submit Order
+                </button>
+                {errorMessage && <div>{errorMessage}</div>}
+            </form>
+        )
     }
 
     useEffect(() => {
@@ -52,21 +91,21 @@ function Cart({ formData, setFormData, custAddresses, order, setOrder, orders, c
         setOrders(updatingOrders)
     }
 
-    const checkout = async(e) => {
-        e.preventDefault()
-        const res = await fetch('/checkout', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({items: [...order.products, shippingStripe]})
-        })
-        const json = await res.json();
-        if (res.ok) {
-            window.location.assign(json.url)
-            orderAddressUpdate()
-        }
-    }
+    // const checkout = async(e) => {
+    //     e.preventDefault()
+    //     const res = await fetch('/checkout', {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify({items: [...order.products, shippingStripe]})
+    //     })
+    //     const json = await res.json();
+    //     if (res.ok) {
+    //         window.location.assign(json.url)
+    //         orderAddressUpdate()
+    //     }
+    // }
 
     // function orderUpdate() {
     //     fetch(`orders/${order.id}`, {
@@ -111,9 +150,7 @@ function Cart({ formData, setFormData, custAddresses, order, setOrder, orders, c
     return (
         order.products && productCount !== 0 ?
         <div>
-        <StripeProvider apiKey='pk_test_51NMeYtK92FCM7B9EQ0zptqgDi5YpluL1RMOdZPvIDdJ1nTBQMqV7OvtER3gtzlNRIaGxVvdc6jeMNlQs8EHLz3Ct001tpnBJOK'>
-          <div>
-            <Elements>
+            <Elements stripe={stripePromise}>
                     <div>
                 <h1>Current Cart</h1>
                     { productMap ? productMap : null }
@@ -121,7 +158,7 @@ function Cart({ formData, setFormData, custAddresses, order, setOrder, orders, c
                     <br/>
                     <p>Flat Rate Shipping: ${ order ? order.shipping : null}</p>
                     <p>Order Total: ${ order ? order.total + orderTotalAddition : null}</p>
-                    <form onSubmit={checkout}>
+                    <form>
                         Select the Shipping Address:
                         <br/>
                         <select className="addressselect" onChange={handleTypeChange}>
@@ -129,16 +166,14 @@ function Cart({ formData, setFormData, custAddresses, order, setOrder, orders, c
                             {addressOptions}
                         </select>
                         <br/>
-                        <Checkout/>
+                    </form> 
+                        <CheckoutForm/>
                         <br/>
                         { errors ? errors.map(error => <div className='error' key={error}>{error}</div>) :null }
                         <br/>
                         <br/>
-                    </form>
                     </div> 
                     </Elements>
-                    </div>
-                    </StripeProvider>
                     </div> : <h1>Current Cart is Empty</h1>
     )
 }
