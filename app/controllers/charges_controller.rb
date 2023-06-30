@@ -16,8 +16,8 @@ class ChargesController < ApplicationController
     session = Stripe::Checkout::Session.create({
       line_items: @line_items,
       mode: 'payment',
-      success_url: "http://localhost:4000/success",
-      cancel_url: "http://localhost:4000/cancel"
+      success_url: "https://elegant-elements-jewelry-store.onrender.com/success",
+      cancel_url: "https://elegant-elements-jewelry-store.onrender.com/cancel"
     })
     render json: {url: session.url, message: session}, status: :ok
     
