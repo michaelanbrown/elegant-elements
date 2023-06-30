@@ -1,18 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Routes, Route } from "react-router-dom";
 import '../App.css'
 import { UserContext } from './context/User';
 import ProductCartCard from './ProductCartCard';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import Checkout from './Checkout';
 
-function Cart({ setSuccess, success, custAddresses, order, setOrder, orders, custProducts, setCustProducts, setOrders, customizations, productCount, setProductCount }) {
+function Cart({ formData, setFormData, custAddresses, order, setOrder, orders, custProducts, setCustProducts, setOrders, customizations, productCount, setProductCount }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [orderTotalAddition, setOrderTotalAddition] = useState(0)
     const [errors, setErrors] = useState(false)
     const [orderId, setOrderId] = useState(null)
-    const [formData, setFormData] = useState({
-        address_id: "",
-        status: "submitted" 
+    // const [formData, setFormData] = useState({
+    //     address_id: "",
+    //     status: "submitted" 
+    // })
+    const [addressData, setAddressData] = useState({
+        address_id: ""
     })
     const shippingStripe = {
         stripe_key: "price_1NMgq2K92FCM7B9Ez1ZejOIO",
@@ -60,26 +64,44 @@ function Cart({ setSuccess, success, custAddresses, order, setOrder, orders, cus
         const json = await res.json();
         if (res.ok) {
             window.location.assign(json.url)
-            orderUpdate()
+            orderAddressUpdate()
         }
     }
 
+    // function orderUpdate() {
+    //     fetch(`orders/${order.id}`, {
+    //         method: "PATCH",
+    //         headers: {
+    //             "Content-Type" : "application/json",
+    //             "Accept" : "application/json"
+    //         },
+    //         body: JSON.stringify(formData)
+    //     }).then((res) => {
+    //         if(res.ok){
+    //           res.json()
+    //           .then(order => {
+    //             setOrder([])
+    //             updateOrders(order)
+    //             setProductCount(0)
+    //             })
+    //         } else {
+    //           res.json().then(json => setErrors(json.errors))
+    //         }
+    // })}
 
-    function orderUpdate() {
+        function orderAddressUpdate() {
         fetch(`orders/${order.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type" : "application/json",
                 "Accept" : "application/json"
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(addressData)
         }).then((res) => {
             if(res.ok){
               res.json()
               .then(order => {
-                setOrder([])
                 updateOrders(order)
-                setProductCount(0)
                 })
             } else {
               res.json().then(json => setErrors(json.errors))
@@ -88,6 +110,7 @@ function Cart({ setSuccess, success, custAddresses, order, setOrder, orders, cus
 
     return (
         order.products && productCount !== 0 ?
+        <div>
         <StripeProvider apiKey='pk_test_51NMeYtK92FCM7B9EQ0zptqgDi5YpluL1RMOdZPvIDdJ1nTBQMqV7OvtER3gtzlNRIaGxVvdc6jeMNlQs8EHLz3Ct001tpnBJOK'>
           <div>
             <Elements>
@@ -115,7 +138,8 @@ function Cart({ setSuccess, success, custAddresses, order, setOrder, orders, cus
                     </div> 
                     </Elements>
                     </div>
-                    </StripeProvider> : <h1>Current Cart is Empty</h1>
+                    </StripeProvider>
+                    </div> : <h1>Current Cart is Empty</h1>
     )
 }
 

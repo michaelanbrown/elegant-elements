@@ -30,6 +30,7 @@ function App() {
   const [progressOrder, setProgressOrder] = useState(false)
   const [custAddresses, setCustAddresses] = useState([])
   const [success, setSuccess] = useState(false)
+  const [orderId, setOrderId] = useState(null)
 
   useEffect(() => {
     fetch("/authorized_user")
@@ -61,6 +62,7 @@ function App() {
                 setOrder(orders.filter(order => {
                   if (order.status == "in progress" && order.customer_id == customer.id) {
                     setOrderProducts(order.products)
+                    setOrderId(order.id)
                       return order
                   } else {
                       return null
@@ -130,6 +132,42 @@ function getOrders() {
     })
   }
 
+  const [formData, setFormData] = useState({
+    status: "submitted" 
+})
+
+  function orderUpdate(orderId) {
+    fetch(`orders/${orderId}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type" : "application/json",
+            "Accept" : "application/json"
+        },
+        body: JSON.stringify(formData)
+    }).then((res) => {
+        if(res.ok){
+          res.json()
+          .then(order => {
+            setOrder([])
+            updateOrders(order)
+            setProductCount(0)
+            })
+        } else {
+          res.json().then(json => setErrors(json.errors))
+        }
+})}
+
+function updateOrders(updatedOrder) {
+  const updatingOrders = orders.map((currentOrder) => {
+      if (currentOrder.id === orderId) {
+          return updatedOrder
+      } else {
+          return currentOrder
+      }
+  })
+  setOrders(updatingOrders)
+}
+
   return (
     <main>
       <Header productCount={productCount} custAddresses={custAddresses}/>
@@ -142,9 +180,9 @@ function getOrders() {
         <Route path="/previous-products/*" element={<PreviousProducts orderProducts={orderProducts} custProducts={custProducts} order={order} setOrder={setOrder} customizations={customizations} orders={orders} setOrders={setOrders} productCount={productCount} setProductCount={setProductCount}/>} />
         <Route path="/previous-orders" element={<PreviousOrders orders={orders} setOrders={setOrders} products={products}/>} />
         <Route path="/new-address" element={<CreateAddress custAddresses={custAddresses} setCustAddresses={setCustAddresses} addresses={addresses} setAddresses={setAddresses}/>} />
-        <Route path="/cart" element={<Cart success={success} setSuccess={setSuccess} custAddresses={custAddresses} setCustAddresses={setCustAddresses} order={order} setOrder={setOrder} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations} custProducts={custProducts} setCustProducts={setCustProducts}/>} />
-        <Route path="/success" element={<Success setSuccess={setSuccess}/>} />
-        <Route path="/cancel" element={<Cancel setSuccess={setSuccess}/>} />
+        <Route path="/cart" element={<Cart formData={formData} setFormData={setFormData} custAddresses={custAddresses} setCustAddresses={setCustAddresses} order={order} setOrder={setOrder} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations} custProducts={custProducts} setCustProducts={setCustProducts}/>} />
+        <Route path="/success" element={<Success orderId={orderId} orderUpdate={orderUpdate}/>} />
+        <Route path="/cancel" element={<Cancel/>} />
       </Routes>
     </main>
   );
