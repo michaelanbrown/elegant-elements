@@ -2,7 +2,6 @@ import React, { useState, useContext} from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../App.css'
 import { UserContext } from './context/User';
-import CreateAddress from './CreateAddress';
 
 function Signup({ customers, setCustomers, getProducts, getCustomers, getAddresses, getCustomizations, getOrders }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);

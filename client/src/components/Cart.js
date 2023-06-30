@@ -2,10 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import '../App.css'
 import { UserContext } from './context/User';
 import ProductCartCard from './ProductCartCard';
-import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 
-function Cart({ formData, setFormData, custAddresses, order, setOrder, orders, custProducts, setCustProducts, setOrders, customizations, productCount, setProductCount }) {
+function Cart({ stripePromise, formData, setFormData, custAddresses, order, setOrder, orders, custProducts, setCustProducts, setOrders, customizations, productCount, setProductCount }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
     const [orderTotalAddition, setOrderTotalAddition] = useState(0)
     const [errors, setErrors] = useState(false)
@@ -21,7 +20,6 @@ function Cart({ formData, setFormData, custAddresses, order, setOrder, orders, c
         stripe_key: "price_1NMgq2K92FCM7B9Ez1ZejOIO",
         quantity: 1
     }
-    const stripePromise = loadStripe('pk_test_51NMeYtK92FCM7B9EQ0zptqgDi5YpluL1RMOdZPvIDdJ1nTBQMqV7OvtER3gtzlNRIaGxVvdc6jeMNlQs8EHLz3Ct001tpnBJOK')
 
     const CheckoutForm = () => {
         const stripe = useStripe();
@@ -143,15 +141,13 @@ function Cart({ formData, setFormData, custAddresses, order, setOrder, orders, c
                 updateOrders(order)
                 })
             } else {
-              res.json().then(json => setErrors(json.errors))
+              res.json().then(json => console.log(json.errors))
             }
     })}
 
     return (
         order.products && productCount !== 0 ?
         <div>
-            <Elements stripe={stripePromise}>
-                    <div>
                 <h1>Current Cart</h1>
                     { productMap ? productMap : null }
                     <br/>
@@ -167,12 +163,10 @@ function Cart({ formData, setFormData, custAddresses, order, setOrder, orders, c
                         </select>
                         <br/>
                     </form> 
-                        <CheckoutForm/>
                         <br/>
                         { errors ? errors.map(error => <div className='error' key={error}>{error}</div>) :null }
-                        <br/>
-                        <br/>
-                    </div> 
+                    <Elements stripe={stripePromise}>    
+                        <CheckoutForm/>
                     </Elements>
                     </div> : <h1>Current Cart is Empty</h1>
     )
