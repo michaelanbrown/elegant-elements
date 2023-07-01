@@ -10,6 +10,7 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
     const productName = product.name.slice(0,1).toUpperCase() + product.name.slice(1, product.name.length)
     const [viewOrderForm, setViewOrderForm] = useState(false)
     const [errors, setErrors] = useState([])
+    const [defaultValue, setDefaultValue] = useState(null)
     const typeOptions = options.map(option => {
         return (<option value={option} key={option}>{option.slice(0,1).toUpperCase() + option.slice(1, option.length)}</option>)
     })
@@ -31,7 +32,8 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
 
     useEffect(() => {
         const orderSetting = order && order[0] ? setOrder(order[0]) : null
-    }, [order])
+        const defaultValueSetting = custom_type === "date" ? setDefaultValue("Date format: 00.00.0000") : setDefaultValue(null)
+    }, [order, custom_type])
 
     function onViewClick(){
         setViewOrderForm(!viewOrderForm)
@@ -240,7 +242,7 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
                         <br/>
                         Personalization:
                         <br/>
-                        <input type="text" name="personalization" value={personalization} onChange={handleChange} />
+                        <input type="text" name="personalization" placeholder={defaultValue} value={personalization} onChange={handleChange} />
                         <br/>
                         Quantity:
                         <br/>
