@@ -9,6 +9,7 @@ class Order < ApplicationRecord
     validates :status, presence: true
     validate :order_cannot_update, on: :update
     validate :in_progress
+    validate :admin, on: :update
 
     private
 
@@ -26,6 +27,14 @@ class Order < ApplicationRecord
 
         if (status == "in progress" && orders.find_by(status: "in progress").to_s.length > 0)
             errors.add(:status, "You already have an order in progress")
+        end
+    end
+
+    def admin
+        return if(status == "fulfilled" && customer.admin)
+
+        if(customer.admin == false)
+            errors.add(:status, "You do not have permissions")
         end
     end
 end
