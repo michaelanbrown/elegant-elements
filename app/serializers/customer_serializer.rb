@@ -9,7 +9,7 @@ class CustomerSerializer < ActiveModel::Serializer
     @product_arrays = @order_ids.map { |o| Product.where(order_id: o)}
     @prods = []
     @product_arrays.map{|p| p.map{|p| @prods.push(p)}}
-    @prods.each{|p| p.jewelry = p.jewelry.capitalize}.uniq{|p| p.jewelry && p.customization_id}
+    @prods.each{|p| p.jewelry = p.jewelry.capitalize}.uniq{|p| p.jewelry && p.customization.personalization}
   end
 
   def in_progress_product_count

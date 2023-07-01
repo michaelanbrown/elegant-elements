@@ -16,9 +16,10 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
     })
     const [customForm, setCustomForm] = useState({
         custom_type: "",
-        personalization: ""
+        personalization: "",
+        price: 0
     })
-    const {custom_type, personalization} = customForm
+    const {custom_type, personalization, price} = customForm
     const [orderProduct, setOrderProduct] = useState({
         jewelry: product.name,
         customization_id: "",
@@ -72,6 +73,7 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
         }
         }
     }
+    console.log(customForm)
 
     function onOrder(e){
         e.preventDefault()
@@ -88,10 +90,6 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
                   res.json().then(newOrder => {
                       setOrders([...orders, newOrder])
                       setOrder(newOrder)
-                      const customization = {
-                        custom_type,
-                        personalization
-                        }
                         const customizationWithPrice = {
                             custom_type,
                             personalization,
@@ -100,7 +98,7 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
                       fetch("/customizations",{
                         method:'POST',
                         headers:{'Content-Type': 'application/json'},
-                        body:JSON.stringify(customization)
+                        body:JSON.stringify(customizationWithPrice)
                       })
                       .then(res => {
                           if(res.ok){
