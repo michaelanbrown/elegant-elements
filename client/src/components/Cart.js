@@ -29,14 +29,6 @@ function Cart({ stripePromise, formData, setFormData, custAddresses, order, setO
 
         const checkout = async(e) => {
             e.preventDefault()
-            if (elements === null) {
-                return;
-            }
-            const {error: submitError} = await elements.submit();
-            if (submitError) {
-                setErrorMessage(submitError.message);
-                return;
-            }
             const res = await fetch('/checkout', {
                 method: "POST",
                 headers: {
