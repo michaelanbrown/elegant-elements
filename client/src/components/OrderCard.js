@@ -9,6 +9,9 @@ function OrderCard({ orders, setOrders, order, products }) {
     const [formData, setFormData] = useState({
         status: "canceled"
     })
+    const [fulfillFormData, setFulfillFormData] = useState({
+        status: "fulfilled"
+    })
 
     const currentProducts = products.filter(product => {
         if (product.order_id == order.id) {
@@ -51,6 +54,26 @@ function OrderCard({ orders, setOrders, order, products }) {
             }
     })}
 
+    function onFulfill(e) {
+        e.preventDefault()
+        fetch(`orders/${order.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type" : "application/json",
+                "Accept" : "application/json"
+            },
+            body: JSON.stringify(fulfillFormData)
+        }).then((res) => {
+            if(res.ok){
+              res.json()
+              .then(order => {
+                updateOrders(order)
+                })
+            } else {
+              res.json().then(json => setErrors([json.errors]))
+            }
+    })}
+
     return (
         <div className='address'>
             {order.updated_at}
@@ -71,6 +94,8 @@ function OrderCard({ orders, setOrders, order, products }) {
             <br/>
             <br/>
             <button onClick={orderUpdate}>Cancel Order</button></div> : null}
+            <br/>
+            { currentCustomer.admin && order.status !== "fulfilled" && order.status !== "canceled" ? <button onClick={onFulfill}>Fulfill Order</button> : null }
             { errors ? errors.map(error => <div className='error' key={error}>{error}</div>) :null }
         </div>
     )

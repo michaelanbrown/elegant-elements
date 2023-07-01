@@ -36,7 +36,7 @@ export default function NavBar ({ productCount, custAddresses })  {
             { currentCustomer ? <NavLink className="Navelements" to="/previous-orders">Previous Orders</NavLink> : null }
             { currentCustomer ? <br/> : null }
             { currentCustomer.admin ?  <NavLink className="Navelements" to="/all-orders">All Orders</NavLink> : null }
-            { currentCustomer ? <br/> : null }
+            { currentCustomer.admin ? <br/> : null }
             { currentCustomer ? <NavLink className="Navelements" to="/cart">Cart 🛒</NavLink> : null }
             { productCount && productCount > 0 ? <span className="dot">{productCount}</span> : null}
             { currentCustomer ? <br/> : null }
