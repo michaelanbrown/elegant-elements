@@ -6,9 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-u1 = Customer.create!(name: "Carla Jones", email: "carla.jones@gmail.com", username: "carla.jones", password: "carla1234!")
-u2 = Customer.create!(name: "Vanessa", email: "ness1234@yahoo.com", username: "nessa", password: "nessaabcd")
-u3 = Customer.create!(name: "Jack Crane", email: "jc@gmail.com", username: "jcraneee", password: "crane")
+u1 = Customer.create!(name: "Carla Jones", email: "carla.jones@gmail.com", username: "carla.jones", password: "carla1234!", admin: false)
+u2 = Customer.create!(name: "Vanessa", email: "ness1234@yahoo.com", username: "nessa", password: "nessaabcd", admin: false)
+u3 = Customer.create!(name: "Jack Crane", email: "jc@gmail.com", username: "jcraneee", password: "crane", admin: false)
+u4 = Customer.create!(name: "Michaela Brown", email: "m_brownbrown@yahoo.com", username: "michaelanbrown", password: "mnb", admin: true)
 
 c1 = Customization.create!(custom_type: "phrase", price: 4.00, personalization: "Life is a gift")
 c2 = Customization.create!(custom_type: "word", price: 2.00, personalization: "Smiles")
