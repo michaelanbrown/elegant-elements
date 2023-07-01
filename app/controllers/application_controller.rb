@@ -34,7 +34,7 @@ class ApplicationController < ActionController::API
 
   def authorize_customer_on_order
     find_order
-    permitted = @order.customer_id == @current_customer.id
+    permitted = @order.customer_id == @current_customer.id || @current_customer.admin == true
     render json: { errors: "Not authorized" }, status: :unauthorized unless permitted
   end
 
