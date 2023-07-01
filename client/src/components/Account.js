@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import '../App.css'
 import { UserContext } from './context/User';
 import Address from './Address';
@@ -8,7 +8,15 @@ import CreateAddress from './CreateAddress';
 
 function Account({ addresses, setAddresses, custAddresses, setCustAddresses }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
-    const addressMap = custAddresses ? custAddresses.map(address => <Address key={address.id} custAddresses={custAddresses} setCustAddresses={setCustAddresses} address={address} addresses={addresses} setAddresses={setAddresses}/>) : null
+    const [addressForm, setAddressForm] = useState('')
+
+    function handleChange(e) {
+        setAddressForm(e.target.value);
+    }
+
+    const filteredAddresses = custAddresses.filter(address => address.street.indexOf(addressForm) > -1)
+ 
+    const addressMap = custAddresses ? filteredAddresses.map(address => <Address key={address.id} custAddresses={custAddresses} setCustAddresses={setCustAddresses} address={address} addresses={addresses} setAddresses={setAddresses}/>) : null
 
     return (
         <div>
@@ -24,7 +32,10 @@ function Account({ addresses, setAddresses, custAddresses, setCustAddresses }) {
             </Routes>
             <br/>
             <br/>
-            Addresses:
+            Search for an Address by Street:
+                        <br/>
+                        <input type="text" name="addressValue" value={addressForm} onChange={handleChange} />
+                        <br/>
             <br/>
             <br/>
             {addressMap}

@@ -118,6 +118,7 @@ function ProductsList({ order, setOrder, orderProducts, productPrice, product, c
                 }
           })
     }
+    
 
     return (
             <div className='customization'>
@@ -125,8 +126,8 @@ function ProductsList({ order, setOrder, orderProducts, productPrice, product, c
                 Jewelry: {product.jewelry}
                 { customizationLine }
                 <button onClick={onClick}>Order Again</button>
-                { errors ? errors.map(error => <div className='error' key={error}>{error}</div>) :null }
                 <br/>
+                { errors ? errors.map(error => <div className='error' key={error}>{error}</div>) :null }
                 <br/>
             </div>
     )
