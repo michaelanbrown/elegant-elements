@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import '../App.css'
 import { UserContext } from './context/User';
 import ProductCartCard from './ProductCartCard';
-import { Elements, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Elements, useStripe } from '@stripe/react-stripe-js';
 
 function Cart({ stripePromise, formData, setFormData, custAddresses, order, setOrder, orders, custProducts, setCustProducts, setOrders, customizations, productCount, setProductCount }) {
     const { currentCustomer, setCurrentCustomer } = useContext(UserContext);
@@ -23,9 +23,6 @@ function Cart({ stripePromise, formData, setFormData, custAddresses, order, setO
 
     const CheckoutForm = () => {
         const stripe = useStripe();
-        const elements = useElements();
-
-        const [errorMessage, setErrorMessage] = useState(null)
 
         const checkout = async(e) => {
             e.preventDefault()
@@ -44,10 +41,9 @@ function Cart({ stripePromise, formData, setFormData, custAddresses, order, setO
         }
         return (
             <form onSubmit={checkout}>
-                <button type="submit" disabled={!stripe || !elements}>
+                <button type="submit" disabled={!stripe}>
                     Submit Order
                 </button>
-                {errorMessage && <div>{errorMessage}</div>}
             </form>
         )
     }
