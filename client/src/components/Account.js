@@ -14,7 +14,7 @@ function Account({ addresses, setAddresses, custAddresses, setCustAddresses }) {
         setAddressForm(e.target.value);
     }
 
-    const filteredAddresses = custAddresses.filter(address => address.street.indexOf(addressForm) > -1)
+    const filteredAddresses = custAddresses.filter(address => address.street.toLowerCase().indexOf(addressForm.toLowerCase()) > -1)
  
     const addressMap = custAddresses ? filteredAddresses.map(address => <Address key={address.id} custAddresses={custAddresses} setCustAddresses={setCustAddresses} address={address} addresses={addresses} setAddresses={setAddresses}/>) : null
 
