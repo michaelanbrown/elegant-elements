@@ -54,7 +54,7 @@ function ProductCartCard({ product, order, setOrder, custProducts, setCustProduc
             }
     })}
 
-    function deleteProduct(deletedProduct) {
+    function deletingProduct(deletedProduct) {
         const deletingProduct = custProducts.filter((prod) => {
             if (prod.id !== deleteProduct.id) {
                 return deletedProduct
@@ -75,7 +75,7 @@ function ProductCartCard({ product, order, setOrder, custProducts, setCustProduc
                 quantity: 0
             })
             setProductCount(productCount - 1)
-            deleteProduct(product)
+            deletingProduct(product)
           }
           if (productCount == 0) {
             setOrder({...order,
