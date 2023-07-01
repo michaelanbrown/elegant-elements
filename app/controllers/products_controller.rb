@@ -27,6 +27,10 @@ class ProductsController < ApplicationController
         render json: @product, status: :accepted
     end
 
+    def destroy
+        @product.destroy
+        head :no_content 
+    end
 
     private
 

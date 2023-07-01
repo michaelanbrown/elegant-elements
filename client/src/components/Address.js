@@ -24,30 +24,30 @@ function Address({ address, addresses, setAddresses, custAddresses, setCustAddre
         });
     }
 
-    function deleteAddress(address) {
-        const deletingAddress = addresses.filter((addie) => {
-            if (addie.id !== address.id) {
-                return address
-            }
-        })
-        setAddresses(deletingAddress)
-        const deletingCustAddress = custAddresses.filter((addie) => {
-            if (addie.id !== address.id) {
-                return address
-            }
-        })
-        setCustAddresses(deletingCustAddress)
-    }
+    // function deleteAddress(address) {
+    //     const deletingAddress = addresses.filter((addie) => {
+    //         if (addie.id !== address.id) {
+    //             return address
+    //         }
+    //     })
+    //     setAddresses(deletingAddress)
+    //     const deletingCustAddress = custAddresses.filter((addie) => {
+    //         if (addie.id !== address.id) {
+    //             return address
+    //         }
+    //     })
+    //     setCustAddresses(deletingCustAddress)
+    // }
 
-    function deleteCustomerAddress(){
-        fetch(`/addresses/${address.id}`, {
-            method: 'DELETE'
-        })
-        .then(res => {
-            if(res.ok)
-            deleteAddress(address)
-        })
-    }
+    // function deleteCustomerAddress(){
+    //     fetch(`/addresses/${address.id}`, {
+    //         method: 'DELETE'
+    //     })
+    //     .then(res => {
+    //         if(res.ok)
+    //         deleteAddress(address)
+    //     })
+    // }
 
     function onUpdateClick() {
         setActive(!active)
@@ -100,7 +100,7 @@ function Address({ address, addresses, setAddresses, custAddresses, setCustAddre
                 {city}, {state} {zip}
                 <br/>
                 <br/>
-                <button onClick={onUpdateClick}>Update</button> or <button onClick={deleteCustomerAddress}>Delete</button>
+                <button onClick={onUpdateClick}>Update</button>
                 <br/>
                 <br/>
                 { errors ? errors.map(error => <div className='error' key={error}>{error}</div>) : null }

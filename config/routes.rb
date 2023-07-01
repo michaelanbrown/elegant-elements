@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   
-  resources :addresses
-  resources :products, only: [:index, :show, :create, :update]
+  resources :addresses, only: [:index, :show, :create, :update]
+  resources :products
   resources :orders, only: [:index, :show, :create, :update]
   resources :customizations, only: [:index, :show, :create]
   resources :customers, only: [:index, :show, :create]

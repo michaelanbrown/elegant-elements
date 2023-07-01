@@ -20,11 +20,6 @@ class AddressesController < ApplicationController
         render json: @address, status: :accepted
     end
 
-    def destroy
-        @address.destroy
-        head :no_content 
-    end
-
     private
 
     def address_params
