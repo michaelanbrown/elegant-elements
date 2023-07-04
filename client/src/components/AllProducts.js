@@ -73,7 +73,7 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
         }
         }
     }
-    console.log(customForm)
+console.log(errors)
 
     function onOrder(e){
         e.preventDefault()
@@ -134,12 +134,12 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
                                           }
                                         })
                                       } else {
-                                          res.json().then(json => setErrors(...errors, json.errors))
+                                          res.json().then(json => setErrors([...errors, json.errors]))
                                       }
                                   })
                               })
                             } else {
-                                res.json().then(json => setErrors(...errors, json.errors.filter(error => error !== 'Custom type is not included in the list')))
+                                res.json().then(json => setErrors([...errors, json.errors.filter(error => error !== 'Custom type is not included in the list')]))
                             }
                       })
                   })
@@ -192,12 +192,12 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
                                           }
                                         })
                                       } else {
-                                          res.json().then(json => setErrors(...errors, json.errors))
+                                          res.json().then(json => setErrors([...errors, json.errors]))
                                       }
                                   })
                               })
                             } else {
-                                res.json().then(json => setErrors(...errors, json.errors.filter(error => error !== 'Custom type is not included in the list')))
+                                res.json().then(json => setErrors([...errors, json.errors.filter(error => error !== 'Custom type is not included in the list')]))
                             }
                       })
                 }
