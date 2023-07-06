@@ -51,6 +51,7 @@ function App() {
           const cartOrder = customer.orders ? customer.orders.map(order => {
             if (order.status == "in progress") {
                 setProgressOrder(order)
+                setOrderId(order.id)
                 return order
             } else {
                 return null
@@ -64,7 +65,6 @@ function App() {
                 setOrder(orders.filter(order => {
                   if (order.status == "in progress" && order.customer_id == customer.id) {
                     setOrderProducts(order.products)
-                    setOrderId(order.id)
                       return order
                   } else {
                       return null
@@ -139,8 +139,8 @@ function getOrders() {
     status: "submitted" 
 })
 
-  function orderUpdate(progressOrder) {
-    fetch(`orders/${progressOrder.id}`, {
+  function orderUpdate(orderId) {
+    fetch(`orders/${orderId}`, {
         method: "PATCH",
         headers: {
             "Content-Type" : "application/json",
@@ -185,7 +185,7 @@ function updateOrders(updatedOrder) {
         {currentCustomer.admin ? <Route path="/all-orders" element={<AllOrders orders={orders} setOrders={setOrders} products={products}/>} /> : null}
         <Route path="/new-address" element={<CreateAddress custAddresses={custAddresses} setCustAddresses={setCustAddresses} addresses={addresses} setAddresses={setAddresses}/>} />
         <Route path="/cart" element={<Cart stripePromise={stripePromise} formData={formData} setFormData={setFormData} custAddresses={custAddresses} setCustAddresses={setCustAddresses} order={order} setOrder={setOrder} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations} custProducts={custProducts} setCustProducts={setCustProducts}/>} />
-        <Route path="/success" element={<Success orderIdentified={progressOrder} orderUpdate={orderUpdate}/>} />
+        <Route path="/success" element={<Success orderId={orderId} orderUpdate={orderUpdate}/>} />
         <Route path="/cancel" element={<Cancel/>} />
       </Routes>
     </main>

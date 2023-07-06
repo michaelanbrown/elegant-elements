@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 
 
-function Success({ orderUpdate, orderIdentified }) {
+function Success({ orderUpdate, orderId }) {
 
   useEffect(() => {
-    orderUpdate(orderIdentified)
-  }, [orderIdentified])
+    orderUpdate(orderId)
+  }, [orderId])
 
   return (
     <div>
