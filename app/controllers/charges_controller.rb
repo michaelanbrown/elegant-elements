@@ -4,7 +4,7 @@ class ChargesController < ApplicationController
 
   def create
 
-    Stripe.api_key = ENV["stripe_api_key"]
+    Stripe.api_key = process.env.stripe_api_key
 
     begin
 
