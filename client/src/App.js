@@ -156,7 +156,7 @@ function getOrders() {
             setProductCount(0)
             })
         } else {
-          res.json().then(json => setErrors(json.errors))
+          res.json().then(json => setErrors([json.errors]))
         }
 })}
 
