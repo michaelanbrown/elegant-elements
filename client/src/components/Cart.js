@@ -48,7 +48,6 @@ function Cart({ stripePromise, formData, setFormData, custAddresses, order, setO
         )
     }
 
-
     useEffect(() => {
         const identification = order && order[0] ? setOrderId(order[0].id) : null
         const orderSetting = order && order[0] ? setOrder(order[0]) : null
