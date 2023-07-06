@@ -184,7 +184,7 @@ function updateOrders(updatedOrder) {
         {currentCustomer.admin ? <Route path="/all-orders" element={<AllOrders orders={orders} setOrders={setOrders} products={products}/>} /> : null}
         <Route path="/new-address" element={<CreateAddress custAddresses={custAddresses} setCustAddresses={setCustAddresses} addresses={addresses} setAddresses={setAddresses}/>} />
         <Route path="/cart" element={<Cart stripePromise={stripePromise} formData={formData} setFormData={setFormData} custAddresses={custAddresses} setCustAddresses={setCustAddresses} order={order} setOrder={setOrder} productCount={productCount} setProductCount={setProductCount} orders={orders} setOrders={setOrders} customizations={customizations} setCustomizations={setCustomizations} custProducts={custProducts} setCustProducts={setCustProducts}/>} />
-        <Route path="/success" element={<Success orderId={orderId} orderUpdate={orderUpdate}/>} />
+        <Route path="/success" element={<Success orderId={progressOrder.id} orderUpdate={orderUpdate}/>} />
         <Route path="/cancel" element={<Cancel/>} />
       </Routes>
     </main>
