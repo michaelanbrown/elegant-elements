@@ -32,7 +32,7 @@ function App() {
   const [progressOrder, setProgressOrder] = useState(false)
   const [custAddresses, setCustAddresses] = useState([])
   const [orderId, setOrderId] = useState(null)
-  const stripePromise = loadStripe('pk_test_51NMeYtK92FCM7B9EQ0zptqgDi5YpluL1RMOdZPvIDdJ1nTBQMqV7OvtER3gtzlNRIaGxVvdc6jeMNlQs8EHLz3Ct001tpnBJOK')
+  const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY)
 
   useEffect(() => {
     fetch("/authorized_user")

@@ -73,7 +73,6 @@ function AllProducts({ product, productPrice, customizations, setCustomizations,
         }
         }
     }
-console.log(errors)
 
     function onOrder(e){
         e.preventDefault()
@@ -234,7 +233,7 @@ console.log(errors)
                         Custom Type:
                         <br/>
                         <select id="custom_type" onChange={handleTypeChange}>
-                            <option key={""}>{""}</option>
+                            <option value={""} key={""}>{""}</option>
                             {typeOptions}
                         </select>
                         <br/>
