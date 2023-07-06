@@ -138,8 +138,8 @@ function getOrders() {
     status: "submitted" 
 })
 
-  function orderUpdate(orderId) {
-    fetch(`orders/${orderId}`, {
+  function orderUpdate(progressOrder) {
+    fetch(`orders/${progressOrder.id}`, {
         method: "PATCH",
         headers: {
             "Content-Type" : "application/json",
